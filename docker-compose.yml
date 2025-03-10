@@ -28,3 +28,9 @@ services:
       - postgres
     networks:
       - app-network
+
+networks:
+  app-network:
+
+volumes:
+  postgres-data:
