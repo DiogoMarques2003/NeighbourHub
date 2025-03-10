@@ -145,7 +145,7 @@ model Orders {
   createdAt DateTime
   urgency String
   status String
-  lastOrder String
+  lastOrder String?
   deadline DateTime
   userId String
   condominiumId String
