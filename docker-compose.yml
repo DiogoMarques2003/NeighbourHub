@@ -24,6 +24,8 @@ services:
       PGADMIN_DEFAULT_PASSWORD: Pn7fdfcOka
     ports:
       - "3000:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
     depends_on:
       - postgres
     networks:
@@ -51,3 +53,4 @@ networks:
 
 volumes:
   postgres-data:
+  pgadmin-data:
