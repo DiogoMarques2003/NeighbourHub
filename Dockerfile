@@ -27,8 +27,7 @@ FROM node:18 AS production
 WORKDIR /app/backend
 
 COPY --from=build_backend /app/backend/build ./build
-COPY --from=build_backend /app/backend/package.json ./package.json
-COPY --from=build_backend /app/backend/yarn.lock ./yarn.lock
+COPY backend/package.json backend/yarn.lock ./
 COPY --from=build_frontend /app/frontend/build /app/frontend/build
 
 RUN yarn install --frozen-lockfile --production
