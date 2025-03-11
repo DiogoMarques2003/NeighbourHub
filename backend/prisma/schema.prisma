@@ -1,0 +1,190 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id String @id @unique
+  name String
+  email String @unique
+  password String
+  phoneNumber String
+  iban String
+  foto String?
+
+  Addresses Addresses[]
+  Condominiums Condominiums[]
+  AreaReservations AreaReservations[]
+  Services Services[]
+  ServiceRequests ServiceRequests[]
+  Orders Orders[]
+  Votings Votings[]
+}
+
+model Condominiums {
+  id String @id @unique
+  name String
+  mountlyQuota Float
+  adminId String
+  admin Users @relation(fields: [adminId], references: [id])
+
+  Addresses Addresses[]
+  CommonAreas CommonAreas[]
+  Services Services[]
+  Orders Orders[]
+}
+
+model Addresses {
+  id String @id @unique
+  country String
+  city String
+  street String
+  houseNumber String
+  postalCode String
+  houseType Int
+  userId String
+  coundominiumId String
+  user Users @relation(fields: [userId], references: [id])
+  condominium Condominiums @relation(fields: [coundominiumId], references: [id])
+
+  CondominiumPayments CondominiumPayments[]
+}
+
+model CommonAreas {
+  id String @id @unique
+  name String
+  schedule DateTime
+  cost Float?
+  rules String
+  status String
+  capacity Int
+  images String[]
+  type Int
+  condominiumId String
+  condominium Condominiums @relation(fields: [condominiumId], references: [id])
+
+  AreaReservations AreaReservations[]
+}
+
+model AreaReservations {
+  id String @id @unique
+  startDate DateTime
+  endDate DateTime
+  status String
+  areaId String
+  userId String
+  area CommonAreas @relation(fields: [areaId], references: [id])
+  user Users @relation(fields: [userId], references: [id])
+
+  CondominiumPayments CondominiumPayments[]
+  Fine Fine[]
+}
+
+model CondominiumPayments {
+  id String @id @unique
+  value Float
+  date DateTime
+  paymentType Int
+  addressId String
+  areaReservationId String?
+  address Addresses @relation(fields: [addressId], references: [id])
+  areaReservation AreaReservations? @relation(fields: [areaReservationId], references: [id])
+}
+
+model Fine {
+  id String @id @unique
+  amount Float
+  reason String
+  createdAt DateTime
+  status String
+  areaReservationId String
+  areaReservation AreaReservations @relation(fields: [areaReservationId], references: [id])
+}
+
+model Services {
+  id String @id @unique
+  name String
+  description String
+  cost Float?
+  ownerId String
+  condominiumId String
+  owner Users @relation(fields: [ownerId], references: [id])
+  condominium Condominiums @relation(fields: [condominiumId], references: [id])
+
+  ServiceRequests ServiceRequests[]
+}
+
+model ServiceRequests {
+  id String @id @unique
+  requestDate DateTime
+  status String
+  serviceId String
+  userId String
+  service Services @relation(fields: [serviceId], references: [id])
+  user Users @relation(fields: [userId], references: [id])
+
+  ServiceReviews ServiceReviews[]
+}
+
+model ServiceReviews {
+  id String @id @unique
+  rating Int
+  comment String
+  createdAt DateTime
+  serviceRequestId String
+  serviceRequest ServiceRequests @relation(fields: [serviceRequestId], references: [id])
+}
+
+model Orders {
+  id String @id @unique
+  description String
+  createdAt DateTime
+  urgency String
+  status String
+  lastOrder String?
+  deadline DateTime
+  userId String
+  condominiumId String
+  user Users @relation(fields: [userId], references: [id])
+  condominium Condominiums @relation(fields: [condominiumId], references: [id])
+
+  Budgets Budgets[]
+  Votings Votings[]
+  OrderWorks OrderWorks[]
+}
+
+model Budgets {
+  id String @id @unique
+  description String
+  amount Float
+  createdAt DateTime
+  orderId String
+  order Orders @relation(fields: [orderId], references: [id])
+
+  Votings Votings[]
+}
+
+model Votings {
+  id String @id @unique
+  decision Boolean
+  orderID String
+  budgetID String?
+  userID String
+  order Orders @relation(fields: [orderID], references: [id])
+  budget Budgets? @relation(fields: [budgetID], references: [id])
+  user Users @relation(fields: [userID], references: [id])
+}
+
+model OrderWorks {
+  id String @id @unique
+  startDate DateTime
+  endDate DateTime
+  status String
+  description String
+  orderId String
+  order Orders @relation(fields: [orderId], references: [id])
+}
