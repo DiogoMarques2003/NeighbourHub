@@ -1,4 +1,4 @@
-FROM node:18 AS build_frontend
+FROM node:22.12 AS build_frontend
 
 WORKDIR /app/frontend
 
@@ -8,7 +8,7 @@ RUN yarn install --frozen-lockfile
 COPY frontend .
 RUN yarn build
 
-FROM node:18 AS build_backend
+FROM node:22.12 AS build_backend
 
 WORKDIR /app/backend
 
@@ -22,7 +22,7 @@ RUN yarn prisma generate
 
 RUN yarn build
 
-FROM node:18 AS production
+FROM node:22.12 AS production
 
 WORKDIR /app/backend
 
