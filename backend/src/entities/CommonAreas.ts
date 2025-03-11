@@ -1,6 +1,4 @@
 import { v4 as uuid } from 'uuid';
-import Condominiums from './Condominiums';
-import AreaReservations from './AreaReservations';
 
 export default class CommonAreas {
   public readonly id: string;
@@ -13,9 +11,6 @@ export default class CommonAreas {
   public images: string[];
   public type: number;
   public condominiumId: string;
-  public readonly condominium: Condominiums;
-
-  public readonly AreaReservations: AreaReservations[];
 
   constructor(props: Omit<CommonAreas, 'id'>, id?: string) {
     Object.assign(this, props);

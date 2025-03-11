@@ -1,5 +1,4 @@
 import { v4 as uuid } from 'uuid';
-import ServiceRequests from './ServiceRequests';
 
 export default class ServiceReviews {
   public readonly id: string;
@@ -7,7 +6,6 @@ export default class ServiceReviews {
   public comment: string;
   public createdAt: Date;
   public serviceRequestId: string;
-  public readonly serviceRequest: ServiceRequests;
 
   constructor(props: Omit<ServiceReviews, 'id'>, id?: string) {
     Object.assign(this, props);

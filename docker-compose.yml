@@ -29,6 +29,23 @@ services:
     networks:
       - app-network
 
+  'api_website':
+    build: .
+    container_name: api_website
+    restart: always
+    pull_policy: build
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: ${DATABASE_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      PORT: 3333
+    ports:
+      - "3333:3333"
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+
 networks:
   app-network:
 

@@ -14,6 +14,7 @@ module.exports = {
       ['module-resolver', {
         alias: {
           '@handlers': './src/handlers',
+          '@middlewares': './src/middlewares',
           '@errors': './src/errors',
           '@entities': './src/entities',
           '@providers': './src/providers',

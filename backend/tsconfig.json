@@ -19,16 +19,14 @@
       "forceConsistentCasingInFileNames": true,
       "baseUrl": ".",
       "paths": {
-        "@customPlugins/*": ["./src/customPlugins/*"],
         "@handlers/*": ["./src/handlers/*"],
+        "@middlewares/*": ["./src/middlewares/*"],
         "@errors/*": ["./src/errors/*"],
-        "@config/*": ["./src/config/*"],
         "@entities/*": ["./src/entities/*"],
         "@providers/*": ["./src/providers/*"],
         "@repositories/*": ["./src/repositories/*"],
         "@useCases/*": ["./src/useCases/*"],
         "@shared/*": ["./src/shared/*"],
-        "@schemas/*": ["./src/schemas/*"],
         "@constants/*": ["./src/constants/*"],
       }
     },

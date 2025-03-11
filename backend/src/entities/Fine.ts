@@ -1,5 +1,4 @@
 import { v4 as uuid } from 'uuid';
-import AreaReservations from './AreaReservations';
 
 export default class Fine {
   public readonly id: string;
@@ -8,7 +7,6 @@ export default class Fine {
   public createdAt: Date;
   public status: string;
   public areaReservationId: string;
-  public readonly areaReservation: AreaReservations;
 
   constructor(props: Omit<Fine, 'id'>, id?: string) {
     Object.assign(this, props);
