@@ -1,4 +1,5 @@
 import { userCreateAccountController } from '@useCases/User/CreateAccount';
+import { userLoginAccountController } from '@useCases/User/LoginAccount';
 import { Router } from 'express';
 import multer from 'multer';
 import os from 'os';
@@ -12,6 +13,10 @@ router.get('/', (req, res) => {
 
 router.post('/register', upload.single('foto'), (req, res) => {
   userCreateAccountController.handle(req, res);
+});
+
+router.post('/login', (req, res) => {
+  userLoginAccountController.handle(req, res);
 });
 
 export { router };

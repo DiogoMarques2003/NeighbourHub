@@ -25,6 +25,7 @@ WORKDIR /app/backend
 
 COPY --from=build_backend /app/backend/build ./build
 COPY --from=build_backend /app/backend/prisma ./prisma
+COPY --from=build_backend /app/backend/files ./files
 COPY --from=build_backend /app/backend/package.json /app/backend/yarn.lock ./
 COPY --from=build_frontend /app/frontend/build /app/frontend/build
 
