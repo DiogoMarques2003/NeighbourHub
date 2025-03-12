@@ -25,7 +25,6 @@ export default class UserCreateAccountController {
       this.userCreateAccountVerifications.execute(requestData);
 
       const token = await this.userCreateAccountCase.execute(requestData);
-
       if (!token) throw new AppError('Erro ao criar a conta', 500);
 
       res.status(201).json({ token, message: 'Conta criada com sucesso' });
