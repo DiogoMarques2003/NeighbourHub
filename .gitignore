@@ -5,5 +5,5 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-./backend/files/*
-!./backend/files/profilePictures/.gitkeep
+backend/files/*
+!backend/files/profilePictures/.gitkeep
