@@ -1,4 +1,6 @@
+import verifyJWT from '@middlewares/verifyJWT';
 import { userCreateAccountController } from '@useCases/User/CreateAccount';
+import { userGetInfoController } from '@useCases/User/GetInfo';
 import { userLoginAccountController } from '@useCases/User/LoginAccount';
 import { Router } from 'express';
 import multer from 'multer';
@@ -17,6 +19,10 @@ router.post('/register', upload.single('foto'), (req, res) => {
 
 router.post('/login', (req, res) => {
   userLoginAccountController.handle(req, res);
+});
+
+router.get('/@me', verifyJWT, (req, res) => {
+  userGetInfoController.handle(req, res);
 });
 
 export { router };

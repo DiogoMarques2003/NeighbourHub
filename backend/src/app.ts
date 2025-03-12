@@ -2,6 +2,7 @@ import express from 'express';
 import { router } from './routes';
 import cors from 'cors';
 import { join } from 'path';
+import errorHandler from '@handlers/errorHandler';
 
 const app = express();
 
@@ -16,6 +17,8 @@ app.use(
 app.use('/api', router);
 // Permitir acesso a partir do browser
 app.use(cors());
+// Tratar erros
+app.use((err, _req, res, _next) => errorHandler(err, res));
 
 // Se tiver em produtivo fornecer o site também
 if (process.env.NODE_ENV === 'production') {
