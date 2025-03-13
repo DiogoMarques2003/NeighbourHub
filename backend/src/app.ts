@@ -3,6 +3,7 @@ import { router } from './routes';
 import cors from 'cors';
 import { join } from 'path';
 import errorHandler from '@handlers/errorHandler';
+import { existsSync } from 'fs';
 
 const app = express();
 
@@ -28,5 +29,16 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(join(frontendPath, 'index.html'));
   });
 }
+
+// Para os arquivos salvos na api
+app.use('/content/*', (req, res) => {
+  const filePath = join(
+    __dirname,
+    '..',
+    req.originalUrl.replace('/content', '')
+  );
+  if (!existsSync(filePath)) res.status(404).send();
+  else res.sendFile(filePath);
+});
 
 export { app };
