@@ -21,15 +21,6 @@ app.use(cors());
 // Tratar erros
 app.use((err, _req, res, _next) => errorHandler(err, res));
 
-// Se tiver em produtivo fornecer o site também
-if (process.env.NODE_ENV === 'production') {
-  const frontendPath = join(__dirname, '..', '..', 'frontend', 'build');
-  app.use(express.static(frontendPath));
-  app.get('*', (req, res) => {
-    res.sendFile(join(frontendPath, 'index.html'));
-  });
-}
-
 // Para os arquivos salvos na api
 app.use('/content/*', (req, res) => {
   const filePath = join(
@@ -40,5 +31,14 @@ app.use('/content/*', (req, res) => {
   if (!existsSync(filePath)) res.status(404).send();
   else res.sendFile(filePath);
 });
+
+// Se tiver em produtivo fornecer o site também
+if (process.env.NODE_ENV === 'production') {
+  const frontendPath = join(__dirname, '..', '..', 'frontend', 'build');
+  app.use(express.static(frontendPath));
+  app.get('*', (req, res) => {
+    res.sendFile(join(frontendPath, 'index.html'));
+  });
+}
 
 export { app };
