@@ -9,7 +9,7 @@ import {
 } from '@constants/filesPaths';
 import Users from '@entities/Users';
 import generateToken from '@shared/generateToken';
-import { renameSync } from 'fs';
+import { copyFileSync, renameSync, unlinkSync } from 'fs';
 import { join } from 'path';
 
 export default class UserCreateAccountcase {
@@ -29,9 +29,14 @@ export default class UserCreateAccountcase {
       const extension = foto.originalname.split('.').pop();
       const photoName = `${uuid()}.${extension}`;
       fotoUri = join(BASE_PROFILE_PICTURES_PATH, photoName);
-      renameSync(
+      // Copiar a imagem para o diretorio de arquivos
+      copyFileSync(
         join(foto.destination, foto.filename),
         join(PROFILE_PICTURES_PATH, photoName)
+      );
+      // Apagar imagem temporaria
+      unlinkSync(
+        join(foto.destination, foto.filename)
       );
     }
 
