@@ -184,7 +184,7 @@ model Votings {
 
 model OrderWorks {
   id String @id @unique
-  poistedAt DateTime
+  postedAt DateTime
   status String
   description String
   orderId String
