@@ -14,7 +14,6 @@ app.use(
   })
 );
 
-// app.use(upload.none());
 app.use('/api', router);
 // Permitir acesso a partir do browser
 app.use(cors());

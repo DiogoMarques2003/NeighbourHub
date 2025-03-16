@@ -9,7 +9,7 @@ import {
 } from '@constants/filesPaths';
 import Users from '@entities/Users';
 import generateToken from '@shared/generateToken';
-import { copyFileSync, renameSync, unlinkSync } from 'fs';
+import { copyFileSync, unlinkSync } from 'fs';
 import { join } from 'path';
 
 export default class UserCreateAccountcase {
