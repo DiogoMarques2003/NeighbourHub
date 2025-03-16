@@ -1,4 +1,5 @@
 import verifyJWT from '@middlewares/verifyJWT';
+import { condominiumCreateController } from '@useCases/Condominium/Create';
 import { userCreateAccountController } from '@useCases/User/CreateAccount';
 import { userGetInfoController } from '@useCases/User/GetInfo';
 import { userLoginAccountController } from '@useCases/User/LoginAccount';
@@ -19,6 +20,10 @@ router.post('/login', (req, res) => {
 
 router.get('/@me', verifyJWT, (req, res) => {
   userGetInfoController.handle(req, res);
+});
+
+router.post('/condominium', verifyJWT, (req, res) => {
+  condominiumCreateController.handle(req, res);
 });
 
 export { router };

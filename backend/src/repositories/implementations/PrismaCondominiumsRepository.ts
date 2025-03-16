@@ -2,7 +2,9 @@ import Condominiums from '@entities/Condominiums';
 import { PrismaClient } from '@prisma/client';
 import ICondominiumsRepository from '@repositories/ICondominiumsRepository';
 
-export default class PrismaCondominiumsRepository implements ICondominiumsRepository {
+export default class PrismaCondominiumsRepository
+  implements ICondominiumsRepository
+{
   private readonly prisma: PrismaClient;
 
   constructor() {
@@ -11,6 +13,10 @@ export default class PrismaCondominiumsRepository implements ICondominiumsReposi
 
   findById(id: string): Promise<Condominiums | null> {
     return this.prisma.condominiums.findUnique({ where: { id } });
+  }
+
+  findByEmail(email: string): Promise<Condominiums | null> {
+    return this.prisma.condominiums.findUnique({ where: { email } });
   }
 
   create(condominium: Condominiums): Promise<Condominiums> {
