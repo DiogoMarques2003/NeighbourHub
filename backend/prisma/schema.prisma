@@ -28,7 +28,9 @@ model Users {
 model Condominiums {
   id String @id @unique
   name String
-  mountlyQuota Float
+  email String @unique
+  phoneNumber String
+  monthlyQuota Float
   adminId String
   admin Users @relation(fields: [adminId], references: [id])
 

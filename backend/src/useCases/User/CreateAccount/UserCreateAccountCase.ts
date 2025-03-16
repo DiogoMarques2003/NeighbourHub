@@ -35,9 +35,7 @@ export default class UserCreateAccountcase {
         join(PROFILE_PICTURES_PATH, photoName)
       );
       // Apagar imagem temporaria
-      unlinkSync(
-        join(foto.destination, foto.filename)
-      );
+      unlinkSync(join(foto.destination, foto.filename));
     }
 
     const userClass = new Users({
