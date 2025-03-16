@@ -3,7 +3,8 @@ import { v4 as uuid } from 'uuid';
 export default class CommonAreas {
   public readonly id: string;
   public name: string;
-  public schedule: Date;
+  public startSchedule: String;
+  public endSchedule: String;
   public cost: number;
   public rules: string;
   public status: string;

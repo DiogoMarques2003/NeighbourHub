@@ -7,7 +7,8 @@ export default class Orders {
   public urgency: string;
   public status: string;
   public lastOrder?: string;
-  public deadline: Date;
+  public startDate: Date;
+  public endDate: Date;
   public userId: string;
   public condominiumId: string;
 

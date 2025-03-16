@@ -1,17 +1,10 @@
-import { v4 as uuid } from 'uuid';
-
 export default class Votings {
-  public readonly id: string;
+  public readonly orderID: string;
+  public readonly userID: string;
   public decision: boolean;
-  public orderID: string;
   public budgetID?: string;
-  public userID: string;
 
-  constructor(props: Omit<Votings, 'id'>, id?: string) {
+  constructor(props: Votings) {
     Object.assign(this, props);
-
-    if (!id) {
-      this.id = uuid();
-    }
   }
 }

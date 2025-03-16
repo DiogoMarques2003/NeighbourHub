@@ -57,7 +57,8 @@ model Addresses {
 model CommonAreas {
   id String @id @unique
   name String
-  schedule DateTime
+  startSchedule String
+  endSchedule String
   cost Float?
   rules String
   status String
@@ -146,7 +147,8 @@ model Orders {
   urgency String
   status String
   lastOrder String?
-  deadline DateTime
+  startDate DateTime
+  endDate DateTime
   userId String
   condominiumId String
   user Users @relation(fields: [userId], references: [id])
@@ -169,20 +171,20 @@ model Budgets {
 }
 
 model Votings {
-  id String @id @unique
+  userID String @unique
+  orderID String @unique
   decision Boolean
-  orderID String
   budgetID String?
-  userID String
   order Orders @relation(fields: [orderID], references: [id])
   budget Budgets? @relation(fields: [budgetID], references: [id])
   user Users @relation(fields: [userID], references: [id])
+
+  @@id([userID,orderID])
 }
 
 model OrderWorks {
   id String @id @unique
-  startDate DateTime
-  endDate DateTime
+  poistedAt DateTime
   status String
   description String
   orderId String
