@@ -173,8 +173,8 @@ model Budgets {
 }
 
 model Votings {
-  userID String @unique
-  orderID String @unique
+  userID String 
+  orderID String 
   decision Boolean
   budgetID String?
   order Orders @relation(fields: [orderID], references: [id])
