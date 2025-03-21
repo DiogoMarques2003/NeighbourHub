@@ -14,7 +14,7 @@ export default class CondominiumCreateCase {
     const { adminId, name, email, phoneNumber, monthlyQuota } = data;
 
     //Validar user
-    const userDb = this.usersRepository.findById(adminId);
+    const userDb = await this.usersRepository.findById(adminId);
     if (!userDb) throw new AppError('Utilizador inválido!', 401);
 
     //Valida email do condominio
