@@ -27,7 +27,7 @@ router.post('/condominium', verifyJWT, (req, res) => {
   condominiumCreateController.handle(req, res);
 });
 
-router.get('/condominium/:id',(req, res) =>{
+router.get('/condominium/:id', verifyJWT, (req, res) =>{
   condominiumGetController.handle(req, res)
 })
 
