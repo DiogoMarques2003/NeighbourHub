@@ -14,6 +14,8 @@ import AddressesGetController from '@useCases/Addresses/Get/AddressGetController
 import { addresGetController } from '@useCases/Addresses/Get';
 import CommonAreasCreateController from '@useCases/CommonAreas/Create/CommonAreasCreateController';
 import { commonAreasCreateController } from '@useCases/CommonAreas/Create';
+import { addressGetByIdController } from '@useCases/Addresses/GetByID';
+import { addressGetController } from '@useCases/Addresses/Get';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -61,7 +63,11 @@ router.post('/condominium/:condominiumId/address', verifyJWT, (req, res) => {
 });
 
 router.get('/condominium/:condId/address', verifyJWT, (req, res) => {
-  addresGetController.handle(req, res);
+  addressGetController.handle(req, res);
+});
+
+router.get('/condominium/:condId/address/:id', verifyJWT, (req, res) => {
+  addressGetByIdController.handle(req, res);
 });
 
 //---COMMON AREAS
