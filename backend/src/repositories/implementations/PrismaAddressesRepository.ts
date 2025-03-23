@@ -27,7 +27,14 @@ export default class PrismaAddressesRepository implements IAddressesRepository {
   findById(id: string): Promise<Addresses | null> {
     return this.prisma.addresses.findUnique({ where: { id } });
   }
+
   create(address: Addresses): Promise<Addresses> {
     return this.prisma.addresses.create({ data: address });
+  }
+
+  getByUserAndCond(userId: string, condId: string): Promise<Addresses | null> {
+    return this.prisma.addresses.findFirst({
+      where: { userId, condominiumId: condId },
+    });
   }
 }
