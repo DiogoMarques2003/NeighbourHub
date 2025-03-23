@@ -14,6 +14,7 @@ export default class CommonAreasCreateController {
   async handle(req: Request, res: Response) {
     try {
       const requestData: ICommonAreasCreateDTO = {
+        userId: req.userID,
         name: req.body.name,
         cost: req.body.cost,
         rules: req.body.rules,

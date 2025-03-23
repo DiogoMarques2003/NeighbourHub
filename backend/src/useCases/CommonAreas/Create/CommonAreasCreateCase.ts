@@ -20,6 +20,7 @@ export default class CommonAreasCreateCase {
 
   async execute(data: ICommonAreasCreateDTO) {
     const {
+      userId,
       name,
       cost,
       rules,
@@ -34,6 +35,10 @@ export default class CommonAreasCreateCase {
     //Valida condominio
     const condDb = await this.condominiumsRepository.findById(condominiumId);
     if (!condDb) throw new AppError('Condominio inexistente', 404);
+
+    //Valida admin condominio
+    if (condDb.adminId != userId)
+      throw new AppError('O utilizador não é administrador', 401);
 
     const imagesConv: string[] = [];
 
@@ -65,7 +70,7 @@ export default class CommonAreasCreateCase {
       startSchedule,
     });
 
-    await this.commonAreasRepository.create(commonAreaClass)
-    return commonAreaClass
+    await this.commonAreasRepository.create(commonAreaClass);
+    return commonAreaClass;
   }
 }
