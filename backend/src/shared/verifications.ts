@@ -4,4 +4,8 @@ function isValidUUID(uuid: string): boolean {
   return uuidValidate(uuid) && uuidVersionValidate(uuid) === 4;
 }
 
-export { isValidUUID };
+function isHoursIntervalValid(startHour: Number, endHour: Number) {
+  return startHour > endHour;
+}
+
+export { isValidUUID, isHoursIntervalValid };

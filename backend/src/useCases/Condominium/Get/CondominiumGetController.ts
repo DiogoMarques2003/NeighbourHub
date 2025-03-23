@@ -19,7 +19,7 @@ export default class CondominiumGetController {
       this.condominiumGetVerifications.execute(requestData);
       const condominium = await this.condominiumGetCase.execute(requestData);
 
-      res.status(200).json({ condominium, message: 'ta aqui chefe!' });
+      res.status(200).json({ condominium });
     } catch (err) {
       errorHandler(err, res);
     }
