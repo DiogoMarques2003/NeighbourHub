@@ -11,6 +11,7 @@ import {
 import { join } from 'path';
 import { copyFileSync, unlinkSync } from 'fs';
 import { STATUS_READY } from '@constants/status';
+import generatePathToFile from '@shared/generatePathToFile';
 
 export default class CommonAreasCreateCase {
   constructor(
@@ -70,7 +71,13 @@ export default class CommonAreasCreateCase {
       startSchedule,
     });
 
+
     await this.commonAreasRepository.create(commonAreaClass);
+
+    commonAreaClass.images = commonAreaClass.images.map((image) =>
+      generatePathToFile(image)
+    );
+
     return commonAreaClass;
   }
 }

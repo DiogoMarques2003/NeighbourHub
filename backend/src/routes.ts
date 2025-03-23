@@ -12,6 +12,7 @@ import { commonAreasCreateController } from '@useCases/CommonAreas/Create';
 import { addressGetByIdController } from '@useCases/Addresses/GetByID';
 import { addressGetController } from '@useCases/Addresses/Get';
 import { ordersCreateController } from '@useCases/Orders/Create';
+import { commonAreasEditController } from '@useCases/CommonAreas/Edit';
 import { Router } from 'express';
 import multer from 'multer';
 import os from 'os';
@@ -82,5 +83,14 @@ router.post(
 router.post('/condominium/:condominiumId/orders', verifyJWT, (req, res) => {
   ordersCreateController.handle(req, res);
 });
+
+router.put(
+  '/condominium/:condominiumId/commonarea/:idCommonArea',
+  upload.array('imagesAdd'),
+  verifyJWT,
+  (req, res) => {
+    commonAreasEditController.handle(req, res);
+  }
+);
 
 export { router };

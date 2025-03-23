@@ -16,4 +16,8 @@ export default class PrismaCommonAreasRepository implements ICommonAreasReposito
   create(commonArea: CommonAreas): Promise<CommonAreas> {
     return this.prisma.commonAreas.create({ data: commonArea });
   }
+
+  update(commonArea: CommonAreas): Promise<CommonAreas> {
+    return this.prisma.commonAreas.update({ where: { id: commonArea.id }, data: commonArea });
+  }
 }
