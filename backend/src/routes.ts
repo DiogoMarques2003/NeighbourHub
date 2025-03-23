@@ -10,8 +10,8 @@ import { Router } from 'express';
 import multer from 'multer';
 import os from 'os';
 import { addressCreateController } from '@useCases/Addresses/Create';
-import AddressesGetController from '@useCases/Addresses/Get/AddressGetController';
-import { addresGetController } from '@useCases/Addresses/Get';
+import { addressGetByIdController } from '@useCases/Addresses/GetByID';
+import { addressGetController } from '@useCases/Addresses/Get';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -53,7 +53,11 @@ router.post('/condominium/:condominiumId/address', verifyJWT, (req, res) => {
 });
 
 router.get('/condominium/:condId/address', verifyJWT, (req, res) => {
-  addresGetController.handle(req, res);
+  addressGetController.handle(req, res);
+});
+
+router.get('/condominium/:condId/address/:id', verifyJWT, (req, res) => {
+  addressGetByIdController.handle(req, res);
 });
 
 export { router };

@@ -13,9 +13,9 @@ const addressGetCase = new AddressGetCase(
   condominiumRepository
 );
 
-const addresGetController = new AddressesGetController(
+const addressGetController = new AddressesGetController(
   addressGetVerifications,
   addressGetCase
 );
 
-export { addresGetController };
+export { addressGetController };
