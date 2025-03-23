@@ -4,12 +4,16 @@ import Addresses from '@entities/Addresses';
 import AppError from '@errors/AppError';
 import IUsersRepository from '@repositories/IUsersRepository';
 import ICondominiumsRepository from '@repositories/ICondominiumsRepository';
+import IMailProvider from '@providers/IMailProvider';
+import { resolve } from 'path';
+import { EMAILS_PATH } from '@constants/filesPaths';
 
 export default class AddressesCreateCase {
   constructor(
     private addressesRepository: IAddressesRepository,
     private condominiumRepository: ICondominiumsRepository,
-    private usersRepository: IUsersRepository
+    private usersRepository: IUsersRepository,
+    private mailProvider: IMailProvider
   ) {}
 
   async execute(data: IAddressesCreateDTO): Promise<Addresses> {
@@ -47,6 +51,21 @@ export default class AddressesCreateCase {
     });
 
     await this.addressesRepository.create(addressClass);
+
+    //enviar email
+    await this.mailProvider.sendMail(
+      user.email,
+      [],
+      process.env.MAIL_FROM,
+      'Adicionado a um condomínio',
+      resolve(EMAILS_PATH, 'newResident.hbs'),
+      {
+        moradorNome: user.name,
+        condominioNome: cond.name,
+        linkCondominio: `https://neighbourhub.diogomarques.dev/condominiums/${condominiumId}`
+      }
+    )
+
     return addressClass;
   }
 }

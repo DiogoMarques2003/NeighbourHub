@@ -6,14 +6,13 @@ import { condominiumDeleteController } from '@useCases/Condominium/Delete';
 import { userCreateAccountController } from '@useCases/User/CreateAccount';
 import { userGetInfoController } from '@useCases/User/GetInfo';
 import { userLoginAccountController } from '@useCases/User/LoginAccount';
+import { addressCreateController } from '@useCases/Addresses/Create';
+import { addresGetController } from '@useCases/Addresses/Get';
+import { commonAreasCreateController } from '@useCases/CommonAreas/Create';
+import { ordersCreateController } from '@useCases/Orders/Create';
 import { Router } from 'express';
 import multer from 'multer';
 import os from 'os';
-import { addressCreateController } from '@useCases/Addresses/Create';
-import AddressesGetController from '@useCases/Addresses/Get/AddressGetController';
-import { addresGetController } from '@useCases/Addresses/Get';
-import CommonAreasCreateController from '@useCases/CommonAreas/Create/CommonAreasCreateController';
-import { commonAreasCreateController } from '@useCases/CommonAreas/Create';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -65,8 +64,17 @@ router.get('/condominium/:condId/address', verifyJWT, (req, res) => {
 });
 
 //---COMMON AREAS
-router.post('/condominium/:id/commonarea', upload.array('images'), verifyJWT, (req, res) => {
-  commonAreasCreateController.handle(req, res);
+router.post(
+  '/condominium/:id/commonarea',
+  upload.array('images'),
+  verifyJWT,
+  (req, res) => {
+    commonAreasCreateController.handle(req, res);
+  }
+);
+
+router.post('/condominium/:condominiumId/orders', verifyJWT, (req, res) => {
+  ordersCreateController.handle(req, res);
 });
 
 export { router };
