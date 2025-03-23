@@ -26,4 +26,11 @@ export default class PrismaCondominiumsRepository
   async deleteById(id: string): Promise<boolean> {
     return !!(await this.prisma.condominiums.delete({ where: { id } }));
   }
+
+  edit(condominium: Condominiums): Promise<Condominiums> {
+    return this.prisma.condominiums.update({
+      where: { id: condominium.id },
+      data: condominium,
+    });
+  }
 }

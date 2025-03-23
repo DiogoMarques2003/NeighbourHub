@@ -5,4 +5,5 @@ export default interface ICondominiumsRepository {
   findByEmail(email: string): Promise<Condominiums | null>;
   create(condominium: Condominiums): Promise<Condominiums>;
   deleteById(id: string): Promise<boolean>;
+  edit(condominium: Condominiums): Promise<Condominiums>;
 }

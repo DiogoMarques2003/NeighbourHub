@@ -1,5 +1,6 @@
 import verifyJWT from '@middlewares/verifyJWT';
 import { condominiumCreateController } from '@useCases/Condominium/Create';
+import { condominiumEditController } from '@useCases/Condominium/Edit';
 import { condominiumGetController } from '@useCases/Condominium/Get';
 import { condominiumDeleteController } from '@useCases/Condominium/Delete';
 import { userCreateAccountController } from '@useCases/User/CreateAccount';
@@ -32,8 +33,15 @@ router.get('/condominium/:id', verifyJWT,(req, res) =>{
   condominiumGetController.handle(req, res)
 })
 
+router.get('/condominium/:id', verifyJWT, (req, res) => {
+  condominiumGetController.handle(req, res);
+});
+
+router.put('/condominium/:idCondominium', verifyJWT, (req, res) => {
+  condominiumEditController.handle(req, res);
+});
+
 router.delete('/condominium/:condominiumID', verifyJWT, (req, res) => {
   condominiumDeleteController.handle(req, res);
 });
-
 export { router };
