@@ -8,10 +8,13 @@ import { userLoginAccountController } from '@useCases/User/LoginAccount';
 import { Router } from 'express';
 import multer from 'multer';
 import os from 'os';
+import CommonAreasCreateController from '@useCases/CommonAreas/Create/CommonAreasCreateController';
+import { commonAreasCreateController } from '@useCases/CommonAreas/Create';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
 
+//---LOGIN
 router.post('/register', upload.single('foto'), (req, res) => {
   userCreateAccountController.handle(req, res);
 });
@@ -24,16 +27,22 @@ router.get('/@me', verifyJWT, (req, res) => {
   userGetInfoController.handle(req, res);
 });
 
+//---CONDOMINIUM'S
 router.post('/condominium', verifyJWT, (req, res) => {
   condominiumCreateController.handle(req, res);
 });
 
-router.get('/condominium/:id', verifyJWT,(req, res) =>{
-  condominiumGetController.handle(req, res)
-})
+router.get('/condominium/:id', verifyJWT, (req, res) => {
+  condominiumGetController.handle(req, res);
+});
 
 router.delete('/condominium/:condominiumID', verifyJWT, (req, res) => {
   condominiumDeleteController.handle(req, res);
+});
+
+//---COMMON AREAS
+router.post('/condominium/:id/commonarea', upload.array('images'), verifyJWT, (req, res) => {
+  commonAreasCreateController.handle(req, res);
 });
 
 export { router };
