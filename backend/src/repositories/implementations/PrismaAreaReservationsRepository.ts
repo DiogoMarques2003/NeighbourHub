@@ -15,4 +15,10 @@ export default class PrismaAreaReservationsRepository implements IAreaReservatio
   create(areaReservation: AreaReservations): Promise<AreaReservations> {
     return this.prisma.areaReservations.create({ data: areaReservation });
   }
+  edit(areaReservation: AreaReservations): Promise<AreaReservations> {
+    return this.prisma.areaReservations.update({
+      where: { id: areaReservation.id },
+      data: areaReservation,
+    });
+  }
 }
