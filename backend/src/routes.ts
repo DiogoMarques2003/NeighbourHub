@@ -8,6 +8,7 @@ import { userLoginAccountController } from '@useCases/User/LoginAccount';
 import { Router } from 'express';
 import multer from 'multer';
 import os from 'os';
+import { addressCreateController } from '@useCases/Addresses/Create';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -28,12 +29,16 @@ router.post('/condominium', verifyJWT, (req, res) => {
   condominiumCreateController.handle(req, res);
 });
 
-router.get('/condominium/:id', verifyJWT,(req, res) =>{
-  condominiumGetController.handle(req, res)
-})
+router.get('/condominium/:id', verifyJWT, (req, res) => {
+  condominiumGetController.handle(req, res);
+});
 
 router.delete('/condominium/:condominiumID', verifyJWT, (req, res) => {
   condominiumDeleteController.handle(req, res);
+});
+
+router.post('/condominium/:condominiumId/address', verifyJWT, (req, res) => {
+  addressCreateController.handle(req, res);
 });
 
 export { router };
