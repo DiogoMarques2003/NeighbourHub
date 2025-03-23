@@ -22,4 +22,11 @@ export default class PrismaCondominiumsRepository
   create(condominium: Condominiums): Promise<Condominiums> {
     return this.prisma.condominiums.create({ data: condominium });
   }
+
+  edit(condominium: Condominiums): Promise<Condominiums> {
+    return this.prisma.condominiums.update({
+      where: { id: condominium.id },
+      data: condominium,
+    });
+  }
 }
