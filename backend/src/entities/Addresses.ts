@@ -9,7 +9,7 @@ export default class Addresses {
   public postalCode: string;
   public houseType: number;
   public userId: string;
-  public coundominiumId: string;
+  public condominiumId: string;
 
   constructor(props: Omit<Addresses, 'id'>, id?: string) {
     Object.assign(this, props);

@@ -49,9 +49,9 @@ model Addresses {
   postalCode String
   houseType Int
   userId String
-  coundominiumId String
+  condominiumId String
   user Users @relation(fields: [userId], references: [id])
-  condominium Condominiums @relation(fields: [coundominiumId], references: [id])
+  condominium Condominiums @relation(fields: [condominiumId], references: [id])
 
   CondominiumPayments CondominiumPayments[]
 }
