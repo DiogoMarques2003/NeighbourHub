@@ -48,6 +48,7 @@ model Addresses {
   houseNumber String
   postalCode String
   houseType Int
+  createdAT DateTime @default(now())
   userId String
   condominiumId String
   user Users @relation(fields: [userId], references: [id])
