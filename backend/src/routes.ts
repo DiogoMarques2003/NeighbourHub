@@ -7,7 +7,6 @@ import { userCreateAccountController } from '@useCases/User/CreateAccount';
 import { userGetInfoController } from '@useCases/User/GetInfo';
 import { userLoginAccountController } from '@useCases/User/LoginAccount';
 import { addressCreateController } from '@useCases/Addresses/Create';
-import { addresGetController } from '@useCases/Addresses/Get';
 import { commonAreasCreateController } from '@useCases/CommonAreas/Create';
 import { addressGetByIdController } from '@useCases/Addresses/GetByID';
 import { addressGetController } from '@useCases/Addresses/Get';
