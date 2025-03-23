@@ -1,4 +1,5 @@
 export default interface ICommonAreasCreateDTO {
+  userId: string;
   name: string;
   cost: number;
   rules: string;
