@@ -167,7 +167,7 @@ model Budgets {
   id String @id @unique
   description String
   amount Float
-  createdAt DateTime
+  createdAt DateTime @default(now())
   orderId String
   order Orders @relation(fields: [orderId], references: [id])
 

@@ -7,7 +7,7 @@ export default class Budgets {
   public createdAt: Date;
   public orderId: string;
 
-  constructor(props: Omit<Budgets, 'id'>, id?: string) {
+  constructor(props: Omit<Budgets, 'id' | 'createdAt'>, id?: string) {
     Object.assign(this, props);
 
     if (!id) {

@@ -16,4 +16,7 @@ export default class PrismaOrdersRepository implements IOrdersRepository {
   create(order: Orders): Promise<Orders> {
     return this.prisma.orders.create({ data: order });
   }
+  update(order: Orders): Promise<Orders> {
+    return this.prisma.orders.update({ where: { id: order.id }, data: order });
+  }
 }
