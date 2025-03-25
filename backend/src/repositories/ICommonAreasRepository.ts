@@ -3,4 +3,10 @@ import CommonAreas from '@entities/CommonAreas';
 export default interface ICommonAreasRepository {
   findById(id: string): Promise<CommonAreas | null>;
   create(commonArea: CommonAreas): Promise<CommonAreas>;
+  countByType(type?: number): Promise<number>;
+  getCommonAreasWithPagination(
+    pageSize: number,
+    pageNumber: number,
+    type?: number
+  ): Promise<CommonAreas[]>;
 }

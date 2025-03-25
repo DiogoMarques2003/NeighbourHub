@@ -68,6 +68,7 @@ model CommonAreas {
   capacity Int
   images String[]
   type Int
+  createdAT DateTime @default(now())
   condominiumId String
   condominium Condominiums @relation(fields: [condominiumId], references: [id])
 
