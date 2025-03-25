@@ -9,8 +9,13 @@ export default class PrismaVotingsRepository implements IVotingsRepository {
     this.prisma = new PrismaClient();
   }
 
-  findById(id: string): Promise<Votings | null> {
-    return this.prisma.votings.findUnique({ where: { id } });
+  findByOrderAndUser(orderID: string, userID: string): Promise<Votings | null> {
+    return this.prisma.votings.findFirst({
+      where: {
+        userID,
+        orderID,
+      },
+    });
   }
 
   create(voting: Votings): Promise<Votings> {

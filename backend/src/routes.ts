@@ -15,6 +15,7 @@ import { commonAreasEditController } from '@useCases/CommonAreas/Edit';
 import { Router } from 'express';
 import multer from 'multer';
 import os from 'os';
+import { votingCreateController } from '@useCases/Orders/CreateVoting';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -91,5 +92,13 @@ router.put(
     commonAreasEditController.handle(req, res);
   }
 );
+
+//--VOTING
+
+router.post('/condominium/:condominiumID/orders/:orderID/voting', verifyJWT, (req, res) => {
+  votingCreateController.handle(req, res);
+});
+
+
 
 export { router };
