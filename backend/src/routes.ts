@@ -16,6 +16,7 @@ import { Router } from 'express';
 import multer from 'multer';
 import os from 'os';
 import { votingCreateController } from '@useCases/Orders/CreateVoting';
+import { commonAreasGetController } from '@useCases/CommonAreas/Get';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -93,12 +94,18 @@ router.put(
   }
 );
 
-//--VOTING
-
-router.post('/condominium/:condominiumID/orders/:orderID/voting', verifyJWT, (req, res) => {
-  votingCreateController.handle(req, res);
+router.get('/condominium/:condId/commonarea', verifyJWT, (req, res) => {
+  commonAreasGetController.handle(req, res);
 });
 
+//--VOTING
 
+router.post(
+  '/condominium/:condominiumID/orders/:orderID/voting',
+  verifyJWT,
+  (req, res) => {
+    votingCreateController.handle(req, res);
+  }
+);
 
 export { router };

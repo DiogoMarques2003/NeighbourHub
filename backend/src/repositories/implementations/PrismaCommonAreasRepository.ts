@@ -20,7 +20,7 @@ export default class PrismaCommonAreasRepository
   }
 
   countByType(type?: number): Promise<number> {
-    return this.prisma.commonAreas.count({ where: { type } });
+    return this.prisma.commonAreas.count({ where: type ? { type } : {} });
   }
 
   getCommonAreasWithPagination(
@@ -31,11 +31,15 @@ export default class PrismaCommonAreasRepository
     return this.prisma.commonAreas.findMany({
       skip: (pageNumber - 1) * pageSize,
       take: pageSize,
-      where: { type },
+      where: type ? { type } : {},
+      orderBy: { createdAT: 'desc' },
     });
   }
 
   update(commonArea: CommonAreas): Promise<CommonAreas> {
-    return this.prisma.commonAreas.update({ where: { id: commonArea.id }, data: commonArea });
+    return this.prisma.commonAreas.update({
+      where: { id: commonArea.id },
+      data: commonArea,
+    });
   }
 }

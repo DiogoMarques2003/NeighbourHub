@@ -37,12 +37,11 @@ export default class PrismaAddressesRepository implements IAddressesRepository {
       where: { userId, condominiumId: condId },
     });
   }
-  async getAllUsersEmails(condominiumId: string): Promise<string[]> { 
-     const usersEmails = await this.prisma.addresses
-      .findMany({
-        where: { condominiumId },
-        select: { user: { select: { email: true } } },
-      })
-      return usersEmails.map((user) => user.user.email);
+  async getAllUsersEmails(condominiumId: string): Promise<string[]> {
+    const usersEmails = await this.prisma.addresses.findMany({
+      where: { condominiumId },
+      select: { user: { select: { email: true } } },
+    });
+    return [...new Set(usersEmails.map((u) => u.user.email))];
   }
 }
