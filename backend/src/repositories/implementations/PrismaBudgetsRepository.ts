@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import Budgets from '@entities/Budgets';
 import IBudgetsRepository from '@repositories/IBudgetsRepository';
 
@@ -13,7 +13,7 @@ export default class PrismaBudgetsRepository implements IBudgetsRepository {
     return this.prisma.budgets.findUnique({ where: { id } });
   }
 
-  create(budget: Budgets): Promise<Budgets> {
-    return this.prisma.budgets.create({ data: budget });
+  createMany(budgets: Budgets[]): Promise<Prisma.BatchPayload> {
+    return this.prisma.budgets.createMany({ data: budgets });
   }
 }

@@ -9,4 +9,6 @@ export default interface IAddressesRepository {
     pageNumber: number,
     pageSize: number
   ): Promise<Addresses[]>;
+  getByUserAndCond(userId: string, condId: string): Promise<Addresses | null>;
+  getAllUsersEmails(condominiumId: string): Promise<string[]>;
 }

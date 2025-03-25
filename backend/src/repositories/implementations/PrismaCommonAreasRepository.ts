@@ -34,4 +34,8 @@ export default class PrismaCommonAreasRepository
       where: { type },
     });
   }
+
+  update(commonArea: CommonAreas): Promise<CommonAreas> {
+    return this.prisma.commonAreas.update({ where: { id: commonArea.id }, data: commonArea });
+  }
 }

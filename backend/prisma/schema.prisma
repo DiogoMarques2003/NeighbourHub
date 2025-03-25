@@ -147,12 +147,13 @@ model ServiceReviews {
 model Orders {
   id String @id @unique
   description String
-  createdAt DateTime
+  createdAt DateTime @default(now())
   urgency String
   status String
   lastOrder String?
-  startDate DateTime
-  endDate DateTime
+  startDate DateTime?
+  endDate DateTime?
+  votingDeadline DateTime?
   userId String
   condominiumId String
   user Users @relation(fields: [userId], references: [id])
@@ -167,7 +168,7 @@ model Budgets {
   id String @id @unique
   description String
   amount Float
-  createdAt DateTime
+  createdAt DateTime @default(now())
   orderId String
   order Orders @relation(fields: [orderId], references: [id])
 

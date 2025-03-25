@@ -9,4 +9,5 @@ export default interface ICommonAreasRepository {
     pageNumber: number,
     type?: number
   ): Promise<CommonAreas[]>;
+  update(commonArea: CommonAreas): Promise<CommonAreas>;
 }

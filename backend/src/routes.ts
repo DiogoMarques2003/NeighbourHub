@@ -6,16 +6,16 @@ import { condominiumDeleteController } from '@useCases/Condominium/Delete';
 import { userCreateAccountController } from '@useCases/User/CreateAccount';
 import { userGetInfoController } from '@useCases/User/GetInfo';
 import { userLoginAccountController } from '@useCases/User/LoginAccount';
-import { Router } from 'express';
-import multer from 'multer';
-import os from 'os';
 import { addressCreateController } from '@useCases/Addresses/Create';
-import AddressesGetController from '@useCases/Addresses/Get/AddressGetController';
-import { addresGetController } from '@useCases/Addresses/Get';
-import CommonAreasCreateController from '@useCases/CommonAreas/Create/CommonAreasCreateController';
 import { commonAreasCreateController } from '@useCases/CommonAreas/Create';
 import { addressGetByIdController } from '@useCases/Addresses/GetByID';
 import { addressGetController } from '@useCases/Addresses/Get';
+import { ordersCreateController } from '@useCases/Orders/Create';
+import { commonAreasEditController } from '@useCases/CommonAreas/Edit';
+import { Router } from 'express';
+import multer from 'multer';
+import os from 'os';
+import { votingCreateController } from '@useCases/Orders/CreateVoting';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -71,8 +71,34 @@ router.get('/condominium/:condId/address/:id', verifyJWT, (req, res) => {
 });
 
 //---COMMON AREAS
-router.post('/condominium/:id/commonarea', upload.array('images'), verifyJWT, (req, res) => {
-  commonAreasCreateController.handle(req, res);
+router.post(
+  '/condominium/:id/commonarea',
+  upload.array('images'),
+  verifyJWT,
+  (req, res) => {
+    commonAreasCreateController.handle(req, res);
+  }
+);
+
+router.post('/condominium/:condominiumId/orders', verifyJWT, (req, res) => {
+  ordersCreateController.handle(req, res);
 });
+
+router.put(
+  '/condominium/:condominiumId/commonarea/:idCommonArea',
+  upload.array('imagesAdd'),
+  verifyJWT,
+  (req, res) => {
+    commonAreasEditController.handle(req, res);
+  }
+);
+
+//--VOTING
+
+router.post('/condominium/:condominiumID/orders/:orderID/voting', verifyJWT, (req, res) => {
+  votingCreateController.handle(req, res);
+});
+
+
 
 export { router };
