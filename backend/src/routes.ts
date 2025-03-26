@@ -17,6 +17,7 @@ import multer from 'multer';
 import os from 'os';
 import { votingCreateController } from '@useCases/Orders/CreateVoting';
 import { commonAreasGetController } from '@useCases/CommonAreas/Get';
+import { ordersGetController } from '@useCases/Orders/Get';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -83,6 +84,10 @@ router.post(
 
 router.post('/condominium/:condominiumId/orders', verifyJWT, (req, res) => {
   ordersCreateController.handle(req, res);
+});
+
+router.get('/condominium/:condominiumId/orders', verifyJWT, (req, res) => {
+  ordersGetController.handle(req, res);
 });
 
 router.put(
