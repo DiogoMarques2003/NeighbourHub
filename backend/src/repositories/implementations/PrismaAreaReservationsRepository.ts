@@ -21,4 +21,15 @@ export default class PrismaAreaReservationsRepository implements IAreaReservatio
       data: areaReservation,
     });
   }
+  checkReservationDate(startDate: Date, endDate: Date, areaId: string): Promise<AreaReservations> {
+    return this.prisma.areaReservations.findFirst({
+      where: {
+        areaId,
+        OR: [
+          { startDate: { lte: endDate }, endDate: { gte: startDate } },
+          { startDate: { gte: startDate }, endDate: { lte: endDate } },
+        ],
+      },
+    });
+  }
 }

@@ -17,6 +17,7 @@ import multer from 'multer';
 import os from 'os';
 import { votingCreateController } from '@useCases/Orders/CreateVoting';
 import { commonAreasGetController } from '@useCases/CommonAreas/Get';
+import { areaReservationsController } from '@useCases/AreaReservations/Create';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -72,40 +73,32 @@ router.get('/condominium/:condId/address/:id', verifyJWT, (req, res) => {
 });
 
 //---COMMON AREAS
-router.post(
-  '/condominium/:id/commonarea',
-  upload.array('images'),
-  verifyJWT,
-  (req, res) => {
-    commonAreasCreateController.handle(req, res);
-  }
-);
-
-router.post('/condominium/:condominiumId/orders', verifyJWT, (req, res) => {
-  ordersCreateController.handle(req, res);
+router.post('/condominium/:id/commonarea', upload.array('images'), verifyJWT, (req, res) => {
+  commonAreasCreateController.handle(req, res);
 });
 
-router.put(
-  '/condominium/:condominiumId/commonarea/:idCommonArea',
-  upload.array('imagesAdd'),
-  verifyJWT,
-  (req, res) => {
-    commonAreasEditController.handle(req, res);
-  }
-);
+router.put('/condominium/:condominiumId/commonarea/:idCommonArea', upload.array('imagesAdd'), verifyJWT, (req, res) => {
+  commonAreasEditController.handle(req, res);
+});
 
 router.get('/condominium/:condId/commonarea', verifyJWT, (req, res) => {
   commonAreasGetController.handle(req, res);
 });
 
+//--AREA RESERVATION
+router.post('/condominium/:condId/commonarea/:idCommonArea/reservation', verifyJWT, (req, res) => {
+  areaReservationsController.handle(req, res);
+});
+
 //--VOTING
 
-router.post(
-  '/condominium/:condominiumID/orders/:orderID/voting',
-  verifyJWT,
-  (req, res) => {
-    votingCreateController.handle(req, res);
-  }
-);
+router.post('/condominium/:condominiumID/orders/:orderID/voting', verifyJWT, (req, res) => {
+  votingCreateController.handle(req, res);
+});
+
+//--Orders
+router.post('/condominium/:condominiumId/orders', verifyJWT, (req, res) => {
+  ordersCreateController.handle(req, res);
+});
 
 export { router };
