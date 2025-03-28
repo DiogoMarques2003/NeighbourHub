@@ -18,7 +18,26 @@ export default class PrismaVotingsRepository implements IVotingsRepository {
     });
   }
 
-  create(voting: Votings): Promise<Votings> {
-    return this.prisma.votings.create({ data: voting });
+  upsert(voting: Votings): Promise<Votings> {
+    return this.prisma.votings.upsert({
+      where: {
+         userID_orderID: {
+          userID: voting.userID,
+          orderID: voting.orderID
+         }
+      },
+      update: {
+        decision: voting.decision,
+        budgetID: voting.budgetID
+      },
+      create: {
+        decision: voting.decision,
+        userID: voting.userID,
+        orderID: voting.orderID,
+        budgetID: voting.budgetID
+      }
+    })
   }
+
+
 }

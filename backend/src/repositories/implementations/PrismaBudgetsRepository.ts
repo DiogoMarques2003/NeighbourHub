@@ -13,6 +13,10 @@ export default class PrismaBudgetsRepository implements IBudgetsRepository {
     return this.prisma.budgets.findUnique({ where: { id } });
   }
 
+  countByOrderID(id: string): Promise<number> {
+    return this.prisma.budgets.count({ where: { orderId: id} })
+  }
+
   createMany(budgets: Budgets[]): Promise<Prisma.BatchPayload> {
     return this.prisma.budgets.createMany({ data: budgets });
   }
