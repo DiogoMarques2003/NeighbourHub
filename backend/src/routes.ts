@@ -20,6 +20,7 @@ import { voteCreateController } from '@useCases/Orders/CreateVote';
 import { commonAreasGetController } from '@useCases/CommonAreas/Get';
 import { ordersGetController } from '@useCases/Orders/Get';
 import { areaReservationsController } from '@useCases/AreaReservations/Create';
+import { addressEditController } from '@useCases/Addresses/Edit';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -62,6 +63,8 @@ router.delete('/condominium/:condominiumID', verifyJWT, (req, res) => {
   condominiumDeleteController.handle(req, res);
 });
 
+//---ADDRESSS
+
 router.post('/condominium/:condominiumId/address', verifyJWT, (req, res) => {
   addressCreateController.handle(req, res);
 });
@@ -72,6 +75,10 @@ router.get('/condominium/:condId/address', verifyJWT, (req, res) => {
 
 router.get('/condominium/:condId/address/:id', verifyJWT, (req, res) => {
   addressGetByIdController.handle(req, res);
+});
+
+router.put('/condominium/:condominiumId/address/:addressId', verifyJWT, (req, res) => {
+  addressEditController.handle(req, res);
 });
 
 //---COMMON AREAS
