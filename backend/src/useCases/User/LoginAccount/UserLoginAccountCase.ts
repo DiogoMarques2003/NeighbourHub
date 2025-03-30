@@ -2,7 +2,6 @@ import IUsersRepository from '@repositories/IUsersRepository';
 import IUserLoginAccountDTO from './IUserLoginAccountDTO';
 import AppError from '@errors/AppError';
 import bcrypt from 'bcryptjs';
-import Users from '@entities/Users';
 import generateToken from '@shared/generateToken';
 
 export default class UserLoginAccountCase {
