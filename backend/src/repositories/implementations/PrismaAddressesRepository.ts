@@ -44,4 +44,10 @@ export default class PrismaAddressesRepository implements IAddressesRepository {
     });
     return [...new Set(usersEmails.map((u) => u.user.email))];
   }
+  update(address: Addresses): Promise<Addresses> {
+    return this.prisma.addresses.update({
+      where: { id: address.id },
+      data: address,
+    });
+  }
 }
