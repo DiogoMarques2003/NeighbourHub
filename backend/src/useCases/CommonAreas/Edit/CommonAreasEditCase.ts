@@ -72,10 +72,10 @@ export default class CommonAreasEditCase {
       for (const imageRemove of imagesRemove) {
         if (existsSync(imageRemove)) {
           unlinkSync(path.resolve(COMMON_AREAS_PATH, imageRemove));
-          commonAreaDb.images = commonAreaDb.images.filter(
-            (image) => image.split('/').pop() !== imageRemove
-          );
         }
+        commonAreaDb.images = commonAreaDb.images.filter(
+          (image) => image.split('/').pop() !== imageRemove
+        );
       }
     }
 
