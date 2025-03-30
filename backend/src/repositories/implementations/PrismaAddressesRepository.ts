@@ -11,11 +11,7 @@ export default class PrismaAddressesRepository implements IAddressesRepository {
   countByCondID(condId: string): Promise<number> {
     return this.prisma.addresses.count({ where: { condominiumId: condId } });
   }
-  getCondAddressWithPagination(
-    condId: string,
-    pageNumber: number,
-    pageSize: number
-  ): Promise<Addresses[]> {
+  getCondAddressWithPagination(condId: string, pageNumber: number, pageSize: number): Promise<Addresses[]> {
     return this.prisma.addresses.findMany({
       skip: (pageNumber - 1) * pageSize,
       take: pageSize,
@@ -37,11 +33,40 @@ export default class PrismaAddressesRepository implements IAddressesRepository {
       where: { userId, condominiumId: condId },
     });
   }
+
   async getAllUsersEmails(condominiumId: string): Promise<string[]> {
     const usersEmails = await this.prisma.addresses.findMany({
       where: { condominiumId },
       select: { user: { select: { email: true } } },
     });
     return [...new Set(usersEmails.map((u) => u.user.email))];
+  }
+
+  async getByUserId(userId: string): Promise<CondominiumGetByUserResponse[]> {
+    const data = await this.prisma.addresses.findMany({
+      where: { userId },
+      select: {
+        country: true,
+        city: true,
+        postalCode: true,
+        condominium: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            phoneNumber: true,
+          },
+        },
+      },
+    });
+
+    return data.map((address) => {
+      const { condominium, ...addressData } = address;
+      return {
+        ...addressData,
+        condominiumId: condominium.id,
+        ...condominium,
+      };
+    });
   }
 }

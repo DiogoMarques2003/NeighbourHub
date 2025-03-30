@@ -33,4 +33,32 @@ export default class PrismaCondominiumsRepository
       data: condominium,
     });
   }
+
+  async getByAdminId(adminId: string): Promise<CondominiumGetByUserResponse[]> {
+    const data = await this.prisma.condominiums.findMany({
+      where: { adminId },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        phoneNumber: true,
+        Addresses: {
+          select: {
+            country: true,
+            city: true,
+            postalCode: true,
+          },
+        },
+      },
+    });
+
+    return data.map((condominium) => {
+      const { Addresses, id, ...condominiumData } = condominium;
+      return {
+        condominiumId: id,
+        ...condominiumData,
+        ...Addresses.shift(),
+      };
+    });
+  }
 }
