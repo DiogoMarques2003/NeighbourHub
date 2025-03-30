@@ -28,5 +28,12 @@ export default class AreaReservationsVerifications {
     data.endDate = new Date(endDate);
 
     if (data.startDate >= data.endDate) throw new AppError('Data inválida', 400);
+
+    if (
+      data.startDate.getFullYear() !== data.endDate.getFullYear() ||
+      data.startDate.getMonth() !== data.endDate.getMonth() ||
+      data.startDate.getDate() !== data.endDate.getDate()
+    )
+      throw new AppError('Reserva possui mais de um dia', 400);
   }
 }

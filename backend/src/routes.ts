@@ -23,6 +23,7 @@ import { areaReservationsController } from '@useCases/AreaReservations/Create';
 import { addressEditController } from '@useCases/Addresses/Edit';
 import { condominiumGetByUserController } from '@useCases/Condominium/GetByUser';
 import { userEditController } from '@useCases/User/Edit';
+import { servicesCreateController } from '@useCases/Services/Create';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -110,6 +111,12 @@ router.get('/condominium/:condId/commonarea', verifyJWT, (req, res) => {
 //--AREA RESERVATION
 router.post('/condominium/:condId/commonarea/:idCommonArea/reservation', verifyJWT, (req, res) => {
   areaReservationsController.handle(req, res);
+});
+
+//--SERVICES
+
+router.post('/condominium/:condId/services', verifyJWT, (req, res) => {
+  servicesCreateController.handle(req, res);
 });
 
 //--VOTING
