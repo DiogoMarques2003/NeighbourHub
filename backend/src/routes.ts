@@ -22,17 +22,22 @@ import { ordersGetController } from '@useCases/Orders/Get';
 import { areaReservationsController } from '@useCases/AreaReservations/Create';
 import { addressEditController } from '@useCases/Addresses/Edit';
 import { condominiumGetByUserController } from '@useCases/Condominium/GetByUser';
+import { userEditController } from '@useCases/User/Edit';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
 
-//---LOGIN
+//---USER
 router.post('/register', upload.single('foto'), (req, res) => {
   userCreateAccountController.handle(req, res);
 });
 
 router.post('/login', (req, res) => {
   userLoginAccountController.handle(req, res);
+});
+
+router.put('/user', verifyJWT, upload.single('foto'), (req, res) => {
+  userEditController.handle(req, res);
 });
 
 router.get('/@me', verifyJWT, (req, res) => {
