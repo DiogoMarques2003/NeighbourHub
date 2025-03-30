@@ -12,4 +12,5 @@ export default interface IAddressesRepository {
   getByUserAndCond(userId: string, condId: string): Promise<Addresses | null>;
   getAllUsersEmails(condominiumId: string): Promise<string[]>;
   update(address: Addresses): Promise<Addresses>;
+  getByUserId(userId: string): Promise<CondominiumGetByUserResponse[]>;
 }

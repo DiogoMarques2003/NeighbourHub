@@ -1,5 +1,4 @@
 import { isValidUUID } from '@shared/verifications';
-import ICondominiumCreateDTO from '../Create/ICondominiumCreateDTO';
 import ICondominiumGetDTO from './ICondominiumGetDTO';
 import AppError from '@errors/AppError';
 
