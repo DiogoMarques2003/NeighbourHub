@@ -1,6 +1,7 @@
 import Services from '@entities/Services';
 import { PrismaClient } from '@prisma/client';
 import IServicesRepository from '@repositories/IServicesRepository';
+import ServicesWithUserData from 'src/@types/ServicesWithUserData';
 
 export default class PrismaServicesRepository implements IServicesRepository {
   private readonly prisma: PrismaClient;
@@ -15,6 +16,28 @@ export default class PrismaServicesRepository implements IServicesRepository {
 
   findByCond(condId: string): Promise<Services[]> {
     return this.prisma.services.findMany({ where: { condominiumId: condId } });
+  }
+
+  findByIdWithUserData(id: string): Promise<ServicesWithUserData | null> {
+    return this.prisma.services.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        cost: true,
+        condominiumId: true,
+        createdAt: true,
+        owner: {
+          select: {
+            id: true,
+            email: true,
+            phoneNumber: true,
+            foto: true,
+          },
+        },
+      },
+    });
   }
 
   countByCondId(condId: string): Promise<number> {
