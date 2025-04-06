@@ -8,15 +8,61 @@ export default class PrismaAddressesRepository implements IAddressesRepository {
   constructor() {
     this.prisma = new PrismaClient();
   }
+
   countByCondID(condId: string): Promise<number> {
     return this.prisma.addresses.count({ where: { condominiumId: condId } });
   }
-  getCondAddressWithPagination(condId: string, pageNumber: number, pageSize: number): Promise<Addresses[]> {
+
+  findByIdWithUser(id: string): Promise<AddressesWithUserData | null> {
+    return this.prisma.addresses.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        country: true,
+        city: true,
+        street: true,
+        houseNumber: true,
+        postalCode: true,
+        houseType: true,
+        createdAT: true,
+        condominiumId: true,
+        user: {
+          select: {
+            id: true,
+            email: true,
+            phoneNumber: true,
+            foto: true,
+          }
+        }
+      }
+    });
+  }
+
+  getCondAddressWithPagination(condId: string, pageNumber: number, pageSize: number): Promise<AddressesWithUserData[]> {
     return this.prisma.addresses.findMany({
       skip: (pageNumber - 1) * pageSize,
       take: pageSize,
       where: { condominiumId: condId },
       orderBy: { createdAT: 'desc' },
+      select: {
+        id: true,
+        country: true,
+        city: true,
+        street: true,
+        houseNumber: true,
+        postalCode: true,
+        houseType: true,
+        createdAT: true,
+        condominiumId: true,
+        user: {
+          select: {
+            id: true,
+            email: true,
+            phoneNumber: true,
+            foto: true,
+          }
+        }
+      }
     });
   }
 

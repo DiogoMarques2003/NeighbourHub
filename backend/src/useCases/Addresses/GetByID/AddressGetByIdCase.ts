@@ -3,6 +3,7 @@ import ICondominiumsRepository from '@repositories/ICondominiumsRepository';
 import IAddressGetByIdDTO from './IAdressGetByIdDTO';
 import AppError from '@errors/AppError';
 import { Addresses } from '@prisma/client';
+import generatePathToFile from '@shared/generatePathToFile';
 
 export default class AddressGetByIdCase {
   constructor(
@@ -10,7 +11,7 @@ export default class AddressGetByIdCase {
     private condominiumRepository: ICondominiumsRepository
   ) {}
 
-  async execute(data: IAddressGetByIdDTO): Promise<Addresses> {
+  async execute(data: IAddressGetByIdDTO): Promise<AddressesWithUserData> {
     const { id, userId, condId } = data;
 
     const condDb = await this.condominiumRepository.findById(condId);
@@ -18,7 +19,9 @@ export default class AddressGetByIdCase {
 
     if (userId !== condDb.adminId) throw new AppError('Sem permissão', 401);
 
-    const address = await this.addressRepository.findById(id);
+    const address = await this.addressRepository.findByIdWithUser(id);
+
+    if (address.user.foto) address.user.foto = generatePathToFile(address.user.foto);
 
     return address;
   }
