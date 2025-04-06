@@ -1,6 +1,7 @@
 import Orders from '@entities/Orders';
 import { Prisma, PrismaClient } from '@prisma/client';
 import IOrdersRepository from '@repositories/IOrdersRepository';
+import OrdersWithUserData from 'src/@types/OrdersWithUserData';
 
 export default class PrismaOrdersRepository implements IOrdersRepository {
   private readonly prisma: PrismaClient;
@@ -11,6 +12,32 @@ export default class PrismaOrdersRepository implements IOrdersRepository {
 
   findById(id: string): Promise<Orders | null> {
     return this.prisma.orders.findUnique({ where: { id } });
+  }
+
+  findByIdWithUserData(id: string): Promise<OrdersWithUserData | null> {
+    return this.prisma.orders.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        description: true,
+        createdAt: true,
+        urgency: true,
+        status: true,
+        lastOrder: true,
+        startDate: true,
+        endDate: true,
+        votingDeadline: true,
+        condominiumId: true,
+        user: {
+          select: {
+            id: true,
+            email: true,
+            phoneNumber: true,
+            foto: true,
+          }
+        }
+      }
+    });
   }
 
   create(order: Orders): Promise<Orders> {
@@ -25,11 +52,7 @@ export default class PrismaOrdersRepository implements IOrdersRepository {
     return this.prisma.orders.count({ where: filters });
   }
 
-  getWithPagination(
-    pageSize: number,
-    pageNumber: number,
-    filters?: Prisma.OrdersWhereInput
-  ): Promise<Orders[]> {
+  getWithPagination(pageSize: number, pageNumber: number, filters?: Prisma.OrdersWhereInput): Promise<Orders[]> {
     return this.prisma.orders.findMany({
       skip: (pageNumber - 1) * pageSize,
       take: pageSize,

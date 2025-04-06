@@ -21,13 +21,9 @@ export default class CondominiumDeleteController {
       this.condominiumDeleteVerifications.execute(requestData);
       const isDeleted = await this.condominiumDeleteCase.execute(requestData);
 
-      res
-        .status(200)
-        .json({
-          message: isDeleted
-            ? 'Condominio removido com sucesso.'
-            : 'Não foi possível apagar o condomínio.',
-        });
+      res.status(isDeleted ? 200 : 500).json({
+        message: isDeleted ? 'Condominio removido com sucesso.' : 'Não foi possível apagar o condomínio.',
+      });
     } catch (err) {
       errorHandler(err, res);
     }

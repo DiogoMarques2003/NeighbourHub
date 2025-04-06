@@ -1,8 +1,8 @@
 import IAddressesRepository from '@repositories/IAddressesRepository';
 import ICondominiumsRepository from '@repositories/ICondominiumsRepository';
 import IAddressGetDTO from './IAddressesGetDTO';
-import { Addresses } from '@prisma/client';
 import AppError from '@errors/AppError';
+import generatePathToFile from '@shared/generatePathToFile';
 
 export default class AddressGetCase {
   constructor(
@@ -10,7 +10,7 @@ export default class AddressGetCase {
     private condominiumRepository: ICondominiumsRepository
   ) {}
 
-  async execute(data: IAddressGetDTO): Promise<DataPagination<Addresses[]>> {
+  async execute(data: IAddressGetDTO): Promise<DataPagination<AddressesWithUserData[]>> {
     const { userId, condId, pageSize, pageNumber } = data;
 
     const condDb = await this.condominiumRepository.findById(condId);
@@ -24,11 +24,12 @@ export default class AddressGetCase {
     const pages = Math.ceil(count / pageSize);
     if (pageNumber > pages) throw new AppError('Página inválida', 404);
 
-    const addresses = await this.addressRepository.getCondAddressWithPagination(
-      condId,
-      pageNumber,
-      pageSize
-    );
+    const addresses = await this.addressRepository.getCondAddressWithPagination(condId, pageNumber, pageSize);
+
+    for (const address of addresses) {
+      if (address.user.foto) address.user.foto = generatePathToFile(address.user.foto);
+      else delete address.user.foto;
+    }
 
     return { data: addresses, pages, actualPage: pageNumber, nRecords: count };
   }
