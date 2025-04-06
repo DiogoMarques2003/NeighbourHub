@@ -7,8 +7,9 @@ export default class Services {
   public cost?: number;
   public ownerId: string;
   public condominiumId: string;
+  public readonly createdAt: Date;
 
-  constructor(props: Omit<Services, 'id'>, id?: string) {
+  constructor(props: Omit<Services, 'id' | 'createdAt'>, id?: string) {
     Object.assign(this, props);
 
     if (!id) {

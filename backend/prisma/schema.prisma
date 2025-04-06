@@ -117,6 +117,7 @@ model Services {
   cost Float?
   ownerId String
   condominiumId String
+  createdAt DateTime @default(now())
   owner Users @relation(fields: [ownerId], references: [id])
   condominium Condominiums @relation(fields: [condominiumId], references: [id])
 
