@@ -13,6 +13,23 @@ export default class PrismaServicesRepository implements IServicesRepository {
     return this.prisma.services.findUnique({ where: { id } });
   }
 
+  findByCond(condId: string): Promise<Services[]> {
+    return this.prisma.services.findMany({ where: { condominiumId: condId } });
+  }
+
+  countByCondId(condId: string): Promise<number> {
+    return this.prisma.services.count({ where: { condominiumId: condId } });
+  }
+
+  getWithPagination(pageSize: number, pageNumber: number, condId: string): Promise<Services[]> {
+    return this.prisma.services.findMany({
+      skip: (pageNumber - 1) * pageSize,
+      take: pageSize,
+      where: { condominiumId: condId },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
   create(service: Services): Promise<Services> {
     return this.prisma.services.create({ data: service });
   }

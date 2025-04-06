@@ -25,6 +25,7 @@ import { condominiumGetByUserController } from '@useCases/Condominium/GetByUser'
 import { userEditController } from '@useCases/User/Edit';
 import { servicesCreateController } from '@useCases/Services/Create';
 import { ordersGetByIdController } from '@useCases/Orders/GetById';
+import { servicesGetAllController } from '@useCases/Services/GetAll';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -115,6 +116,10 @@ router.post('/condominium/:condId/commonarea/:idCommonArea/reservation', verifyJ
 
 router.post('/condominium/:condId/services', verifyJWT, (req, res) => {
   servicesCreateController.handle(req, res);
+});
+
+router.get('/condominium/:condId/services', verifyJWT, (req, res) => {
+  servicesGetAllController.handle(req, res);
 });
 
 //--VOTING
