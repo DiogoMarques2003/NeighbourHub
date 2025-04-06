@@ -26,6 +26,7 @@ import { userEditController } from '@useCases/User/Edit';
 import { servicesCreateController } from '@useCases/Services/Create';
 import { ordersGetByIdController } from '@useCases/Orders/GetById';
 import { servicesGetAllController } from '@useCases/Services/GetAll';
+import { servicesGetByIdController } from '@useCases/Services/GetByID';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -120,6 +121,10 @@ router.post('/condominium/:condId/services', verifyJWT, (req, res) => {
 
 router.get('/condominium/:condId/services', verifyJWT, (req, res) => {
   servicesGetAllController.handle(req, res);
+});
+
+router.get('/condominium/:condId/services/:serviceId', verifyJWT, (req, res) => {
+  servicesGetByIdController.handle(req, res);
 });
 
 //--VOTING
