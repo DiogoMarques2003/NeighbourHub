@@ -24,6 +24,7 @@ import { addressEditController } from '@useCases/Addresses/Edit';
 import { condominiumGetByUserController } from '@useCases/Condominium/GetByUser';
 import { userEditController } from '@useCases/User/Edit';
 import { servicesCreateController } from '@useCases/Services/Create';
+import { ordersGetByIdController } from '@useCases/Orders/GetById';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -97,9 +98,6 @@ router.post('/condominium/:id/commonarea', upload.array('images'), verifyJWT, (r
   commonAreasCreateController.handle(req, res);
 });
 
-router.get('/condominium/:condominiumId/orders', verifyJWT, (req, res) => {
-  ordersGetController.handle(req, res);
-});
 router.put('/condominium/:condominiumId/commonarea/:idCommonArea', upload.array('imagesAdd'), verifyJWT, (req, res) => {
   commonAreasEditController.handle(req, res);
 });
@@ -132,6 +130,14 @@ router.post('/condominium/:condominiumID/orders/:orderID/vote', verifyJWT, (req,
 //--Orders
 router.post('/condominium/:condominiumId/orders', verifyJWT, (req, res) => {
   ordersCreateController.handle(req, res);
+});
+
+router.get('/condominium/:condominiumId/orders', verifyJWT, (req, res) => {
+  ordersGetController.handle(req, res);
+});
+
+router.get('/condominium/:condominiumId/orders/:orderId', verifyJWT, (req, res) => {
+  ordersGetByIdController.handle(req, res);
 });
 
 export { router };

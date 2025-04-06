@@ -27,9 +27,8 @@ export default class AddressGetCase {
     const addresses = await this.addressRepository.getCondAddressWithPagination(condId, pageNumber, pageSize);
 
     for (const address of addresses) {
-      if (address.user.foto) {
-        address.user.foto = generatePathToFile(address.user.foto);
-      }
+      if (address.user.foto) address.user.foto = generatePathToFile(address.user.foto);
+      else delete address.user.foto;
     }
 
     return { data: addresses, pages, actualPage: pageNumber, nRecords: count };

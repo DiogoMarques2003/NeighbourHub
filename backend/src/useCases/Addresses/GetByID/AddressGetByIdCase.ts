@@ -2,7 +2,6 @@ import IAddressesRepository from '@repositories/IAddressesRepository';
 import ICondominiumsRepository from '@repositories/ICondominiumsRepository';
 import IAddressGetByIdDTO from './IAdressGetByIdDTO';
 import AppError from '@errors/AppError';
-import { Addresses } from '@prisma/client';
 import generatePathToFile from '@shared/generatePathToFile';
 
 export default class AddressGetByIdCase {
@@ -22,6 +21,7 @@ export default class AddressGetByIdCase {
     const address = await this.addressRepository.findByIdWithUser(id);
 
     if (address.user.foto) address.user.foto = generatePathToFile(address.user.foto);
+    else delete address.user.foto;
 
     return address;
   }
