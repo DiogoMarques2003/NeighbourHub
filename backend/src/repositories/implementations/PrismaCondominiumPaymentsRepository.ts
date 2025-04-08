@@ -1,5 +1,5 @@
 import CondominiumPayments from '@entities/CondominiumPayments';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prismaClient/client';
 import ICondominiumPaymentsRepository from '@repositories/ICondominiumPaymentsRepository';
 
 export default class PrismaCondominiumPaymentsRepository implements ICondominiumPaymentsRepository {

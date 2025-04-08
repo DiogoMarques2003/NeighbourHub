@@ -1,5 +1,5 @@
 import ServiceReviews from '@entities/ServiceReviews';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prismaClient/client';
 import IServiceReviewsRepository from '@repositories/IServiceReviewsRepository';
 
 export default class PrismaServiceReviewsRepository implements IServiceReviewsRepository {

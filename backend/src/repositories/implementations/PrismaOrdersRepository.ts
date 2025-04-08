@@ -1,5 +1,5 @@
 import Orders from '@entities/Orders';
-import { Prisma, PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prismaClient/client';
 import IOrdersRepository from '@repositories/IOrdersRepository';
 import OrdersWithUserData from 'src/@types/OrdersWithUserData';
 
@@ -34,9 +34,9 @@ export default class PrismaOrdersRepository implements IOrdersRepository {
             email: true,
             phoneNumber: true,
             foto: true,
-          }
-        }
-      }
+          },
+        },
+      },
     });
   }
 

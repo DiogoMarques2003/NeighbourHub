@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prismaClient/client';
 import AreaReservations from '@entities/AreaReservations';
 import IAreaReservationsRepository from '@repositories/IAreaReservationsRepository';
 

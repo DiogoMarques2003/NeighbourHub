@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prismaClient/client';
 import Budgets from '@entities/Budgets';
 import IBudgetsRepository from '@repositories/IBudgetsRepository';
 
@@ -14,7 +14,7 @@ export default class PrismaBudgetsRepository implements IBudgetsRepository {
   }
 
   countByOrderID(id: string): Promise<number> {
-    return this.prisma.budgets.count({ where: { orderId: id} })
+    return this.prisma.budgets.count({ where: { orderId: id } });
   }
 
   createMany(budgets: Budgets[]): Promise<Prisma.BatchPayload> {

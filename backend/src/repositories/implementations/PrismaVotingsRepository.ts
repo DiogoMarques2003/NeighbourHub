@@ -1,5 +1,5 @@
 import Votings from '@entities/Votings';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prismaClient/client';
 import IVotingsRepository from '@repositories/IVotingsRepository';
 
 export default class PrismaVotingsRepository implements IVotingsRepository {
@@ -21,23 +21,21 @@ export default class PrismaVotingsRepository implements IVotingsRepository {
   upsert(voting: Votings): Promise<Votings> {
     return this.prisma.votings.upsert({
       where: {
-         userID_orderID: {
+        userID_orderID: {
           userID: voting.userID,
-          orderID: voting.orderID
-         }
+          orderID: voting.orderID,
+        },
       },
       update: {
         decision: voting.decision,
-        budgetID: voting.budgetID
+        budgetID: voting.budgetID,
       },
       create: {
         decision: voting.decision,
         userID: voting.userID,
         orderID: voting.orderID,
-        budgetID: voting.budgetID
-      }
-    })
+        budgetID: voting.budgetID,
+      },
+    });
   }
-
-
 }

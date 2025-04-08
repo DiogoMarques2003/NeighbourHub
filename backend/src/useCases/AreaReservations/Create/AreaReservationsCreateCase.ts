@@ -4,7 +4,6 @@ import IAreaReservationsDTO from './AreaReservationsCreateDTO';
 import AppError from '@errors/AppError';
 import IAddressesRepository from '@repositories/IAddressesRepository';
 import IAreaReservationsRepository from '@repositories/IAreaReservationsRepository';
-import { error } from 'console';
 import stringToHours from '@shared/convertStringToHours';
 import AreaReservations from '@entities/AreaReservations';
 import { STATUS_RESERV_PENDING } from '@constants/status';

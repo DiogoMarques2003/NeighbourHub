@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prismaClient/client';
 import Addresses from '@entities/Addresses';
 import IAddressesRepository from '@repositories/IAddressesRepository';
 
@@ -32,9 +32,9 @@ export default class PrismaAddressesRepository implements IAddressesRepository {
             email: true,
             phoneNumber: true,
             foto: true,
-          }
-        }
-      }
+          },
+        },
+      },
     });
   }
 
@@ -60,9 +60,9 @@ export default class PrismaAddressesRepository implements IAddressesRepository {
             email: true,
             phoneNumber: true,
             foto: true,
-          }
-        }
-      }
+          },
+        },
+      },
     });
   }
 

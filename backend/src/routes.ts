@@ -27,6 +27,7 @@ import { servicesCreateController } from '@useCases/Services/Create';
 import { ordersGetByIdController } from '@useCases/Orders/GetById';
 import { servicesGetAllController } from '@useCases/Services/GetAll';
 import { servicesGetByIdController } from '@useCases/Services/GetByID';
+import { condominiumPaymentsCreateController } from '@useCases/CondominiumPayments/Create';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -55,14 +56,6 @@ router.post('/condominium', verifyJWT, (req, res) => {
 
 router.get('/condominium', verifyJWT, (req, res) => {
   condominiumGetByUserController.handle(req, res);
-});
-
-router.get('/condominium/:id', verifyJWT, (req, res) => {
-  condominiumGetController.handle(req, res);
-});
-
-router.get('/condominium/:id', verifyJWT, (req, res) => {
-  condominiumGetController.handle(req, res);
 });
 
 router.put('/condominium/:idCondominium', verifyJWT, (req, res) => {
@@ -148,6 +141,11 @@ router.get('/condominium/:condominiumId/orders', verifyJWT, (req, res) => {
 
 router.get('/condominium/:condominiumId/orders/:orderId', verifyJWT, (req, res) => {
   ordersGetByIdController.handle(req, res);
+});
+
+//--Payments
+router.post('/condominium/:condominiumId/payments', verifyJWT, (req, res) => {
+  condominiumPaymentsCreateController.handle(req, res);
 });
 
 export { router };
