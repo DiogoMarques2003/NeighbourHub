@@ -2,7 +2,7 @@ import { isValidUUID } from '@shared/verifications';
 import ICondominiumPaymentsCreateDTO from './ICondominiumPaymentsCreateDTO';
 import AppError from '@errors/AppError';
 
-export default class CondominiumPaymentsVerifications {
+export default class CondominiumPaymentsCreateVerifications {
   execute(data: ICondominiumPaymentsCreateDTO) {
     const { addressId, areaReservationId, condominiumId, paymentType, value, date } = data;
 

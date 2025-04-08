@@ -16,4 +16,15 @@ export default class PrismaCondominiumPaymentsRepository implements ICondominium
   create(condominiumPayment: CondominiumPayments): Promise<CondominiumPayments> {
     return this.prisma.condominiumPayments.create({ data: condominiumPayment });
   }
+
+  update(condominiumPayment: CondominiumPayments): Promise<CondominiumPayments> {
+    return this.prisma.condominiumPayments.update({
+      where: { id: condominiumPayment.id },
+      data: condominiumPayment,
+    });
+  }
+
+  async delete(id: string): Promise<Boolean> {
+    return !!(await this.prisma.condominiumPayments.delete({ where: { id } }));
+  }
 }
