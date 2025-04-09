@@ -1,5 +1,5 @@
 import Services from '@entities/Services';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prismaClient/client';
 import IServicesRepository from '@repositories/IServicesRepository';
 import ServicesWithUserData from 'src/@types/ServicesWithUserData';
 

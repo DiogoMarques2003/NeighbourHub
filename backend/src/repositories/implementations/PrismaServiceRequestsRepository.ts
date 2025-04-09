@@ -1,5 +1,5 @@
 import ServiceRequests from '@entities/ServiceRequests';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prismaClient/client';
 import IServiceRequestsRepository from '@repositories/IServiceRequestsRepository';
 
 export default class PrismaServiceRequestsRepository implements IServiceRequestsRepository {

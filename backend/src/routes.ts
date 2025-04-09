@@ -27,6 +27,11 @@ import { servicesCreateController } from '@useCases/Services/Create';
 import { ordersGetByIdController } from '@useCases/Orders/GetById';
 import { servicesGetAllController } from '@useCases/Services/GetAll';
 import { servicesGetByIdController } from '@useCases/Services/GetByID';
+import { condominiumPaymentsCreateController } from '@useCases/CondominiumPayments/Create';
+import { condominiumPaymentsEditController } from '@useCases/CondominiumPayments/Edit';
+import { condominiumPaymentsDeleteController } from '@useCases/CondominiumPayments/Delete';
+import { condominiumPaymentsGetByIdController } from '@useCases/CondominiumPayments/GetById';
+import { condominiumPaymentsGetController } from '@useCases/CondominiumPayments/Get';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -55,14 +60,6 @@ router.post('/condominium', verifyJWT, (req, res) => {
 
 router.get('/condominium', verifyJWT, (req, res) => {
   condominiumGetByUserController.handle(req, res);
-});
-
-router.get('/condominium/:id', verifyJWT, (req, res) => {
-  condominiumGetController.handle(req, res);
-});
-
-router.get('/condominium/:id', verifyJWT, (req, res) => {
-  condominiumGetController.handle(req, res);
 });
 
 router.put('/condominium/:idCondominium', verifyJWT, (req, res) => {
@@ -148,6 +145,27 @@ router.get('/condominium/:condominiumId/orders', verifyJWT, (req, res) => {
 
 router.get('/condominium/:condominiumId/orders/:orderId', verifyJWT, (req, res) => {
   ordersGetByIdController.handle(req, res);
+});
+
+//--Payments
+router.post('/condominium/:condominiumId/payments', verifyJWT, (req, res) => {
+  condominiumPaymentsCreateController.handle(req, res);
+});
+
+router.put('/condominium/:condominiumId/payments/:condominiumPaymentId', verifyJWT, (req, res) => {
+  condominiumPaymentsEditController.handle(req, res);
+});
+
+router.delete('/condominium/:condominiumId/payments/:condominiumPaymentId', verifyJWT, (req, res) => {
+  condominiumPaymentsDeleteController.handle(req, res);
+});
+
+router.get('/condominium/:condominiumId/payments/:condominiumPaymentId', verifyJWT, (req, res) => {
+  condominiumPaymentsGetByIdController.handle(req, res);
+});
+
+router.get('/condominium/:condominiumId/payments', verifyJWT, (req, res) => {
+  condominiumPaymentsGetController.handle(req, res);
 });
 
 export { router };

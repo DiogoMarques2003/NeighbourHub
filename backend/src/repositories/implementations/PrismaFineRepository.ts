@@ -1,5 +1,5 @@
 import Fine from '@entities/Fine';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prismaClient/client';
 import IFineRepository from '@repositories/IFineRepository';
 
 export default class PrismaFineRepository implements IFineRepository {

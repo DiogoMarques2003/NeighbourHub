@@ -1,5 +1,5 @@
 import OrderWorks from '@entities/OrderWorks';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prismaClient/client';
 import IOrderWorksRepository from '@repositories/IOrderWorksRepository';
 
 export default class PrismaOrderWorksRepository implements IOrderWorksRepository {

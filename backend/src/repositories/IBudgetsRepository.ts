@@ -1,5 +1,5 @@
 import Budgets from '@entities/Budgets';
-import { Prisma } from '@prisma/client';
+import { Prisma } from '@prismaClient/client';
 
 export default interface IBudgetsRepository {
   findById(id: string): Promise<Budgets | null>;

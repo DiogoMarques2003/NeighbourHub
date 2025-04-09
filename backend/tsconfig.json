@@ -28,6 +28,7 @@
         "@useCases/*": ["./src/useCases/*"],
         "@shared/*": ["./src/shared/*"],
         "@constants/*": ["./src/constants/*"],
+        "@prismaClient/*": ["./src/prisma-client/*"],
       }
     },
     "include": [

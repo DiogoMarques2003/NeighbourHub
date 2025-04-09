@@ -1,5 +1,5 @@
 import Orders from '@entities/Orders';
-import { Prisma } from '@prisma/client';
+import { Prisma } from '@prismaClient/client';
 import OrdersWithUserData from 'src/@types/OrdersWithUserData';
 
 export default interface IOrdersRepository {

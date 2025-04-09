@@ -1,10 +1,8 @@
 import Condominiums from '@entities/Condominiums';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prismaClient/client';
 import ICondominiumsRepository from '@repositories/ICondominiumsRepository';
 
-export default class PrismaCondominiumsRepository
-  implements ICondominiumsRepository
-{
+export default class PrismaCondominiumsRepository implements ICondominiumsRepository {
   private readonly prisma: PrismaClient;
 
   constructor() {

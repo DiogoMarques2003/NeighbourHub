@@ -1,5 +1,5 @@
 import Users from '@entities/Users';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prismaClient/client';
 import IUsersRepository from '@repositories/IUsersRepository';
 
 export default class PrismaUsersRepository implements IUsersRepository {
@@ -20,7 +20,7 @@ export default class PrismaUsersRepository implements IUsersRepository {
   create(user: Users): Promise<Users> {
     return this.prisma.users.create({ data: user });
   }
-  
+
   update(user: Users): Promise<Users> {
     return this.prisma.users.update({ where: { id: user.id }, data: user });
   }

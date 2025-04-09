@@ -1,10 +1,8 @@
 import CommonAreas from '@entities/CommonAreas';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prismaClient/client';
 import ICommonAreasRepository from '@repositories/ICommonAreasRepository';
 
-export default class PrismaCommonAreasRepository
-  implements ICommonAreasRepository
-{
+export default class PrismaCommonAreasRepository implements ICommonAreasRepository {
   private readonly prisma: PrismaClient;
 
   constructor() {
@@ -23,11 +21,7 @@ export default class PrismaCommonAreasRepository
     return this.prisma.commonAreas.count({ where: type ? { type } : {} });
   }
 
-  getCommonAreasWithPagination(
-    pageNumber: number,
-    pageSize: number,
-    type?: number
-  ): Promise<CommonAreas[]> {
+  getCommonAreasWithPagination(pageNumber: number, pageSize: number, type?: number): Promise<CommonAreas[]> {
     return this.prisma.commonAreas.findMany({
       skip: (pageNumber - 1) * pageSize,
       take: pageSize,
