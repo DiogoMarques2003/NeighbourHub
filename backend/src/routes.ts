@@ -31,6 +31,7 @@ import { condominiumPaymentsCreateController } from '@useCases/CondominiumPaymen
 import { condominiumPaymentsEditController } from '@useCases/CondominiumPayments/Edit';
 import { condominiumPaymentsDeleteController } from '@useCases/CondominiumPayments/Delete';
 import { condominiumPaymentsGetByIdController } from '@useCases/CondominiumPayments/GetById';
+import { condominiumPaymentsGetController } from '@useCases/CondominiumPayments/Get';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -161,6 +162,10 @@ router.delete('/condominium/:condominiumId/payments/:condominiumPaymentId', veri
 
 router.get('/condominium/:condominiumId/payments/:condominiumPaymentId', verifyJWT, (req, res) => {
   condominiumPaymentsGetByIdController.handle(req, res);
+});
+
+router.get('/condominium/:condominiumId/payments', verifyJWT, (req, res) => {
+  condominiumPaymentsGetController.handle(req, res);
 });
 
 export { router };
