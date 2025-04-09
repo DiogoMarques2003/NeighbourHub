@@ -30,6 +30,7 @@ import { servicesGetByIdController } from '@useCases/Services/GetByID';
 import { condominiumPaymentsCreateController } from '@useCases/CondominiumPayments/Create';
 import { condominiumPaymentsEditController } from '@useCases/CondominiumPayments/Edit';
 import { condominiumPaymentsDeleteController } from '@useCases/CondominiumPayments/Delete';
+import { condominiumPaymentsGetByIdController } from '@useCases/CondominiumPayments/GetById';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -156,6 +157,10 @@ router.put('/condominium/:condominiumId/payments/:condominiumPaymentId', verifyJ
 
 router.delete('/condominium/:condominiumId/payments/:condominiumPaymentId', verifyJWT, (req, res) => {
   condominiumPaymentsDeleteController.handle(req, res);
+});
+
+router.get('/condominium/:condominiumId/payments/:condominiumPaymentId', verifyJWT, (req, res) => {
+  condominiumPaymentsGetByIdController.handle(req, res);
 });
 
 export { router };
