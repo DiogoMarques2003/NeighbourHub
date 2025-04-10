@@ -16,7 +16,9 @@ app.use(
 
 app.use('/api', router);
 // Permitir acesso a partir do browser
-app.use(cors());
+app.use(cors({
+  origin: '*'
+}));
 // Tratar erros
 app.use((err, _req, res, _next) => errorHandler(err, res));
 
