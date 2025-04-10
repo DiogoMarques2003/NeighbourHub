@@ -27,7 +27,7 @@ export default class ServicesCreateCase {
 
     //Valida User no condominio
     const userCondDb = await this.addressesRepository.getByUserAndCond(ownerId, condId);
-    if (!userCondDb) throw new AppError('Não faz parte do condomínio', 401);
+    if (!userCondDb) throw new AppError('Não faz parte do condomínio', 403);
 
     const servicesClass = new Services({
       name,

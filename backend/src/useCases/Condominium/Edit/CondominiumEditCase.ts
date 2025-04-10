@@ -14,7 +14,7 @@ export default class CondominiumEditCase {
     if (!condDb) throw new AppError('Condomínio não encontrado!', 404);
 
     if (userID != condDb.adminId)
-        throw new AppError ('Não pode atualizar este condominio', 401);
+        throw new AppError ('Não pode atualizar este condominio', 403);
 
     // Validar email do condomínio
     if (email && email !== condDb.email) {

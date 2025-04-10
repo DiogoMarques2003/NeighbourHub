@@ -34,7 +34,7 @@ export default class AddressesCreateCase {
     if (!cond) throw new AppError('Condomínio não existe', 404);
 
     //validar o admin do condominio
-    if (adminId !== cond.adminId) throw new AppError('Sem permissão', 401);
+    if (adminId !== cond.adminId) throw new AppError('Sem permissão', 403);
 
     const user = await this.usersRepository.findByEmail(userEmail);
     if (!user) throw new AppError('Utilizador não existe', 404);

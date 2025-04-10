@@ -24,7 +24,7 @@ export default class VotingCreateCase {
 
     // Valida se o user tem autorização para votar
     const adressesDb = await this.adressesRepository.getByUserAndCond(userID, condominiumID);
-    if (!adressesDb) throw new AppError('Não tem autorização para votar porque não faz parte do condomínio!', 401);
+    if (!adressesDb) throw new AppError('Não tem autorização para votar porque não faz parte do condomínio!', 403);
 
     const budgetsCount = await this.budgetsRepository.countByOrderID(orderID);
     if(budgetsCount && !budgetID) throw new AppError('Apenas é possível votar num orçamento!', 400);

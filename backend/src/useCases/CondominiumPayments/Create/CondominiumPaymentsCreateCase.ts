@@ -22,12 +22,12 @@ export default class CondominiumPaymentsCreateCase {
     //Validar Condominio
     const condominiumDb = await this.condominiumRepository.findById(condominiumId);
     if (!condominiumDb) throw new AppError('Condominio inexistente', 404);
-    if (condominiumDb.adminId !== userId) throw new AppError('Não é administrador do condomínio', 401);
+    if (condominiumDb.adminId !== userId) throw new AppError('Não é administrador do condomínio', 403);
 
     //Validar Endereço
     const addresseDb = await this.addressesRepository.findById(addressId);
     if (!addresseDb) throw new AppError('Endereço inexistente', 404);
-    if (addresseDb.condominiumId !== condominiumId) throw new AppError('Endereço não pertence ao condomínio', 401);
+    if (addresseDb.condominiumId !== condominiumId) throw new AppError('Endereço não pertence ao condomínio', 403);
 
     const condominiuumPayment = new CondominiumPayments({
       addressId,
@@ -40,11 +40,11 @@ export default class CondominiumPaymentsCreateCase {
     if (areaReservationId) {
         const areaReservationDb = await this.areaReservationsRepository.findById(areaReservationId);
         if (!areaReservationDb) throw new AppError('Reserva inexistente', 404);
-        if (areaReservationDb.userId !== addresseDb.userId) throw new AppError('Reserva não pertence ao utilizador do endereço', 401);
+        if (areaReservationDb.userId !== addresseDb.userId) throw new AppError('Reserva não pertence ao utilizador do endereço', 403);
 
         const commonAreaDb = await this.commonAreasRepository.findById(areaReservationDb.areaId);
         if (!commonAreaDb) throw new AppError('Área comum inexistente', 404);
-        if (commonAreaDb.condominiumId !== condominiumId) throw new AppError('Área comum não pertence ao condomínio', 401);
+        if (commonAreaDb.condominiumId !== condominiumId) throw new AppError('Área comum não pertence ao condomínio', 403);
 
         condominiuumPayment.areaReservationId = areaReservationId;
     }

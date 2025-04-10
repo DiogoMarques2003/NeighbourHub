@@ -16,7 +16,7 @@ export default class AddressGetByIdCase {
     const condDb = await this.condominiumRepository.findById(condId);
     if (!condDb) throw new AppError('Condomínio não existe', 404);
 
-    if (userId !== condDb.adminId) throw new AppError('Sem permissão', 401);
+    if (userId !== condDb.adminId) throw new AppError('Sem permissão', 403);
 
     const address = await this.addressRepository.findByIdWithUser(id);
 

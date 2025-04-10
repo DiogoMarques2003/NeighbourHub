@@ -20,11 +20,11 @@ export default class OrdersGetByIdCase {
     if (!condDb) throw new AppError('Condomínio não existe!', 404);
 
     const userAddress = await this.addressRepository.getByUserAndCond(userId, condominiumId);
-    if (!userAddress && condDb.adminId !== userId) throw new AppError('Utilizador não pertence ao condomínio!', 401);
+    if (!userAddress && condDb.adminId !== userId) throw new AppError('Utilizador não pertence ao condomínio!', 403);
 
     const order = await this.ordersRepository.findByIdWithUserData(orderId);
     if (!order) throw new AppError('Ordem não existe!', 404);
-    if (order.condominiumId !== condominiumId) throw new AppError('Ordem não pertence ao condomínio!', 401);
+    if (order.condominiumId !== condominiumId) throw new AppError('Ordem não pertence ao condomínio!', 403);
 
     if (order.user.foto) order.user.foto = generatePathToFile(order.user.foto);
     else delete order.user.foto;

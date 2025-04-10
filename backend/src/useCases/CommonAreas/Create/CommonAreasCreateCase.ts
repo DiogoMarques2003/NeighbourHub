@@ -39,7 +39,7 @@ export default class CommonAreasCreateCase {
 
     //Valida admin condominio
     if (condDb.adminId != userId)
-      throw new AppError('O utilizador não é administrador', 401);
+      throw new AppError('O utilizador não é administrador', 403);
 
     const imagesConv: string[] = [];
 

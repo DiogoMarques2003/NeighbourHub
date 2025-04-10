@@ -45,7 +45,7 @@ export default class CommonAreasEditCase {
     if (!condDb) throw new AppError('Condomínio inexistente', 404);
 
     if (userId != condDb.adminId)
-      throw new AppError('Não pode atualizar este condominio', 401);
+      throw new AppError('Não pode atualizar este condominio', 403);
 
     // Atualiza as informações do espaço comum, se fornecido
     if (name) commonAreaDb.name = name;

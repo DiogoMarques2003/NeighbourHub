@@ -25,10 +25,10 @@ export default class CondominiumPaymentsGetByIdCase {
 
     const addresseDb = await this.addressesRepository.findById(condominiumPaymentDb.addressId);
     if (!addresseDb || addresseDb.condominiumId !== condominiumId)
-      throw new AppError('Endereço não pertence ao condomínio', 401);
+      throw new AppError('Endereço não pertence ao condomínio', 403);
 
     if (condominiumDb.adminId !== userId && addresseDb.userId !== userId)
-      throw new AppError('Não pode consultar este papamento', 401);
+      throw new AppError('Não pode consultar este papamento', 403);
 
     if (!condominiumPaymentDb.areaReservationId) delete condominiumPaymentDb.areaReservationId;
 

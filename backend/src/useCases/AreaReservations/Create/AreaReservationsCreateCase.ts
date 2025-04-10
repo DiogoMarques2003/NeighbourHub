@@ -40,7 +40,7 @@ export default class AreaReservationsCreateCase {
 
     //Valida User no condominio
     const userCondDb = await this.addressesRepository.getByUserAndCond(userId, condId);
-    if (!userCondDb) throw new AppError('Não faz parte do condomínio', 401);
+    if (!userCondDb) throw new AppError('Não faz parte do condomínio', 403);
 
     //Valida Reservas
     const reservaDb = await this.areaReservationsRepository.checkReservationDate(startDate, endDate, areaId);

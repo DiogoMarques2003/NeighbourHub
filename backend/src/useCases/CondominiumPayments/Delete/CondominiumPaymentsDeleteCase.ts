@@ -17,7 +17,7 @@ export default class CondominiumPaymentsDeleteCase {
     //Validar Condominio
     const condominiumDb = await this.condominiumRepository.findById(condominiumId);
     if (!condominiumDb) throw new AppError('Condominio inexistente', 404);
-    if (condominiumDb.adminId !== userId) throw new AppError('Não é administrador do condomínio', 401);
+    if (condominiumDb.adminId !== userId) throw new AppError('Não é administrador do condomínio', 403);
 
     //Validar Pagamento
     const condominiumPaymentDb = await this.condominiumPaymentsRepository.findById(condominiumPaymentId);
@@ -25,7 +25,7 @@ export default class CondominiumPaymentsDeleteCase {
 
     const addresseDb = await this.addressesRepository.findById(condominiumPaymentDb.addressId);
     if (!addresseDb || addresseDb.condominiumId !== condominiumId)
-      throw new AppError('Endereço não pertence ao condomínio', 401);
+      throw new AppError('Endereço não pertence ao condomínio', 403);
 
     return this.condominiumPaymentsRepository.delete(condominiumPaymentDb.id);
   }

@@ -36,7 +36,7 @@ export default class CondominiumPaymentsGetCase {
     const hasAddress = await this.addressesRepository.getByUserAndCond(userId, condominiumId);
 
     if (condominiumDb.adminId !== userId && !hasAddress)
-      throw new AppError('Não podes consultar os pagamentos deste condominio', 401);
+      throw new AppError('Não podes consultar os pagamentos deste condominio', 403);
 
     const andCondition: Prisma.CondominiumPaymentsWhereInput[] = [];
 
@@ -56,7 +56,7 @@ export default class CondominiumPaymentsGetCase {
     else if (addressId && condominiumDb.adminId === userId) {
       const address = await this.addressesRepository.findById(addressId);
       if (!address) throw new AppError('Endereço inexistente', 404);
-      if (address.condominiumId !== condominiumId) throw new AppError('Endereço não pertence ao condominio', 401);
+      if (address.condominiumId !== condominiumId) throw new AppError('Endereço não pertence ao condominio', 403);
       filters.addressId = addressId;
     }
     if (paymentType) filters.paymentType = paymentType;

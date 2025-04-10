@@ -20,7 +20,7 @@ export default class OrdersGetCase {
     if (!condDb) throw new AppError('Condomínio não existe!', 404);
 
     const userAddress = await this.addressRepository.getByUserAndCond(userId, condominiumId);
-    if (!userAddress && condDb.adminId !== userId) throw new AppError('Utilizador não pertence ao condomínio!', 401);
+    if (!userAddress && condDb.adminId !== userId) throw new AppError('Utilizador não pertence ao condomínio!', 403);
 
     const filters: Prisma.OrdersWhereInput = {
       condominiumId,

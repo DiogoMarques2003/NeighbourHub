@@ -21,7 +21,7 @@ export default class ServicesGetByIdCase {
 
     //Valida User no condominio
     const userCondDb = await this.addressRepository.getByUserAndCond(userId, condId);
-    if (!userCondDb && condDb.adminId !== userId) throw new AppError('Não faz parte do condomínio', 401);
+    if (!userCondDb && condDb.adminId !== userId) throw new AppError('Não faz parte do condomínio', 403);
 
     const serviceWithUser = await this.servicesRepository.findByIdWithUserData(serviceId);
 

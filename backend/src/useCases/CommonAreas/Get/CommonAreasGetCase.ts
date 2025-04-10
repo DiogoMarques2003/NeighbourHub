@@ -22,7 +22,7 @@ export default class CommonAreasGetCase {
     if (!condDb) throw new AppError('Id de condomínio inválido', 404);
 
     const user = await this.addressRepository.getByUserAndCond(userId, condId);
-    if (!user && condDb.adminId !== userId) throw new AppError('User não pertence ao condomínio', 401);
+    if (!user && condDb.adminId !== userId) throw new AppError('User não pertence ao condomínio', 403);
 
     const count = await this.commonAreasRepository.countByType(type);
     if (!count) throw new AppError('Não existem espaços', 404);

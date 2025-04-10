@@ -32,13 +32,13 @@ export default class VotingCreateCase {
     if (!condominium) throw new AppError('Condomínio não encontrado', 404);
 
     if (order.condominiumId !== condominiumID)
-      throw new AppError('Pedido não pertence a este condomínio', 401);
+      throw new AppError('Pedido não pertence a este condomínio', 403);
 
     if (condominium.adminId !== userID)
-      throw new AppError('Utilizador não é administrador do condomínio', 401);
+      throw new AppError('Utilizador não é administrador do condomínio', 403);
 
     if (order.status !== STATUS_ORDER_PENDING)
-      throw new AppError('Pedido não está pendente', 401);
+      throw new AppError('Pedido não está pendente', 403);
 
     if (budgets) {
       const budgetsClass: Budgets[] = [];

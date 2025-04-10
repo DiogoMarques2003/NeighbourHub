@@ -28,7 +28,7 @@ export default class AddressesEditCase {
     if (!cond) throw new AppError('Condomínio não existe', 404);
 
     // Validar se o admin tem permissão para editar
-    if (adminId !== cond.adminId) throw new AppError('Sem permissão', 401);
+    if (adminId !== cond.adminId) throw new AppError('Sem permissão', 403);
 
     // Atualizar apenas os campos que foram passados
     if (country !== undefined) address.country = country;
