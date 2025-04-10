@@ -1,12 +1,14 @@
 import axios from 'axios';
-import helperFunctions, { getToken, removeToken } from '../utils/helperFunctions';
+import { getToken, removeToken } from '../utils/helperFunctions';
 
-const API_URL = 'https://neighbourhub.diogomarques.dev'
+const API_URL = 'https://neighbourhub.diogomarques.dev/api'
 
 const authService = {
+    
     login: async (credentials) => {
         const response = await axios.post(`${API_URL}/login`, credentials);
         return response.data;
+        
     },
 
     register: async (userData) => {
@@ -14,8 +16,12 @@ const authService = {
         return response.data;
     },
 
-    validateToken: async () => {
-        /* token é passado automaticamente pelo interceptor */
+    getCurrentUser: async () => {
+        const userToken = getToken();
+        if (!userToken) {
+            return null;
+        }
+        
         const response = await axios.get(`${API_URL}/@me`);
         return response.data;
     },
@@ -42,7 +48,7 @@ const authService = {
                     removeToken();
                     window.location.href = '/login';
                 }
-                return Promise.reject(error);
+                Promise.reject(error);
             }
         );
     }

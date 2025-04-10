@@ -1,20 +1,26 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import LoginPage from '../../frontend/src/pages/LoginPage';
-import PrivateRoute from './routes/PrivateRouter';
-
+import { privateRoutes, publicRoutes } from './routes';
+import AuthGuard from './guards/AuthGuard';
 
 const App = () => {
   return (
     <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-
-          <Route element={<PrivateRoute />}>
-            <Route path="/home" element={<Home />} />
-          </Route>
-          <Route path="*" element={<Navigate to="/NotFound" />} />
-        </Routes>
+      <Routes>
+        {/* Public routes */}
+        {publicRoutes.map((route) => (
+          <Route key={route.path} path={route.path} element={route.element} />
+        ))}
+        
+        {/* Protected routes */}
+        <Route element={<AuthGuard />}>
+          {privateRoutes.map((route) => (
+            <Route key={route.path} path={route.path} element={route.element} />
+          ))}
+        </Route>
+        
+        {/* Default redirect */}
+        <Route path="*" element={<Navigate to="/NotFound" replace />} />
+      </Routes>
     </BrowserRouter>
   );
 };
