@@ -3,4 +3,6 @@ export default interface IServicesReviewDTO {
   userId: string;
   serviceId: string;
   rating: number;
+  comment: string;
+  requestId: string;
 }

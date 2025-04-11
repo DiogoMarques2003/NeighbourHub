@@ -7,7 +7,7 @@ export default class ServiceReviews {
   public createdAt: Date;
   public serviceRequestId: string;
 
-  constructor(props: Omit<ServiceReviews, 'id'>, id?: string) {
+  constructor(props: Omit<ServiceReviews, 'id' | 'createdAt'>, id?: string) {
     Object.assign(this, props);
 
     if (!id) {
