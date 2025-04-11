@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "ServiceRequests" ALTER COLUMN "requestDate" SET DEFAULT CURRENT_TIMESTAMP;
