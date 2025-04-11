@@ -127,7 +127,7 @@ model Services {
 
 model ServiceRequests {
   id String @id @unique
-  requestDate DateTime
+  requestDate DateTime @default(now())
   status String
   serviceId String
   userId String
