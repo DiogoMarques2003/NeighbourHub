@@ -7,5 +7,6 @@ export default interface IServicesRepository {
   findByIdWithUserData(id: string): Promise<ServicesWithUserData | null>;
   countByCondId(condId: string): Promise<number>;
   create(service: Services): Promise<Services>;
+  update(service: Services): Promise<Services>;
   getWithPagination(pageSize: number, pageNumber: number, condId: string): Promise<Services[]>;
 }

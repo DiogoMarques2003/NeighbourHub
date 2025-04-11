@@ -37,7 +37,11 @@ export default class ServicesRequestCase {
 
     if (serviceConDb.ownerId === userId) throw new AppError('Este serviço é seu', 403);
 
-    // const serviceWithUser = await this.servicesRepository.findByIdWithUserData(serviceId);
+    const user = await this.userRepository.findById(userId);
+    if (!user) throw new AppError('Utilizador não encontrado', 401);
+
+    const ownerEmail = await this.userRepository.findById(serviceConDb.ownerId);
+    if (!ownerEmail) throw new AppError('Erro ao obter dono do serviço', 500);
 
     const service = new ServiceRequests({
       status: STATUS_REQ_PENDING,
@@ -47,11 +51,8 @@ export default class ServicesRequestCase {
 
     await this.serviceReqRepo.create(service);
 
-    const user = await this.userRepository.findById(userId);
-    if (!user) throw new AppError('Utilizador não encontrado', 401);
-
     await this.mailProvider.sendMail(
-      condDb.email,
+      ownerEmail.email,
       [user.email],
       process.env.MAIL_FROM,
       'Novo Serviço Requisitado',

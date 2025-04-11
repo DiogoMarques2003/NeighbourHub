@@ -56,4 +56,8 @@ export default class PrismaServicesRepository implements IServicesRepository {
   create(service: Services): Promise<Services> {
     return this.prisma.services.create({ data: service });
   }
+
+  update(service: Services): Promise<Services> {
+    return this.prisma.services.update({ where: { id: service.id }, data: service });
+  }
 }
