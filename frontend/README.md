@@ -10,3 +10,17 @@ Currently, two official plugins are available:
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## TODO:
+ver o tema da foto ao registar
+modo dark mode avaliar
+tipografia toda igual
+tema do token codar melhor
+tema das traduções
+loading global
+logo no separador
+app.jsx
+plugin pra identação e ts react
+fontes iguais em todo o projeto
+ver porque é ñ passa no lauch effect do auth quando é rota protegida
+nas rotas protegidas validar tmb se o token é válido se q mas serão muito requests idk...

@@ -1,31 +1,35 @@
 import { useState } from 'react';
-import Input from '../../common/Input';
-import Button from '../../common/Button';
+import { Mail, Lock } from "lucide-react";
 import authService from '../../../services/authService';
 import { useNavigate } from 'react-router-dom';
+import InputWithIcon from '../../common/InputWithIcon';
+import Button from '../../common/Button';
+import { useAuthContext } from '../../../hooks/useAuthContext';
+import { removeToken, setToken } from '../../../utils/helperFunctions.js';
 
 const LoginForm = () => {
-
   const [credentials, setCredentials] = useState({
     email: '',
     password: ''
   });
 
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const { updateCurrentUser } = useAuthContext();
   const navigate = useNavigate();
 
+
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  
   const validateCredentials = () => {
     const { email, password } = credentials;
 
-    if(!password || !email) {
+    if(!password || !email.trim()) {
       setError('Preencha todos os campos');
       return false;
     }
 
-    setError(null);
+    setError("");
     return true;
-
   };
 
   const handleChange = (e) => {
@@ -41,59 +45,75 @@ const LoginForm = () => {
 
     if (!validateCredentials()) return;
     setIsLoading(true);
-    
-    try {
-      const user = await authService.login(credentials);
-      setCurrentUser(user);
-      navigate("/home");
-    } catch (err) {
-      setError(err.message || 'Failed to login');
-    } finally {
+
+    const result = await authService.login(credentials);
+    if (result?.error || !result) {
+      setError(result?.error || 'Failed to login');
       setIsLoading(false);
+      return;
     }
+    
+    const currentUser = await authService.getCurrentUser(result.token);
+    if (!currentUser || currentUser.error) {
+      setError(currentUser?.error || 'Failed to get user profile');
+      removeToken();
+      setIsLoading(false);
+      return;
+    }
+
+    updateCurrentUser(currentUser);
+    navigate("/home");
+    setIsLoading(false);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      {error && (
-        <div className="bg-red-50 p-4 rounded-md border border-red-200">
-          <p className="text-sm text-red-600">{error}</p>
-        </div>
-      )}
-
-      <div>
-        <Input
+    <form className="space-y-2" onSubmit={handleSubmit}>
+      <div className={`transition-all duration-300 overflow-hidden ${error ? 'bg-red-50 p-4 mb-4 rounded-md border border-red-200 opacity-100 max-h-20' : 'max-h-0 opacity-0 p-0 border-0'}`}>
+        <p className="text-sm text-red-600">{error}</p>
+      </div>
+      
+      <div className="space-y-4">
+        <InputWithIcon
+          icon={Mail}
           type="email"
-          placeholder="Email"
           name="email"
+          placeholder="Email"
           value={credentials.email}
           onChange={handleChange}
         />
-      </div>
-      <div>
-        <Input
+        
+        <InputWithIcon
+          icon={Lock}
           type="password"
-          placeholder="Password"
           name="password"
+          placeholder="Password"
           value={credentials.password}
           onChange={handleChange}
         />
-      </div>
 
-      <Button 
-        type="submit"
-        /* isLoading={isLoading}
-        disabled={isLoading} */
-      >
-        Login
-      </Button>
+        <div className="mt-6">
+        <Button
+          type="submit" 
+          isLoading={isLoading}
+          fullWidth
+          variant='primary'
+        >
+          Login
+        </Button>
+        </div>
+        
+        <div className="text-center mt-3">
+          <a href="/reset-password" className="text-blue-600 text-sm font-medium hover:text-blue-700 hover:underline">
+            Esqueceste-te da palavra-passe?
+          </a>
+        </div>
 
-      <div className="text-center mt-2">
-        <p>Esqueceu-te palavra passe?</p>
-        <p>Não tens conta? <a href="/register" className="text-blue-500">Registar</a></p>
+        <div className="text-center text-sm text-gray-600 mt-2">
+          Não tens conta? <a href="/register" className="text-blue-600 text-sm font-medium hover:text-blue-700 hover:underline">Registar</a>
+        </div>
       </div>
     </form>
   );
 };
 
-export default LoginForm
+export default LoginForm;

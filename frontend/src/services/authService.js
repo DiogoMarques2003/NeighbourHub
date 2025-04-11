@@ -1,56 +1,39 @@
-import axios from 'axios';
-import { getToken, removeToken } from '../utils/helperFunctions';
-
-const API_URL = 'https://neighbourhub.diogomarques.dev/api'
+import { getToken, setToken } from '../utils/helperFunctions';
+import apiClient from './apiClient';
 
 const authService = {
     
     login: async (credentials) => {
-        const response = await axios.post(`${API_URL}/login`, credentials);
-        return response.data;
-        
+        try {
+            const response = await apiClient.post('/login', credentials);
+            return response?.data;
+        } catch(error) {
+            return { error: error?.response?.data?.message };
+        }
     },
 
     register: async (userData) => {
-        const response = await axios.post(`${API_URL}/register`, userData);
-        return response.data;
+        try {
+            const response = await apiClient.post('/register', userData);
+            return response?.data;
+        } catch(error) {
+            return { error: error?.response?.data?.message };
+        }
     },
-
-    getCurrentUser: async () => {
-        const userToken = getToken();
-        if (!userToken) {
+ 
+    getCurrentUser: async (token) => {
+        if(token) {
+            setToken(token);
+        } else if(!getToken()) {
             return null;
         }
-        
-        const response = await axios.get(`${API_URL}/@me`);
-        return response.data;
-    },
 
-    setupInterceptors: (axiosInstance) => {
-        axiosInstance.interceptors.request.use(
-            (config) => {
-                const token = getToken();
-                if(token) {
-                    config.headers.Authorization = `Bearer ${token}`;
-                }
-
-                return config;
-            },
-            (error) => {
-                Promise.reject(error);
-            }
-        );
-
-        axiosInstance.interceptors.response.use(
-            (response) => response,
-            (error) => {
-                if(error.response && error.response.status === 401) {
-                    removeToken();
-                    window.location.href = '/login';
-                }
-                Promise.reject(error);
-            }
-        );
+        try {
+            const response = await apiClient.get('/@me');
+            return response?.data;
+        } catch(error) {
+            return { error: error?.response?.data?.message };
+        }
     }
 }
 

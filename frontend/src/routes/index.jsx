@@ -25,7 +25,11 @@ export const publicRoutes = [
 // Private routes (auth required)
 export const privateRoutes = [
   {
+    path: '/',
+    element: <HomePage />,
+  },
+  {
     path: '/home',
     element: <HomePage />,
-  }
+  },
 ];
