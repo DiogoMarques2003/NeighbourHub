@@ -35,6 +35,7 @@ import { condominiumPaymentsGetController } from '@useCases/CondominiumPayments/
 import { servicesRequestController } from '@useCases/Services/Request';
 import { servicesReviewController } from '@useCases/Services/Review';
 import { serviceEditController } from '@useCases/Services/Edit';
+import { addressDeleteController } from '@useCases/Addresses/Delete';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -93,6 +94,10 @@ router.get('/condominium/:condId/address/:id', verifyJWT, (req, res) => {
 
 router.put('/condominium/:condominiumId/address/:addressId', verifyJWT, (req, res) => {
   addressEditController.handle(req, res);
+});
+
+router.delete('/condominium/:condominiumId/address/:addressId', verifyJWT, (req, res) => {
+  addressDeleteController.handle(req, res);
 });
 
 //---COMMON AREAS
