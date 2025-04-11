@@ -30,7 +30,7 @@ app.use('/content/*', (req, res) => {
 
 // Se tiver em produtivo fornecer o site também
 if (process.env.NODE_ENV === 'production') {
-  const frontendPath = join(__dirname, '..', '..', 'frontend', 'build');
+  const frontendPath = join(__dirname, '..', '..', 'frontend', 'dist');
   app.use(express.static(frontendPath));
   app.get('*', (req, res) => {
     res.sendFile(join(frontendPath, 'index.html'));

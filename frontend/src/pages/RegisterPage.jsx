@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import AuthBox from '../components/layout/AuthBox';
 import AuthBackgroundVideo from '../components/common/AuthBackgroundVideo';
-import GoBackLayout from '../components/layout/goBackLayout';
+import GoBackLayout from '../components/layout/GoBackLayout';
 import RegisterForm from '../components/features/register/RegisterForm';
 
 const RegisterPage = () => {
