@@ -14,28 +14,23 @@ app.use(
   })
 );
 
-app.use('/api', router);
 // Permitir acesso a partir do browser
-app.use(cors({
-  origin: '*'
-}));
+app.use(cors());
+
+app.use('/api', router);
 // Tratar erros
 app.use((err, _req, res, _next) => errorHandler(err, res));
 
 // Para os arquivos salvos na api
 app.use('/content/*', (req, res) => {
-  const filePath = join(
-    __dirname,
-    '..',
-    req.originalUrl.replace('/content', '')
-  );
+  const filePath = join(__dirname, '..', req.originalUrl.replace('/content', ''));
   if (!existsSync(filePath)) res.status(404).send();
   else res.sendFile(filePath);
 });
 
 // Se tiver em produtivo fornecer o site também
 if (process.env.NODE_ENV === 'production') {
-  const frontendPath = join(__dirname, '..', '..', 'frontend', 'build');
+  const frontendPath = join(__dirname, '..', '..', 'frontend', 'dist');
   app.use(express.static(frontendPath));
   app.get('*', (req, res) => {
     res.sendFile(join(frontendPath, 'index.html'));

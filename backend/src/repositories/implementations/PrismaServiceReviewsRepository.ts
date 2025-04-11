@@ -16,4 +16,8 @@ export default class PrismaServiceReviewsRepository implements IServiceReviewsRe
   create(serviceReview: ServiceReviews): Promise<ServiceReviews> {
     return this.prisma.serviceReviews.create({ data: serviceReview });
   }
+
+  findByReq(id: string): Promise<ServiceReviews | null> {
+    return this.prisma.serviceReviews.findFirst({ where: { serviceRequestId: id } });
+  }
 }
