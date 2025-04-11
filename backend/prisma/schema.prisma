@@ -141,7 +141,7 @@ model ServiceReviews {
   id String @id @unique
   rating Int
   comment String
-  createdAt DateTime
+  createdAt DateTime  @default(now())
   serviceRequestId String
   serviceRequest ServiceRequests @relation(fields: [serviceRequestId], references: [id])
 }
