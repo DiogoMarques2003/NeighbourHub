@@ -132,7 +132,7 @@ const RegisterForm = () => {
             icon={Phone}
             name="phoneNumber"
             type="tel"
-            placeholder="Numero telefone"
+            placeholder="Numero de telefone"
             value={formData.phoneNumber}
             onChange={handleChange}
             required
@@ -152,7 +152,7 @@ const RegisterForm = () => {
           <InputMaskWithIcon
             icon={CreditCard}
             name="iban"
-            placeholder="PT__ ____ ____ ____ ____ __"
+            placeholder="Iban"
             value={formData.iban}
             onChange={(e) => handleChange(e)}
             mask="PT50 9999 9999 99999999999 99"

@@ -29,8 +29,13 @@ apiClient.interceptors.response.use(
     (response) => response,
     (error) => {
         if(error.response && error.response.status === 401) {
-            removeToken();
-            window.location.href = '/login';
+            const isLoginAttempt = error.config.url.includes('/login');
+
+            if(!isLoginAttempt) {
+                removeToken();
+                window.location.href = '/login';
+            }
+            
         }
         return Promise.reject(error);
     }
