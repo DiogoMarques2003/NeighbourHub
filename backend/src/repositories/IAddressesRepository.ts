@@ -5,13 +5,10 @@ export default interface IAddressesRepository {
   findByIdWithUser(id: string): Promise<AddressesWithUserData | null>;
   create(address: Addresses): Promise<Addresses>;
   countByCondID(condId: string): Promise<number>;
-  getCondAddressWithPagination(
-    condId: string,
-    pageNumber: number,
-    pageSize: number
-  ): Promise<AddressesWithUserData[]>;
+  getCondAddressWithPagination(condId: string, pageNumber: number, pageSize: number): Promise<AddressesWithUserData[]>;
   getByUserAndCond(userId: string, condId: string): Promise<Addresses | null>;
   getAllUsersEmails(condominiumId: string): Promise<string[]>;
   update(address: Addresses): Promise<Addresses>;
   getByUserId(userId: string): Promise<CondominiumGetByUserResponse[]>;
+  delete(id: string): Promise<Addresses>;
 }

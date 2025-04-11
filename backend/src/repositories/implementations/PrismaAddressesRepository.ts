@@ -74,6 +74,11 @@ export default class PrismaAddressesRepository implements IAddressesRepository {
     return this.prisma.addresses.create({ data: address });
   }
 
+  //DELETE
+  delete(id: string): Promise<Addresses> {
+    return this.prisma.addresses.delete({ where: { id } });
+  }
+
   getByUserAndCond(userId: string, condId: string): Promise<Addresses | null> {
     return this.prisma.addresses.findFirst({
       where: { userId, condominiumId: condId },
