@@ -24,3 +24,4 @@ plugin pra identação e ts react
 fontes iguais em todo o projeto
 ver porque é ñ passa no lauch effect do auth quando é rota protegida
 nas rotas protegidas validar tmb se o token é válido se q mas serão muito requests idk...
+input mais dinâmico

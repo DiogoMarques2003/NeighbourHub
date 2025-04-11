@@ -80,8 +80,8 @@ const RegisterForm = () => {
         }
       
         const result = await authService.register(formDataToSend);
-        if(!result || result.error) {
-          setError(result.error || 'Falha no registo');
+        if(!result || result?.error) {
+          setError(result?.error || 'Falha no registo');
           setIsLoading(false);
           return;
         }
@@ -89,14 +89,7 @@ const RegisterForm = () => {
         updateCurrentUser(await authService.getCurrentUser(result?.token));
 
         navigate('/home');
-        toast.success('Registration successful! 🎉', {
-          position: 'top-right',
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
+        toast.success(result?.message || 'Registration successful!');
         setIsLoading(false);
     };
 

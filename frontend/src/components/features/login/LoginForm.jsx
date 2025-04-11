@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import InputWithIcon from '../../common/InputWithIcon';
 import Button from '../../common/Button';
 import { useAuthContext } from '../../../hooks/useAuthContext';
-import { removeToken, setToken } from '../../../utils/helperFunctions.js';
+import { removeToken } from '../../../utils/helperFunctions.js';
 
 const LoginForm = () => {
   const [credentials, setCredentials] = useState({
@@ -53,7 +53,7 @@ const LoginForm = () => {
       return;
     }
     
-    const currentUser = await authService.getCurrentUser(result.token);
+    const currentUser = await authService.getCurrentUser(result?.token);
     if (!currentUser || currentUser.error) {
       setError(currentUser?.error || 'Failed to get user profile');
       removeToken();
@@ -62,8 +62,8 @@ const LoginForm = () => {
     }
 
     updateCurrentUser(currentUser);
-    navigate("/home");
     setIsLoading(false);
+    navigate("/home");
   };
 
   return (

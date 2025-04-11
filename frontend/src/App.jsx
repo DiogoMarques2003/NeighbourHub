@@ -1,8 +1,10 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { privateRoutes, publicRoutes } from './routes';
 import ProtectedRoute from './routes/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 import { ToastContainer } from 'react-toastify';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import HomePage from './pages/HomePage';
 
 const App = () => {
   return (
@@ -11,15 +13,13 @@ const App = () => {
         <AuthProvider> 
           <Routes>
             {/* Public routes */}
-            {publicRoutes.map((route) => (
-              <Route key={route.path} path={route.path} element={route.element} />
-            ))}
-            
+            <Route path={"/login"} element={<LoginPage />} />
+            <Route path={"/register"} element={<RegisterPage />} />
+
             {/* Protected routes */}
             <Route element={<ProtectedRoute />}>
-              {privateRoutes.map((route) => (
-                <Route key={route.path} path={route.path} element={route.element} />
-              ))}
+              <Route path={"/"} element={<HomePage />} />
+              <Route path={"/home"} element={<HomePage />} />
             </Route>
             
             {/* Default redirect */}

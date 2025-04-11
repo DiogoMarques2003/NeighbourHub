@@ -16,12 +16,14 @@ export const AuthProvider = ({ children }) => {
     const checkLoggedIn = async () => {
         setIsLoading(true);
         const result = await authService.getCurrentUser();
-        if(!result || result.error) {
-          console.error("Failed to fetch user", result.error);
+        if(!result || result?.error) {
           removeToken();
+          setCurrentUser(null);
           setIsLoading(false);
+          return;
         }
 
+        setIsLoading(false);
         setCurrentUser(result);
     };
 
@@ -29,9 +31,8 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const logout = async () => {
-      setCurrentUser(null);
       removeToken();
-      navigate("/login");
+      setCurrentUser(null);
   };
 
   const updateCurrentUser = (userData) => {
