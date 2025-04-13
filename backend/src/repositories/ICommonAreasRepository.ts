@@ -10,4 +10,5 @@ export default interface ICommonAreasRepository {
     type?: number
   ): Promise<CommonAreas[]>;
   update(commonArea: CommonAreas): Promise<CommonAreas>;
+  delete(id: string): Promise<Boolean>;
 }

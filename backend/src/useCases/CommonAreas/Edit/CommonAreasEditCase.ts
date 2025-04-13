@@ -10,7 +10,6 @@ import {
 } from '@constants/filesPaths';
 import path, { join } from 'path';
 import { copyFileSync, existsSync, unlinkSync } from 'fs';
-import { STATUS, STATUS_READY } from '@constants/status';
 import generatePathToFile from '@shared/generatePathToFile';
 
 export default class CommonAreasEditCase {
@@ -19,7 +18,7 @@ export default class CommonAreasEditCase {
     private commonAreasRepository: ICommonAreasRepository
   ) {}
 
-  async execute(data: ICommonAreasCreateDTO) {
+  async execute(data: ICommonAreasCreateDTO): Promise<CommonAreas> {
     const {
       id,
       status,

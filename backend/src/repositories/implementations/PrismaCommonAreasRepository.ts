@@ -36,4 +36,8 @@ export default class PrismaCommonAreasRepository implements ICommonAreasReposito
       data: commonArea,
     });
   }
+
+  async delete(id: string): Promise<Boolean> {
+    return !!(await this.prisma.commonAreas.delete({ where: { id } }));
+  }
 }

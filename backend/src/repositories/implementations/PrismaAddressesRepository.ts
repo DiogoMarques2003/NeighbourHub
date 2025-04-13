@@ -106,6 +106,7 @@ export default class PrismaAddressesRepository implements IAddressesRepository {
   async getByUserId(userId: string, pageNumber: number, pageSize: number): Promise<CondominiumGetByUserResponse[]> {
     const data = await this.prisma.addresses.findMany({
       where: { userId },
+      distinct: ['condominiumId'],
       orderBy: { createdAT: 'desc' },
       skip: (pageNumber - 1) * pageSize,
       take: pageSize,
