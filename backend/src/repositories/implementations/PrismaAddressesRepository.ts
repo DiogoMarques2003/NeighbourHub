@@ -74,9 +74,8 @@ export default class PrismaAddressesRepository implements IAddressesRepository {
     return this.prisma.addresses.create({ data: address });
   }
 
-  //DELETE
-  delete(id: string): Promise<Addresses> {
-    return this.prisma.addresses.delete({ where: { id } });
+  async delete(id: string): Promise<Boolean> {
+    return !!(await this.prisma.addresses.delete({ where: { id } }))
   }
 
   getByUserAndCond(userId: string, condId: string): Promise<Addresses | null> {
@@ -100,9 +99,16 @@ export default class PrismaAddressesRepository implements IAddressesRepository {
     });
   }
 
-  async getByUserId(userId: string): Promise<CondominiumGetByUserResponse[]> {
+  countByUserId(userId: string): Promise<number> {
+    return this.prisma.addresses.count({ where: { userId } });
+  }
+
+  async getByUserId(userId: string, pageNumber: number, pageSize: number): Promise<CondominiumGetByUserResponse[]> {
     const data = await this.prisma.addresses.findMany({
       where: { userId },
+      orderBy: { createdAT: 'desc' },
+      skip: (pageNumber - 1) * pageSize,
+      take: pageSize,
       select: {
         country: true,
         city: true,

@@ -9,6 +9,7 @@ export default interface IAddressesRepository {
   getByUserAndCond(userId: string, condId: string): Promise<Addresses | null>;
   getAllUsersEmails(condominiumId: string): Promise<string[]>;
   update(address: Addresses): Promise<Addresses>;
-  getByUserId(userId: string): Promise<CondominiumGetByUserResponse[]>;
-  delete(id: string): Promise<Addresses>;
+  getByUserId(userId: string, pageNumber: number, pageSize: number): Promise<CondominiumGetByUserResponse[]>;
+  countByUserId(userId: string): Promise<number>;
+  delete(id: string): Promise<Boolean>;
 }

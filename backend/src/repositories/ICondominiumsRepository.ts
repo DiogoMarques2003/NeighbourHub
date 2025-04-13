@@ -6,4 +6,6 @@ export default interface ICondominiumsRepository {
   create(condominium: Condominiums): Promise<Condominiums>;
   deleteById(id: string): Promise<boolean>;
   edit(condominium: Condominiums): Promise<Condominiums>;
+  getByAdminId(adminId: string, pageNumber: number, pageSize: number): Promise<CondominiumGetByUserResponse[]>
+  countByAdminId(adminId: string): Promise<number>;
 }

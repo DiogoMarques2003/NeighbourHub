@@ -12,17 +12,19 @@ export default class CondominiumGetByUserController {
 
   async handle(req: Request, res: Response) {
     try {
-        const requestData: IcondominiumGetByUserDTO = {
-            userId: req.userID,
-            isAdmin: Boolean(req.query.isAdmin),
-        }
+      const requestData: IcondominiumGetByUserDTO = {
+        userId: req.userID,
+        isAdmin: String(req.query.isAdmin).toLowerCase() === 'true',
+        pageNumber: Number(req.query.pageNumber),
+        pageSize: Number(req.query.pageSize),
+      };
 
-        this.condominiumGetByUserVerifications.execute(requestData);
-        const condominiums = await this.condominiumGetByUserCase.execute(requestData);
+      this.condominiumGetByUserVerifications.execute(requestData);
+      const condominiums = await this.condominiumGetByUserCase.execute(requestData);
 
-        res.status(200).json({ condominiums });
+      res.status(200).json({ condominiums });
     } catch (err) {
-        errorHandler(err, res);
+      errorHandler(err, res);
     }
   }
 }
