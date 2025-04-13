@@ -20,9 +20,9 @@ export default class CondominiumGetByUserController {
       };
 
       this.condominiumGetByUserVerifications.execute(requestData);
-      const condominiums = await this.condominiumGetByUserCase.execute(requestData);
+      const data = await this.condominiumGetByUserCase.execute(requestData);
 
-      res.status(200).json({ condominiums });
+      res.status(200).json(data);
     } catch (err) {
       errorHandler(err, res);
     }
