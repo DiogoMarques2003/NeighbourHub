@@ -9,19 +9,22 @@ export default class CondominiumGetByUserCase {
     private addressRepository: IAddressesRepository
   ) {}
 
-  async execute(data: ICondominiumGetByUserDTO): Promise<CondominiumGetByUserResponse[]> {
-    const { userId, isAdmin } = data;
+  async execute(data: ICondominiumGetByUserDTO): Promise<DataPagination<CondominiumGetByUserResponse[]>> {
+    const { userId, isAdmin, pageNumber, pageSize } = data;
+
+    const cont = isAdmin 
+      ? await this.condominiumsRepository.countByAdminId(userId)
+      : await this.addressRepository.countByUserId(userId);
+
+    if (!cont) throw new AppError(isAdmin ? 'Não é administrador de nenhum condominio' : 'Não é morador de nenhum condominio', 404);
+
+    const pages = Math.ceil(cont / pageSize);
+    if (pageNumber > pages) throw new AppError('Página inválida', 404);
 
     const dataDb = isAdmin
-      ? await this.condominiumsRepository.getByAdminId(userId)
-      : await this.addressRepository.getByUserId(userId);
+      ? await this.condominiumsRepository.getByAdminId(userId, pageNumber, pageSize)
+      : await this.addressRepository.getByUserId(userId, pageNumber, pageSize);
 
-    if (!dataDb || dataDb.length === 0)
-      throw new AppError(
-        isAdmin ? 'Não é administrador de nenhum condominio' : 'Não é morador de nenhum condominio',
-        404
-      );
-
-    return dataDb;
+    return { data: dataDb, pages, actualPage: pageNumber, nRecords: cont };
   }
 }

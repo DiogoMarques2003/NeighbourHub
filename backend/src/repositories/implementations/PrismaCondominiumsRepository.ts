@@ -32,9 +32,16 @@ export default class PrismaCondominiumsRepository implements ICondominiumsReposi
     });
   }
 
-  async getByAdminId(adminId: string): Promise<CondominiumGetByUserResponse[]> {
+  countByAdminId(adminId: string): Promise<number> {
+    return this.prisma.condominiums.count({ where: { adminId } });
+  }
+
+  async getByAdminId(adminId: string, pageNumber: number, pageSize: number): Promise<CondominiumGetByUserResponse[]> {
     const data = await this.prisma.condominiums.findMany({
       where: { adminId },
+      skip: (pageNumber - 1) * pageSize,
+      take: pageSize,
+      orderBy: { createdAt: 'asc' },
       select: {
         id: true,
         name: true,

@@ -7,8 +7,9 @@ export default class Condominiums {
   public phoneNumber: string;
   public monthlyQuota: number;
   public adminId: string;
+  public createdAt: Date;
 
-  constructor(props: Omit<Condominiums, 'id'>, id?: string) {
+  constructor(props: Omit<Condominiums, 'id' | 'createdAt'>, id?: string) {
     Object.assign(this, props);
 
     if (!id) {

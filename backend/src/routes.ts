@@ -36,6 +36,7 @@ import { servicesRequestController } from '@useCases/Services/Request';
 import { servicesReviewController } from '@useCases/Services/Review';
 import { serviceEditController } from '@useCases/Services/Edit';
 import { addressDeleteController } from '@useCases/Addresses/Delete';
+import { servicesDeleteController } from '@useCases/Services/Delete';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -130,6 +131,10 @@ router.get('/condominium/:condId/services', verifyJWT, (req, res) => {
 
 router.get('/condominium/:condId/services/:serviceId', verifyJWT, (req, res) => {
   servicesGetByIdController.handle(req, res);
+});
+
+router.delete('/condominium/:condominiumId/services/:serviceId', verifyJWT, (req, res) => {
+  servicesDeleteController.handle(req, res);
 });
 
 router.post('/condominium/:condId/services/:serviceId/request', verifyJWT, (req, res) => {

@@ -9,7 +9,7 @@ export default class AddressesDeleteCase {
     private condominiumRepository: ICondominiumsRepository
   ) {}
 
-  async execute(data: IAddressesDeleteDTO): Promise<void> {
+  async execute(data: IAddressesDeleteDTO): Promise<Boolean> {
     const { id, adminId, condominiumId } = data;
 
     // Verificar se o condomínio existe
@@ -29,6 +29,6 @@ export default class AddressesDeleteCase {
     }
 
     // Deletar o endereço
-    await this.addressesRepository.delete(id);
+    return this.addressesRepository.delete(id);
   }
 }

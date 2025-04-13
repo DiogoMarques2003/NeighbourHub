@@ -19,9 +19,11 @@ export default class AddressesDeleteController {
       };
 
       this.addressDeleteVerifications.execute(requestData);
-      await this.addressDeleteCase.execute(requestData);
+      const isDeleted = await this.addressDeleteCase.execute(requestData);
 
-      res.status(200).json({ message: 'Endereço eliminado com sucesso' });
+      res
+        .status(isDeleted ? 200 : 500)
+        .json({ message: isDeleted ? 'Endereço eliminado com sucesso' : 'Erro ao eliminar endereço' });
     } catch (err) {
       errorHandler(err, res);
     }

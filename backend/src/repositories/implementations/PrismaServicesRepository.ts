@@ -60,4 +60,8 @@ export default class PrismaServicesRepository implements IServicesRepository {
   update(service: Services): Promise<Services> {
     return this.prisma.services.update({ where: { id: service.id }, data: service });
   }
+
+  async delete(id: string): Promise<Boolean> {
+    return !!(await this.prisma.services.delete({ where: { id } }))
+  }
 }
