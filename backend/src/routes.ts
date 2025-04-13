@@ -37,6 +37,7 @@ import { servicesReviewController } from '@useCases/Services/Review';
 import { serviceEditController } from '@useCases/Services/Edit';
 import { addressDeleteController } from '@useCases/Addresses/Delete';
 import { servicesDeleteController } from '@useCases/Services/Delete';
+import { commonAreasDeleteController } from '@useCases/CommonAreas/Delete';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -108,6 +109,10 @@ router.post('/condominium/:id/commonarea', upload.array('images'), verifyJWT, (r
 
 router.put('/condominium/:condominiumId/commonarea/:idCommonArea', upload.array('imagesAdd'), verifyJWT, (req, res) => {
   commonAreasEditController.handle(req, res);
+});
+
+router.delete('/condominium/:condominiumId/commonarea/:idCommonArea', verifyJWT, (req, res) => {
+  commonAreasDeleteController.handle(req, res);
 });
 
 router.get('/condominium/:condId/commonarea', verifyJWT, (req, res) => {

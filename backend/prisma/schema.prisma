@@ -34,7 +34,7 @@ model Condominiums {
   monthlyQuota Float
   adminId String
   createdAt DateTime @default(now())
-  admin Users @relation(fields: [adminId], references: [id])
+  admin Users @relation(fields: [adminId], references: [id], onDelete: Cascade)
 
   Addresses Addresses[]
   CommonAreas CommonAreas[]
@@ -53,8 +53,8 @@ model Addresses {
   createdAT DateTime @default(now())
   userId String
   condominiumId String
-  user Users @relation(fields: [userId], references: [id])
-  condominium Condominiums @relation(fields: [condominiumId], references: [id])
+  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+  condominium Condominiums @relation(fields: [condominiumId], references: [id], onDelete: Cascade)
 
   CondominiumPayments CondominiumPayments[]
 }
@@ -72,7 +72,7 @@ model CommonAreas {
   type Int
   createdAT DateTime @default(now())
   condominiumId String
-  condominium Condominiums @relation(fields: [condominiumId], references: [id])
+  condominium Condominiums @relation(fields: [condominiumId], references: [id], onDelete: Cascade)
 
   AreaReservations AreaReservations[]
 }
@@ -84,8 +84,8 @@ model AreaReservations {
   status String
   areaId String
   userId String
-  area CommonAreas @relation(fields: [areaId], references: [id])
-  user Users @relation(fields: [userId], references: [id])
+  area CommonAreas @relation(fields: [areaId], references: [id], onDelete: Cascade)
+  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   CondominiumPayments CondominiumPayments[]
   Fine Fine[]
@@ -98,8 +98,8 @@ model CondominiumPayments {
   paymentType Int
   addressId String
   areaReservationId String?
-  address Addresses @relation(fields: [addressId], references: [id])
-  areaReservation AreaReservations? @relation(fields: [areaReservationId], references: [id])
+  address Addresses @relation(fields: [addressId], references: [id], onDelete: Cascade)
+  areaReservation AreaReservations? @relation(fields: [areaReservationId], references: [id], onDelete: Cascade)
 }
 
 model Fine {
@@ -109,7 +109,7 @@ model Fine {
   createdAt DateTime
   status String
   areaReservationId String
-  areaReservation AreaReservations @relation(fields: [areaReservationId], references: [id])
+  areaReservation AreaReservations @relation(fields: [areaReservationId], references: [id], onDelete: Cascade)
 }
 
 model Services {
@@ -120,8 +120,8 @@ model Services {
   ownerId String
   condominiumId String
   createdAt DateTime @default(now())
-  owner Users @relation(fields: [ownerId], references: [id])
-  condominium Condominiums @relation(fields: [condominiumId], references: [id])
+  owner Users @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  condominium Condominiums @relation(fields: [condominiumId], references: [id], onDelete: Cascade)
 
   ServiceRequests ServiceRequests[]
 }
@@ -132,8 +132,8 @@ model ServiceRequests {
   status String
   serviceId String
   userId String
-  service Services @relation(fields: [serviceId], references: [id])
-  user Users @relation(fields: [userId], references: [id])
+  service Services @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   ServiceReviews ServiceReviews[]
 }
@@ -144,7 +144,7 @@ model ServiceReviews {
   comment String
   createdAt DateTime  @default(now())
   serviceRequestId String
-  serviceRequest ServiceRequests @relation(fields: [serviceRequestId], references: [id])
+  serviceRequest ServiceRequests @relation(fields: [serviceRequestId], references: [id], onDelete: Cascade)
 }
 
 model Orders {
@@ -159,8 +159,8 @@ model Orders {
   votingDeadline DateTime?
   userId String
   condominiumId String
-  user Users @relation(fields: [userId], references: [id])
-  condominium Condominiums @relation(fields: [condominiumId], references: [id])
+  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+  condominium Condominiums @relation(fields: [condominiumId], references: [id], onDelete: Cascade)
 
   Budgets Budgets[]
   Votings Votings[]
@@ -173,7 +173,7 @@ model Budgets {
   amount Float
   createdAt DateTime @default(now())
   orderId String
-  order Orders @relation(fields: [orderId], references: [id])
+  order Orders @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   Votings Votings[]
 }
@@ -183,9 +183,9 @@ model Votings {
   orderID String 
   decision Boolean
   budgetID String?
-  order Orders @relation(fields: [orderID], references: [id])
-  budget Budgets? @relation(fields: [budgetID], references: [id])
-  user Users @relation(fields: [userID], references: [id])
+  order Orders @relation(fields: [orderID], references: [id], onDelete: Cascade)
+  budget Budgets? @relation(fields: [budgetID], references: [id], onDelete: Cascade)
+  user Users @relation(fields: [userID], references: [id], onDelete: Cascade)
 
   @@id([userID,orderID])
 }
@@ -196,5 +196,5 @@ model OrderWorks {
   status String
   description String
   orderId String
-  order Orders @relation(fields: [orderId], references: [id])
+  order Orders @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }
