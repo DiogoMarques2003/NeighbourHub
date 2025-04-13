@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
+import ChooseCondominium from './pages/ChooseCondominiumPage';
 
 const App = () => {
   return (
@@ -19,7 +20,8 @@ const App = () => {
             {/* Protected routes */}
             <Route element={<ProtectedRoute />}>
               <Route path={"/"} element={<HomePage />} />
-              <Route path={"/home"} element={<HomePage />} />
+              <Route path={"/condominium"} element={<ChooseCondominium />} />
+    
             </Route>
             
             {/* Default redirect */}

@@ -88,7 +88,7 @@ const RegisterForm = () => {
 
         updateCurrentUser(await authService.getCurrentUser(result?.token));
 
-        navigate('/home');
+        navigate('/condominium');
         toast.success(result?.message || 'Registration successful!');
         setIsLoading(false);
     };

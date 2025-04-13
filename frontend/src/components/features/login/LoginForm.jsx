@@ -63,7 +63,7 @@ const LoginForm = () => {
 
     updateCurrentUser(currentUser);
     setIsLoading(false);
-    navigate("/home");
+    navigate("/condominium");
   };
 
   return (
