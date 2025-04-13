@@ -38,6 +38,7 @@ import { serviceEditController } from '@useCases/Services/Edit';
 import { addressDeleteController } from '@useCases/Addresses/Delete';
 import { servicesDeleteController } from '@useCases/Services/Delete';
 import { commonAreasDeleteController } from '@useCases/CommonAreas/Delete';
+import { commonAreasGetByIdController } from '@useCases/CommonAreas/GetById';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -117,6 +118,10 @@ router.delete('/condominium/:condominiumId/commonarea/:idCommonArea', verifyJWT,
 
 router.get('/condominium/:condId/commonarea', verifyJWT, (req, res) => {
   commonAreasGetController.handle(req, res);
+});
+
+router.get('/condominium/:condominiumId/commonarea/:commonAreaId', verifyJWT, (req, res) => {
+  commonAreasGetByIdController.handle(req, res);
 });
 
 //--AREA RESERVATION
