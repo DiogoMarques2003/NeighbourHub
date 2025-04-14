@@ -39,6 +39,7 @@ import { addressDeleteController } from '@useCases/Addresses/Delete';
 import { servicesDeleteController } from '@useCases/Services/Delete';
 import { commonAreasDeleteController } from '@useCases/CommonAreas/Delete';
 import { commonAreasGetByIdController } from '@useCases/CommonAreas/GetById';
+import { getVotingDetailsController } from '@useCases/Orders/GetVotingDetails';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -167,6 +168,10 @@ router.post('/condominium/:condominiumID/orders/:orderID/voting', verifyJWT, (re
 
 router.post('/condominium/:condominiumID/orders/:orderID/vote', verifyJWT, (req, res) => {
   voteCreateController.handle(req, res);
+});
+
+router.get('/condominium/:condominiumId/orders/:orderId/voting', verifyJWT, (req, res) => {
+  getVotingDetailsController.handle(req, res);
 });
 
 //--Orders

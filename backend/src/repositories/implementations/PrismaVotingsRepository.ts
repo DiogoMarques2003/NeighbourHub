@@ -38,4 +38,20 @@ export default class PrismaVotingsRepository implements IVotingsRepository {
       },
     });
   }
+
+  async countByOrder(orderId: string): Promise<{ upVotes: number; downVotes: number; }> {
+    const votes = await this.prisma.votings.groupBy({
+      by: ['decision'],
+      where: {
+        orderID: orderId,
+      },
+      _count: {
+        decision: true,
+      },
+    });
+
+    const upVotes = votes.find((vote) => vote.decision === true)?._count.decision || 0;
+    const downVotes = votes.find((vote) => vote.decision === false)?._count.decision || 0;
+    return { upVotes, downVotes };
+  }
 }
