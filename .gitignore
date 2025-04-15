@@ -9,3 +9,4 @@ backend/files/*
 backend/src/prisma-client
 !backend/files/profilePictures/.gitkeep
 !backend/files/commonAreasPictures/.gitkeep
+!backend/files/reportFiles/.gitkeep

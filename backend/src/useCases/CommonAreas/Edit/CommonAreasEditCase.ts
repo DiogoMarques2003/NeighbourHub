@@ -4,11 +4,8 @@ import ICommonAreasCreateDTO from './ICommonAreasEditDTO';
 import AppError from '@errors/AppError';
 import { v4 as uuid } from 'uuid';
 import CommonAreas from '@entities/CommonAreas';
-import {
-  BASE_COMMON_AREAS_PICTURES_PATH,
-  COMMON_AREAS_PATH,
-} from '@constants/filesPaths';
-import path, { join } from 'path';
+import { BASE_COMMON_AREAS_PICTURES_PATH, COMMON_AREAS_PATH } from '@constants/filesPaths';
+import path, { join, sep } from 'path';
 import { copyFileSync, existsSync, unlinkSync } from 'fs';
 import generatePathToFile from '@shared/generatePathToFile';
 
@@ -43,8 +40,7 @@ export default class CommonAreasEditCase {
     const condDb = await this.condominiumsRepository.findById(condominiumId);
     if (!condDb) throw new AppError('Condomínio inexistente', 404);
 
-    if (userId != condDb.adminId)
-      throw new AppError('Não pode atualizar este condominio', 403);
+    if (userId != condDb.adminId) throw new AppError('Não pode atualizar este condominio', 403);
 
     // Atualiza as informações do espaço comum, se fornecido
     if (name) commonAreaDb.name = name;
@@ -61,20 +57,18 @@ export default class CommonAreasEditCase {
     if (imagesAdd) resultImagesNumber += imagesAdd.length;
     if (imagesRemove) resultImagesNumber -= imagesRemove.length;
 
-    if (resultImagesNumber > 4)
-      throw new AppError('Número máximo de imagens atingido. (max. 4)', 400);
-    if (resultImagesNumber <= 0)
-      throw new AppError('Número mínimo de imagens atingido. (min. 1)', 400);
+    if (resultImagesNumber > 4) throw new AppError('Número máximo de imagens atingido. (max. 4)', 400);
+    if (resultImagesNumber <= 0) throw new AppError('Número mínimo de imagens atingido. (min. 1)', 400);
 
     // Remover as imagens que o utilizador pedir
     if (imagesRemove) {
       for (const imageRemove of imagesRemove) {
-        if (existsSync(imageRemove)) {
-          unlinkSync(path.resolve(COMMON_AREAS_PATH, imageRemove));
+        const imageName = imageRemove.split('/').pop();
+        const imagePath = path.resolve(COMMON_AREAS_PATH, imageName);
+        if (existsSync(imagePath)) {
+          unlinkSync(imagePath);
         }
-        commonAreaDb.images = commonAreaDb.images.filter(
-          (image) => image.split('/').pop() !== imageRemove
-        );
+        commonAreaDb.images = commonAreaDb.images.filter((image) => image.split(sep).pop() !== imageRemove);
       }
     }
 
@@ -85,10 +79,7 @@ export default class CommonAreasEditCase {
         const photoName = `${uuid()}.${extension}`;
         const photoUri = join(BASE_COMMON_AREAS_PICTURES_PATH, photoName);
         // Copiar a imagem para o diretorio de arquivos
-        copyFileSync(
-          join(imageAdd.destination, imageAdd.filename),
-          join(COMMON_AREAS_PATH, photoName)
-        );
+        copyFileSync(join(imageAdd.destination, imageAdd.filename), join(COMMON_AREAS_PATH, photoName));
         // Apagar imagem temporaria
         unlinkSync(join(imageAdd.destination, imageAdd.filename));
         commonAreaDb.images.push(photoUri);
@@ -98,9 +89,7 @@ export default class CommonAreasEditCase {
     // Salva a alteração no repositório
     await this.commonAreasRepository.update(commonAreaDb);
 
-    commonAreaDb.images = commonAreaDb.images.map((image) =>
-      generatePathToFile(image)
-    );
+    commonAreaDb.images = commonAreaDb.images.map((image) => generatePathToFile(image));
 
     return commonAreaDb;
   }
