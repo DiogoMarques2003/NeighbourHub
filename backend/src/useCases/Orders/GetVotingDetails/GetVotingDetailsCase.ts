@@ -27,8 +27,9 @@ export default class GetVotingDetailsCase {
     if (!userAddress && condDb.adminId !== userId) throw new AppError('Utilizador não pertence ao condomínio!', 403);
 
     const order = await this.ordersRepository.findByIdWithUserData(orderId);
-    if (!order) throw new AppError('Ordem não existe!', 404);
-    if (order.condominiumId !== condominiumId) throw new AppError('Ordem não pertence ao condomínio!', 403);
+    if (!order) throw new AppError('Pedido não existe!', 404);
+    if (order.condominiumId !== condominiumId) throw new AppError('Pedido não pertence ao condomínio!', 403);
+    if (!order.votingDeadline) throw new AppError('Pedido não está em votação!', 400);
 
     const countVotes = await this.votinsgsRepository.countByOrder(orderId);
     const budgets = await this.budgetsRepositoryy.getBudgetsByOrderIdWithVotes(orderId);
