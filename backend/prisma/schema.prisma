@@ -192,9 +192,10 @@ model Votings {
 
 model OrderWorks {
   id String @id @unique
-  postedAt DateTime
+  postedAt DateTime @default(now())
   status String
   description String
+  reportFile String?
   orderId String
   order Orders @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }

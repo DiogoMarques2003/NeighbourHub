@@ -5,9 +5,10 @@ export default class OrderWorks {
   public postedAt: Date;
   public status: string;
   public description: string;
+  public reportFile?: string;
   public orderId: string;
 
-  constructor(props: Omit<OrderWorks, 'id'>, id?: string) {
+  constructor(props: Omit<OrderWorks, 'id' | 'postedAt'>, id?: string) {
     Object.assign(this, props);
 
     if (!id) {

@@ -16,4 +16,41 @@ export default class PrismaOrderWorksRepository implements IOrderWorksRepository
   create(orderWork: OrderWorks): Promise<OrderWorks> {
     return this.prisma.orderWorks.create({ data: orderWork });
   }
+
+  update(orderWork: OrderWorks): Promise<OrderWorks> {
+    return this.prisma.orderWorks.update({ where: { id: orderWork.id }, data: orderWork });
+  }
+
+  async delete(id: string): Promise<boolean> {
+    return !!(await this.prisma.orderWorks.delete({ where: { id } }));
+  }
+
+  countWithFilters(orderId: string, status?: string, hasReport?: boolean): Promise<number> {
+    return this.prisma.orderWorks.count({
+      where: {
+        orderId,
+        ...(status && { status }),
+        reportFile: hasReport === undefined ? undefined : hasReport ? { not: null } : null,
+      },
+    });
+  }
+
+  findWithFilters(
+    orderId: string,
+    pageSize: number,
+    pageNumber: number,
+    status?: string,
+    hasReport?: boolean
+  ): Promise<OrderWorks[]> {
+    return this.prisma.orderWorks.findMany({
+      where: {
+        orderId,
+        ...(status && { status }),
+        reportFile: hasReport === undefined ? undefined : hasReport ? { not: null } : null,
+      },
+      take: pageSize,
+      skip: pageSize * (pageNumber - 1),
+      orderBy: { postedAt: 'desc' },
+    });
+  }
 }

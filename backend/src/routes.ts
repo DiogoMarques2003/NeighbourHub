@@ -40,6 +40,10 @@ import { servicesDeleteController } from '@useCases/Services/Delete';
 import { commonAreasDeleteController } from '@useCases/CommonAreas/Delete';
 import { commonAreasGetByIdController } from '@useCases/CommonAreas/GetById';
 import { getVotingDetailsController } from '@useCases/Orders/GetVotingDetails';
+import { createOrdersWorkController } from '@useCases/OrdersWork/Create';
+import { editOrdersWorkController } from '@useCases/OrdersWork/Edit';
+import { deleteOrdersWorkController } from '@useCases/OrdersWork/Delete';
+import { getOrdersWorkController } from '@useCases/OrdersWork/Get';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -185,6 +189,33 @@ router.get('/condominium/:condominiumId/orders', verifyJWT, (req, res) => {
 
 router.get('/condominium/:condominiumId/orders/:orderId', verifyJWT, (req, res) => {
   ordersGetByIdController.handle(req, res);
+});
+
+//--ORDERS WORKS
+router.post('/condominium/:condominiumId/orders/:orderId/work', upload.single('reportFile'), verifyJWT, (req, res) => {
+  createOrdersWorkController.handle(req, res);
+});
+
+router.put(
+  '/condominium/:condominiumId/orders/:orderId/work/:orderWorkId',
+  upload.single('reportFile'),
+  verifyJWT,
+  (req, res) => {
+    editOrdersWorkController.handle(req, res);
+  }
+);
+
+router.delete(
+  '/condominium/:condominiumId/orders/:orderId/work/:orderWorkId',
+  upload.single('reportFile'),
+  verifyJWT,
+  (req, res) => {
+    deleteOrdersWorkController.handle(req, res);
+  }
+);
+
+router.get('/condominium/:condominiumId/orders/:orderId/work', verifyJWT, (req, res) => {
+  getOrdersWorkController.handle(req, res);
 });
 
 //--Payments
