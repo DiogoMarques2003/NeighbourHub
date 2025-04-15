@@ -140,7 +140,7 @@ model ServiceRequests {
 
 model ServiceReviews {
   id String @id @unique
-  rating Int
+  rating Float
   comment String
   createdAt DateTime  @default(now())
   serviceRequestId String

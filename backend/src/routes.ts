@@ -49,6 +49,8 @@ import { fineEditController } from '@useCases/Fine/Edit';
 import { fineDeleteController } from '@useCases/Fine/delete';
 import { fineGetFromReservationController } from '@useCases/Fine/GetFromReservation';
 import { fineGetController } from '@useCases/Fine/Get';
+import { serviceReviewsEditController } from '@useCases/ServiceReviews/Edit';
+import { serviceReviewsGetController } from '@useCases/ServiceReviews/Get';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -197,16 +199,28 @@ router.post('/condominium/:condId/services/:serviceId/request', verifyJWT, (req,
   servicesRequestController.handle(req, res);
 });
 
-router.post('/condominium/:condId/services/:serviceId/request/:requestId/review', verifyJWT, (req, res) => {
-  servicesReviewController.handle(req, res);
-});
-
 router.post('/condominium/:condId/services/:serviceId', verifyJWT, (req, res) => {
   serviceEditController.handle(req, res);
 });
 
-//--VOTING
+//--Reviews
+router.post('/condominium/:condId/services/:serviceId/request/:requestId/review', verifyJWT, (req, res) => {
+  servicesReviewController.handle(req, res);
+});
 
+router.put(
+  '/condominium/:condominiumId/services/:serviceId/request/:serviceRequestId/review/:serviceReviewId',
+  verifyJWT,
+  (req, res) => {
+    serviceReviewsEditController.handle(req, res);
+  }
+);
+
+router.get('/condominium/:condominiumId/services/:serviceId/reviews', verifyJWT, (req, res) => {
+  serviceReviewsGetController.handle(req, res);
+});
+
+//--VOTING
 router.post('/condominium/:condominiumID/orders/:orderID/voting', verifyJWT, (req, res) => {
   votingCreateController.handle(req, res);
 });

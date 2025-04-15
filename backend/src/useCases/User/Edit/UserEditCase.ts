@@ -4,7 +4,7 @@ import AppError from '@errors/AppError';
 import bcrypt from 'bcryptjs';
 import { v4 as uuid } from 'uuid';
 import { copyFileSync, existsSync, unlinkSync } from 'fs';
-import { join } from 'path';
+import { join, sep } from 'path';
 import { BASE_PROFILE_PICTURES_PATH, PROFILE_PICTURES_PATH } from '@constants/filesPaths';
 import generatePathToFile from '@shared/generatePathToFile';
 
@@ -29,8 +29,10 @@ export default class UserEditCase {
 
     if (foto) {
       // Apagar a imagem caso o utilizador tenha uma
-      if (userDb.foto && existsSync(userDb.foto)) {
-        unlinkSync(userDb.foto);
+      if (userDb.foto) {
+        const userPhotoName = userDb.foto.split(sep).pop();
+        const userPhotoPath = join(PROFILE_PICTURES_PATH, userPhotoName);
+        if (existsSync(userPhotoPath)) unlinkSync(userDb.foto);
       }
 
       const extension = foto.originalname.split('.').pop();
