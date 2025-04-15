@@ -6,24 +6,26 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import ChooseCondominium from './pages/ChooseCondominiumPage';
+import CreateCondominium from './pages/CreateCondominiumPage';
+import './App.css';
 
 const App = () => {
   return (
     <>
       <BrowserRouter>
-        <AuthProvider> 
+        <AuthProvider>
           <Routes>
             {/* Public routes */}
-            <Route path={"/login"} element={<LoginPage />} />
-            <Route path={"/register"} element={<RegisterPage />} />
+            <Route path={'/login'} element={<LoginPage />} />
+            <Route path={'/register'} element={<RegisterPage />} />
 
             {/* Protected routes */}
             <Route element={<ProtectedRoute />}>
-              <Route path={"/"} element={<HomePage />} />
-              <Route path={"/condominium"} element={<ChooseCondominium />} />
-    
+              <Route path={'/'} element={<HomePage />} />
+              <Route path={'/condominium'} element={<ChooseCondominium />} />
+              <Route path={'/condominiumcreate'} element={<CreateCondominium />} />
             </Route>
-            
+
             {/* Default redirect */}
             <Route path="*" element={<Navigate to="/NotFound" replace />} />
           </Routes>
