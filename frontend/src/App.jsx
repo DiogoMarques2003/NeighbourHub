@@ -7,6 +7,7 @@ import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import ChooseCondominium from './pages/ChooseCondominiumPage';
 import HomeLayout from './components/layout/HomeLayout';
+import CommonAreasPage from './pages/CommonAreasPage';
 
 const App = () => {
   return (
@@ -20,12 +21,13 @@ const App = () => {
 
             {/* Protected routes */}
             <Route element={<ProtectedRoute />}>
+              <Route path={"/"} element={<ChooseCondominium />} />
               <Route path={"/condominium"} element={<ChooseCondominium />} />
 
               {/* Protected routes with fixed side bar */}
               <Route element={<HomeLayout />}>
-                <Route path={"/"} element={<HomePage />} />
-                <Route path={"/home"} element={<HomePage />} />
+                <Route path={"/condominium/:condominiumId"} element={<HomePage />} />
+                <Route path={"/condominium/:condominiumId/espacos"} element={<CommonAreasPage />} />
               </Route>
             </Route>
             

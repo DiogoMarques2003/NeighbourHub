@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 import FeatherIcon from 'feather-icons-react';
 import defaultUserPhoto from "../../../public/images/defaultUserAvatar.jpg"
 
-const SideBarHomePage = ({ currentUser, logout }) => {
+const SideBarHomePage = ({ currentUser, condominium, logout }) => {
     const navLinks = [
-        { title: 'Home', path: '/', icon: 'home' },
+        { title: 'Home', path: `/condominium/${condominium.id}`, icon: 'home' },
         { title: 'Pedidos', path: '/pedidos', icon: 'file-text', onClick: null },
-        { title: 'Espaços', path: '/espacos', icon: 'grid', onClick: null },
+        { title: 'Espaços', path: `/condominium/${condominium.id}/espacos`, icon: 'grid', onClick: null },
         { title: 'Serviços', path: '/servicos', icon: 'tool', onClick: null },
         { title: 'Finanças', path: '/financas', icon: 'dollar-sign', onClick: null },
         { title: 'Moradores', path: '/moradores', icon: 'users', onClick: null },
@@ -17,10 +17,10 @@ const SideBarHomePage = ({ currentUser, logout }) => {
       ];
 
     return (
-        <div className="fixed top-0 left-0 h-full w-64 bg-white flex flex-col">
+        <div className="fixed top-0 left-0 h-full w-68 bg-white flex flex-col">
             <div className="flex items-center p-4">
                 <CircleLogo src={logo} size="em" />
-                <span className="ml-2 text-2xl font-semibold ">NeighbourHub</span>
+                <span className="ml-2 text-2xl font-semibold truncate whitespace-nowrap">{condominium.name || "Neighbour Hub"}</span>
             </div>
 
             <nav className="flex-1 mt-4">
@@ -30,8 +30,8 @@ const SideBarHomePage = ({ currentUser, logout }) => {
                             <Link 
                                 to={link.path}
                                 onClick={link.onClick}
-                                className={`flex items-center px-4 py-3 text-gray-700 hover:bg-gray-500 ${
-                                location.pathname === link.path ? 'bg-gray-200' : ''
+                                className={`flex items-center px-4 py-3 text-gray-700 ${
+                                location.pathname === link.path ? 'bg-gray-100' : ''
                                 }`}
                             >
                                 <FeatherIcon size={20} icon={link.icon} />
@@ -42,14 +42,17 @@ const SideBarHomePage = ({ currentUser, logout }) => {
                 </ul>
             </nav>
 
-
-            <div className="flex items-center p-4">
+            <Link
+                to={"/editUser"}
+                className="flex items-center p-4"
+            >
                 <CircleLogo src={currentUser?.foto || defaultUserPhoto} size="em" />
                 <div className="ml-2">
                     <p className="text-sm font-medium">{currentUser.name}</p>
                     <p className="text-xs text-gray-500">{currentUser.email}</p>
                 </div>
-            </div>
+            </Link>
+                
 
             
         </div>

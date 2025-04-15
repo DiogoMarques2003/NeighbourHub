@@ -10,6 +10,16 @@ const condominiumService = {
       return { error: error?.response?.data?.message };
     }
   },
+
+  getConduminiumByID: async (condominiumID) => {
+    try {
+      const response = await apiClient.get(`/condominium/${condominiumID}`);
+      return response?.data;
+    } catch (error) {
+      return { error: error?.response?.data?.message };
+    }
+  },
+
 };
 
 export default condominiumService;
