@@ -22,39 +22,27 @@ export default class PrismaBudgetsRepository implements IBudgetsRepository {
   }
 
   async getBudgetsByOrderIdWithVotes(orderId: string): Promise<GetVotingDetailsResponse['budgets']> {
-    const budgets: GetVotingDetailsResponse['budgets'] = [];
-
-    const budgetsDb = await this.prisma.budgets.findMany({
+    const data = await this.prisma.budgets.findMany({
       where: { orderId },
       select: {
         id: true,
         description: true,
         amount: true,
         createdAt: true,
+        _count: {
+          select: {
+            Votings: { where: { decision: true } },
+          },
+        },
       },
     });
 
-    for await (const budget of budgetsDb) {
-      const votes = await this.prisma.votings.groupBy({
-        by: ['decision'],
-        where: {
-          budgetID: budget.id,
-        },
-        _count: {
-          decision: true,
-        },
-      });
-
-      const upVotes = votes.find((vote) => vote.decision === true)?._count.decision || 0;
-      const downVotes = votes.find((vote) => vote.decision === false)?._count.decision || 0;
-
-      budgets.push({
-        ...budget,
-        upVotes,
-        downVotes,
-      });
-    }
-
-    return budgets;
+    return data.map((budget) => ({
+      id: budget.id,
+      description: budget.description,
+      amount: budget.amount,
+      createdAt: budget.createdAt,
+      votes: budget._count.Votings,
+    }));
   }
 }
