@@ -7,7 +7,7 @@ export default interface ICondominiumPaymentsRepository {
   update(condominiumPayment: CondominiumPayments): Promise<CondominiumPayments>;
   delete(id: string): Promise<Boolean>;
 
-  countWithFilters(findByEmail?: Prisma.CondominiumPaymentsWhereInput): Promise<number>;
+  countWithFilters(filters?: Prisma.CondominiumPaymentsWhereInput): Promise<number>;
   getWithPagination(
     pageSize: number,
     pageNumber: number,

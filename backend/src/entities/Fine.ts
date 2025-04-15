@@ -8,7 +8,7 @@ export default class Fine {
   public status: string;
   public areaReservationId: string;
 
-  constructor(props: Omit<Fine, 'id'>, id?: string) {
+  constructor(props: Omit<Fine, 'id' | 'createdAt'>, id?: string) {
     Object.assign(this, props);
 
     if (!id) {
