@@ -64,7 +64,7 @@ const ChooseCondominiumForm = () => {
             <Card
               key={cond.id}
               className="border border-gray-200 hover:bg-gray-100 mb-5"
-              onClick={() => navigate(`${cond.id}`)}
+              onClick={() => navigate(`/condominium/${cond.id}`)}
             >
               <h5 class="mb-2 text-2xl"> {cond.name} </h5>
               <span class="text-gray-600"> {`${cond.postalCode} ${cond.city}, ${cond.country}`} </span>
