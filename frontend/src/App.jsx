@@ -6,6 +6,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import ChooseCondominium from './pages/ChooseCondominiumPage';
+import HomeLayout from './components/layout/HomeLayout';
 
 const App = () => {
   return (
@@ -19,9 +20,13 @@ const App = () => {
 
             {/* Protected routes */}
             <Route element={<ProtectedRoute />}>
-              <Route path={"/"} element={<HomePage />} />
               <Route path={"/condominium"} element={<ChooseCondominium />} />
-    
+
+              {/* Protected routes with fixed side bar */}
+              <Route element={<HomeLayout />}>
+                <Route path={"/"} element={<HomePage />} />
+                <Route path={"/home"} element={<HomePage />} />
+              </Route>
             </Route>
             
             {/* Default redirect */}

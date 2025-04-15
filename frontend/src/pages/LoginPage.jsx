@@ -15,7 +15,9 @@ export default function LoginPage() {
           <CircleLogo 
             src={logo}
           />
-          <LoginForm />
+          <div className="mt-6">
+            <LoginForm />
+          </div>
         </AuthBox>
       </div>
     </div>
