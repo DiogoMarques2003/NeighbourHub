@@ -106,9 +106,9 @@ model Fine {
   id String @id @unique
   amount Float
   reason String
-  createdAt DateTime
+  createdAt DateTime @default(now())
   status String
-  areaReservationId String
+  areaReservationId String @unique
   areaReservation AreaReservations @relation(fields: [areaReservationId], references: [id], onDelete: Cascade)
 }
 

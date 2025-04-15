@@ -44,6 +44,11 @@ import { createOrdersWorkController } from '@useCases/OrdersWork/Create';
 import { editOrdersWorkController } from '@useCases/OrdersWork/Edit';
 import { deleteOrdersWorkController } from '@useCases/OrdersWork/Delete';
 import { getOrdersWorkController } from '@useCases/OrdersWork/Get';
+import { fineCreateController } from '@useCases/Fine/Create';
+import { fineEditController } from '@useCases/Fine/Edit';
+import { fineDeleteController } from '@useCases/Fine/delete';
+import { fineGetFromReservationController } from '@useCases/Fine/GetFromReservation';
+import { fineGetController } from '@useCases/Fine/Get';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -134,8 +139,44 @@ router.post('/condominium/:condId/commonarea/:idCommonArea/reservation', verifyJ
   areaReservationsController.handle(req, res);
 });
 
-//--SERVICES
+//--Fine
+router.post(
+  '/condominium/:condominiumId/commonarea/:commonAreaId/reservation/:areaReservationId/fine',
+  verifyJWT,
+  (req, res) => {
+    fineCreateController.handle(req, res);
+  }
+);
 
+router.put(
+  '/condominium/:condominiumId/commonarea/:commonAreaId/reservation/:areaReservationId/fine/:fineId',
+  verifyJWT,
+  (req, res) => {
+    fineEditController.handle(req, res);
+  }
+);
+
+router.delete(
+  '/condominium/:condominiumId/commonarea/:commonAreaId/reservation/:areaReservationId/fine/:fineId',
+  verifyJWT,
+  (req, res) => {
+    fineDeleteController.handle(req, res);
+  }
+);
+
+router.get(
+  '/condominium/:condominiumId/commonarea/:commonAreaId/reservation/:areaReservationId/fine',
+  verifyJWT,
+  (req, res) => {
+    fineGetFromReservationController.handle(req, res);
+  }
+);
+
+router.get('/condominium/:condominiumId/fines', verifyJWT, (req, res) => {
+  fineGetController.handle(req, res);
+});
+
+//--SERVICES
 router.post('/condominium/:condId/services', verifyJWT, (req, res) => {
   servicesCreateController.handle(req, res);
 });
@@ -205,14 +246,9 @@ router.put(
   }
 );
 
-router.delete(
-  '/condominium/:condominiumId/orders/:orderId/work/:orderWorkId',
-  upload.single('reportFile'),
-  verifyJWT,
-  (req, res) => {
-    deleteOrdersWorkController.handle(req, res);
-  }
-);
+router.delete('/condominium/:condominiumId/orders/:orderId/work/:orderWorkId', verifyJWT, (req, res) => {
+  deleteOrdersWorkController.handle(req, res);
+});
 
 router.get('/condominium/:condominiumId/orders/:orderId/work', verifyJWT, (req, res) => {
   getOrdersWorkController.handle(req, res);

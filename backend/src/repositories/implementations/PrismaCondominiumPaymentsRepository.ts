@@ -28,8 +28,8 @@ export default class PrismaCondominiumPaymentsRepository implements ICondominium
     return !!(await this.prisma.condominiumPayments.delete({ where: { id } }));
   }
 
-  countWithFilters(findByEmail?: Prisma.CondominiumPaymentsWhereInput): Promise<number> {
-    return this.prisma.condominiumPayments.count({ where: findByEmail });
+  countWithFilters(filters?: Prisma.CondominiumPaymentsWhereInput): Promise<number> {
+    return this.prisma.condominiumPayments.count({ where: filters });
   }
 
   getWithPagination(pageSize: number, pageNumber: number, filters?: Prisma.CondominiumPaymentsWhereInput, orderBy?: Prisma.CondominiumPaymentsOrderByWithRelationInput): Promise<CondominiumPayments[]> {

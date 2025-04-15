@@ -6,7 +6,7 @@ import IAddressesRepository from '@repositories/IAddressesRepository';
 import IAreaReservationsRepository from '@repositories/IAreaReservationsRepository';
 import stringToHours from '@shared/convertStringToHours';
 import AreaReservations from '@entities/AreaReservations';
-import { STATUS_RESERV_PENDING } from '@constants/status';
+import { STATUS_READY, STATUS_RESERV_PENDING } from '@constants/status';
 import IUsersRepository from '@repositories/IUsersRepository';
 import IMailProvider from '@providers/IMailProvider';
 import { resolve } from 'path';
@@ -37,6 +37,7 @@ export default class AreaReservationsCreateCase {
     //Valida Espaço no condominio
     const areaDb = await this.commonAreasRepository.findById(areaId);
     if (!areaDb || areaDb.condominiumId !== condId) throw new AppError('Espaço comum inexistente', 404);
+    if (areaDb.status !== STATUS_READY) throw new AppError('Espaço comum não disponível', 400);
 
     //Valida User no condominio
     const userCondDb = await this.addressesRepository.getByUserAndCond(userId, condId);
