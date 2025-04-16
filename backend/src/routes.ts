@@ -56,6 +56,7 @@ import { areaReservationsDeleteController } from '@useCases/AreaReservations/Del
 import { areaReservationsGetByIdController } from '@useCases/AreaReservations/GetById';
 import { editServiceRequestsController } from '@useCases/ServiceRequests/Edit';
 import { getByIdServiceRequestsController } from '@useCases/ServiceRequests/GetById';
+import { deleteServiceRequestController } from '@useCases/ServiceRequests/Delete';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -223,6 +224,10 @@ router.post('/condominium/:condId/services/:serviceId/request', verifyJWT, (req,
 
 router.put('/condominium/:condominiumId/services/:serviceId/request/:serviceRequestId', verifyJWT, (req, res) => {
   editServiceRequestsController.handle(req, res);
+});
+
+router.delete('/condominium/:condominiumId/services/:serviceId/request/:serviceRequestId', verifyJWT, (req, res) => {
+  deleteServiceRequestController.handle(req, res);
 });
 
 router.get('/condominium/:condominiumId/services/:serviceId/request/:serviceRequestId', verifyJWT, (req, res) => {
