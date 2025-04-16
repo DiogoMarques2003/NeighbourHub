@@ -817,7 +817,7 @@ fast-levenshtein@^2.0.6:
 
 feather-icons-react@^0.8.1:
   version "0.8.1"
-  resolved "https://registry.yarnpkg.com/feather-icons-react/-/feather-icons-react-0.8.1.tgz#ff7ce13900b6dfabfe1e5d287ed4315951b03fa8"
+  resolved "https://registry.npmjs.org/feather-icons-react/-/feather-icons-react-0.8.1.tgz"
   integrity sha512-3qGHyiVpUaIyNOFehqQ/bEFLDFXezWWt250g1gJfKokffuVaLt0P+es8kddf+SaxA0qqiK7tt/uxvFXjDscDKw==
 
 file-entry-cache@^8.0.0:
@@ -1244,7 +1244,7 @@ punycode@^2.1.0:
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.3.1.tgz"
   integrity sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==
 
-"react-dom@^17.0.0 || ^18.0.0 || ^19.0.0", "react-dom@^18 || ^19", react-dom@^19.0.0, react-dom@>=0.14.0, react-dom@>=16.6.0, react-dom@>=18:
+"react-dom@^16.8.4 || ^17.0.0 || ^18.0.0", "react-dom@^17.0.0 || ^18.0.0 || ^19.0.0", "react-dom@^18 || ^19", react-dom@^19.0.0, react-dom@>=0.14.0, react-dom@>=16.6.0, react-dom@>=18:
   version "19.1.0"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-19.1.0.tgz"
   integrity sha512-Xs1hdnE+DyKgeHJeJznQmYMIBG3TKIHJJT95Q58nHLSrElKlGQqDTR2HQ9fx5CN/Gk6Vh/kupBTDLU11/nDk/g==
@@ -1253,7 +1253,7 @@ punycode@^2.1.0:
 
 react-feather@^2.0.10:
   version "2.0.10"
-  resolved "https://registry.yarnpkg.com/react-feather/-/react-feather-2.0.10.tgz#0e9abf05a66754f7b7bb71757ac4da7fb6be3b68"
+  resolved "https://registry.npmjs.org/react-feather/-/react-feather-2.0.10.tgz"
   integrity sha512-BLhukwJ+Z92Nmdcs+EMw6dy1Z/VLiJTzEQACDUEnWMClhYnFykJCGWQx+NmwP/qQHGX/5CzQ+TGi8ofg2+HzVQ==
   dependencies:
     prop-types "^15.7.2"
@@ -1310,7 +1310,7 @@ react-transition-group@^4.4.1:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-"react@^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^17.0.0 || ^18.0.0 || ^19.0.0", "react@^18 || ^19", react@^19.0.0, react@^19.1.0, react@>=0.14.0, react@>=16.6.0, react@>=18:
+"react@^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^16.8.4 || ^17.0.0 || ^18.0.0", "react@^17.0.0 || ^18.0.0 || ^19.0.0", "react@^18 || ^19", react@^19.0.0, react@^19.1.0, react@>=0.14.0, react@>=16.6.0, react@>=16.8.6, react@>=18:
   version "19.1.0"
   resolved "https://registry.npmjs.org/react/-/react-19.1.0.tgz"
   integrity sha512-FS+XFBNvn3GTAWq26joslQgWNoFu08F4kl0J4CgdNKADkdSGXQyTCnKteIAJy96Br6YbpEU1LSzV5dYtjMkMDg==

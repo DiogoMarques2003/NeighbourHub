@@ -137,10 +137,11 @@ export default class PrismaAddressesRepository implements IAddressesRepository {
 
     return data.map((address) => {
       const { condominium, ...addressData } = address;
+      const { id, ...otherCondominiumdData } = condominium;
       return {
         ...addressData,
         condominiumId: condominium.id,
-        ...condominium,
+        ...otherCondominiumdData,
       };
     });
   }
