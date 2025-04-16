@@ -5,8 +5,10 @@ import Button from '../../common/Button';
 import ErrorBar from '../../common/ErrorBar';
 import { toast } from 'react-toastify';
 import condominiumService from '../../../services/condominiumService';
+import { useNavigate } from 'react-router-dom';
 
 const CreateCondominiumForm = () => {
+  const navigate = useNavigate();
   const [condName, setCondName] = useState('');
   const [condEmail, setCondEmail] = useState('');
   const [condPhone, setCondPhone] = useState('');

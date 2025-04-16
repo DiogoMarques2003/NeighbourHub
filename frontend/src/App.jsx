@@ -9,6 +9,7 @@ import ChooseCondominium from './pages/ChooseCondominiumPage';
 import HomeLayout from './components/layout/HomeLayout';
 import CommonAreasPage from './pages/CommonAreasPage';
 import CreateCondominium from './pages/CreateCondominiumPage';
+import ServicesPage from './pages/ServicesPage';
 import './App.css';
 
 const App = () => {
@@ -31,6 +32,7 @@ const App = () => {
               <Route element={<HomeLayout />}>
                 <Route path={"/condominium/:condominiumId"} element={<HomePage />} />
                 <Route path={"/condominium/:condominiumId/espacos"} element={<CommonAreasPage />} />
+                <Route path={"/condominium/:condominiumId/services"} element={<ServicesPage />} />
               </Route>
             </Route>
             
