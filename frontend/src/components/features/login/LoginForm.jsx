@@ -6,6 +6,7 @@ import InputWithIcon from '../../common/InputWithIcon';
 import Button from '../../common/Button';
 import { useAuthContext } from '../../../hooks/useAuthContext';
 import { removeToken } from '../../../utils/helperFunctions.js';
+import ErrorBar from '../../common/ErrorBar.jsx';
 
 const LoginForm = () => {
   const [credentials, setCredentials] = useState({
@@ -67,11 +68,9 @@ const LoginForm = () => {
   };
 
   return (
-    <form className="space-y-2" onSubmit={handleSubmit}>
-      <div className={`transition-all duration-300 overflow-hidden ${error ? 'bg-red-50 p-4 mb-4 rounded-md border border-red-200 opacity-100 max-h-20' : 'max-h-0 opacity-0 p-0 border-0'}`}>
-        <p className="text-sm text-red-600">{error}</p>
-      </div>
-      
+    <form className="space-y-2" onSubmit={handleSubmit}>      
+      {error && <ErrorBar error={error}/>}
+
       <div className="space-y-4">
         <InputWithIcon
           icon={Mail}

@@ -21,7 +21,12 @@ const LogoutCreateCondDiv = () => {
       </div>
 
       <div className="flex items-center mb-6">
-        <button className="text-blue-500 flex items-center cursor-pointer">
+        <button
+          onClick={() => {
+            navigate('/condominiumcreate');
+          }}
+          className="text-blue-500 flex items-center cursor-pointer"
+        >
           <Plus size={20} />
           <span className="ml-1">Criar Condominio</span>
         </button>

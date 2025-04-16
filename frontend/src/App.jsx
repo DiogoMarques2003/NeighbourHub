@@ -8,21 +8,24 @@ import HomePage from './pages/HomePage';
 import ChooseCondominium from './pages/ChooseCondominiumPage';
 import HomeLayout from './components/layout/HomeLayout';
 import CommonAreasPage from './pages/CommonAreasPage';
+import CreateCondominium from './pages/CreateCondominiumPage';
+import './App.css';
 
 const App = () => {
   return (
     <>
       <BrowserRouter>
-        <AuthProvider> 
+        <AuthProvider>
           <Routes>
             {/* Public routes */}
-            <Route path={"/login"} element={<LoginPage />} />
-            <Route path={"/register"} element={<RegisterPage />} />
+            <Route path={'/login'} element={<LoginPage />} />
+            <Route path={'/register'} element={<RegisterPage />} />
 
             {/* Protected routes */}
             <Route element={<ProtectedRoute />}>
-              <Route path={"/"} element={<ChooseCondominium />} />
-              <Route path={"/condominium"} element={<ChooseCondominium />} />
+              <Route path={'/'} element={<HomePage />} />
+              <Route path={'/condominium'} element={<ChooseCondominium />} />
+              <Route path={'/condominiumcreate'} element={<CreateCondominium />} />
 
               {/* Protected routes with fixed side bar */}
               <Route element={<HomeLayout />}>
@@ -30,7 +33,8 @@ const App = () => {
                 <Route path={"/condominium/:condominiumId/espacos"} element={<CommonAreasPage />} />
               </Route>
             </Route>
-            
+            </Route>
+
             {/* Default redirect */}
             <Route path="*" element={<Navigate to="/NotFound" replace />} />
           </Routes>
