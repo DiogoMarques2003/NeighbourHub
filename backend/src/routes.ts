@@ -51,6 +51,9 @@ import { fineGetFromReservationController } from '@useCases/Fine/GetFromReservat
 import { fineGetController } from '@useCases/Fine/Get';
 import { serviceReviewsEditController } from '@useCases/ServiceReviews/Edit';
 import { serviceReviewsGetController } from '@useCases/ServiceReviews/Get';
+import { areaReservationsEditController } from '@useCases/AreaReservations/Edit';
+import { areaReservationsDeleteController } from '@useCases/AreaReservations/Delete';
+import { areaReservationsGetByIdController } from '@useCases/AreaReservations/GetById';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -139,6 +142,18 @@ router.get('/condominium/:condominiumId/commonarea/:commonAreaId', verifyJWT, (r
 //--AREA RESERVATION
 router.post('/condominium/:condId/commonarea/:idCommonArea/reservation', verifyJWT, (req, res) => {
   areaReservationsController.handle(req, res);
+});
+
+router.put('/condominium/:condominiumId/commonarea/:areaId/reservation/:reservationId', verifyJWT, (req, res) => {
+  areaReservationsEditController.handle(req, res);
+});
+
+router.delete('/condominium/:condominiumId/commonarea/:areaId/reservation/:reservationId', verifyJWT, (req, res) => {
+  areaReservationsDeleteController.handle(req, res);
+});
+
+router.get('/condominium/:condominiumId/commonarea/:areaId/reservation/:reservationId', verifyJWT, (req, res) => {
+  areaReservationsGetByIdController.handle(req, res);
 });
 
 //--Fine
