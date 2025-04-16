@@ -33,8 +33,7 @@ const App = () => {
                 <Route path={"/condominium/:condominiumId/espacos"} element={<CommonAreasPage />} />
               </Route>
             </Route>
-            </Route>
-
+            
             {/* Default redirect */}
             <Route path="*" element={<Navigate to="/NotFound" replace />} />
           </Routes>
