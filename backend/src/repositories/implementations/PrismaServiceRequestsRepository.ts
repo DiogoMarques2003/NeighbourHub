@@ -16,4 +16,12 @@ export default class PrismaServiceRequestsRepository implements IServiceRequests
   create(serviceRequest: ServiceRequests): Promise<ServiceRequests> {
     return this.prisma.serviceRequests.create({ data: serviceRequest });
   }
+
+  update(serviceRequest: ServiceRequests): Promise<ServiceRequests> {
+    return this.prisma.serviceRequests.update({ where: { id: serviceRequest.id }, data: serviceRequest });
+  }
+
+  async delete(id: string): Promise<boolean> {
+    return !!(await this.prisma.serviceRequests.delete({ where: { id } }));
+  }
 }

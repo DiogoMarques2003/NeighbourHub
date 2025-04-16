@@ -4,7 +4,6 @@ import IServicesRepository from '@repositories/IServicesRepository';
 import IServicesRequestDTO from './IServicesRequestDTO';
 import IAddressesRepository from '@repositories/IAddressesRepository';
 import IServiceRequestsRepository from '@repositories/IServiceRequestsRepository';
-import Services from '@entities/ServiceRequests';
 import ServiceRequests from '@entities/ServiceRequests';
 import { STATUS_REQ_PENDING } from '@constants/status';
 import { EMAILS_PATH } from '@constants/filesPaths';
