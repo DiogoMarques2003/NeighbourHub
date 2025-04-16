@@ -7,7 +7,7 @@ const AuthBackgroundVideo = () => {
       <video autoPlay muted loop playsInline className="absolute w-full h-full object-cover">
         <source src={video} poster={poster} type="video/mp4" />
       </video>
-      <div className="absolute inset-0 bg-cyan-300 opacity-70" />
+      <div className="absolute inset-0 bg-video-color opacity-80" />
     </>
   );
 };

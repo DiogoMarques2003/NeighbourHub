@@ -4,10 +4,10 @@ import condominiumService from '../../../services/condominiumService';
 import Card from '../../common/Card';
 import Pagination from '../../common/Pagination';
 import Loading from '../../common/Loading';
-import DropDown from '../../common/DropDown';
 import SideTabs from '../../common/SideTabs';
 import { Phone, Mail } from 'lucide-react';
 import { CHOOSE_COND_ROLE } from '../../../utils/constants';
+import ErrorBar from '../../common/ErrorBar';
 
 const ChooseCondominiumForm = () => {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const ChooseCondominiumForm = () => {
     const getData = async () => {
       setIsLoading(true);
       setError('');
-      const result = await condominiumService.getConduminiumByUser({ isAdmin, pageNumber, pageSize: 2 });
+      const result = await condominiumService.getCondominiumByUser({ isAdmin, pageNumber, pageSize: 2 });
 
       console.log(result);
 
@@ -48,26 +48,18 @@ const ChooseCondominiumForm = () => {
       <SideTabs className={"mb-5"} listOptions={CHOOSE_COND_ROLE} setChoice={setIsAdmin} choice={isAdmin} />
       {isLoading ? (
         <Loading className="flex justify-center" />
-      ) : error ? (
-        <div
-          className={`transition-all duration-300 overflow-hidden ${
-            error
-              ? 'bg-red-50 p-4 mb-4 rounded-md border border-red-200 opacity-100 max-h-20'
-              : 'max-h-0 opacity-0 p-0 border-0'
-          }`}
-        >
-          <p className="text-sm text-red-600">{error}</p>
-        </div>
+      ) : error ? ( 
+        <ErrorBar error={error}/>
       ) : (
         <>
           {condData.map((cond) => (
             <Card
               key={cond.id}
-              className="border border-gray-200 hover:bg-gray-100 mb-5"
+              className="border border-gray-200 hover:bg-gray-100 mb-5 cursor-pointer"
               onClick={() => navigate(`${cond.id}`)}
             >
               <h5 class="mb-2 text-2xl"> {cond.name} </h5>
-              <span class="text-gray-600"> {`${cond.postalCode} ${cond.city}, ${cond.country}`} </span>
+              { cond.postalCode && (<span class="text-gray-600"> {`${cond.postalCode} ${cond.city}, ${cond.country}`} </span>) }
               <hr class="h-px my-4 bg-gray-300 border-0"></hr>
               <div className="flex justify-between">
                 <div className="flex items-center mb-6 text-gray-600">

@@ -1,12 +1,16 @@
 import { useState } from 'react';
-import { Mail, Building, Phone } from 'lucide-react';
+import { Mail, Building, Phone, Euro } from 'lucide-react';
 import InputWithIcon from '../../common/InputWithIcon';
 import Button from '../../common/Button';
+import ErrorBar from '../../common/ErrorBar';
+import { toast } from 'react-toastify';
+import condominiumService from '../../../services/condominiumService';
 
 const CreateCondominiumForm = () => {
   const [condName, setCondName] = useState('');
   const [condEmail, setCondEmail] = useState('');
   const [condPhone, setCondPhone] = useState('');
+  const [condQuota, setcondQuota] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -23,6 +27,10 @@ const CreateCondominiumForm = () => {
       setError('Número de telemóvel é obrigatório');
       return false;
     }
+    if (!condQuota.trim()) {
+      setError('Cota mensal é obrigatória');
+      return false;
+    }
     setError('');
     return true;
   };
@@ -31,12 +39,31 @@ const CreateCondominiumForm = () => {
     e.preventDefault();
     if (!validateForm()) return;
     setIsLoading(true);
+
+    const condData = { 
+      name: condName,
+      email: condEmail,
+      phoneNumber: condPhone,
+      monthlyQuota: Number(condQuota)              
+    }
+
+    const result = await condominiumService.postCreateCondominium(condData)
+
+    if (result?.error || !result) {
+      setError(result?.error || 'Não foi possivel criar condominio');
+      setIsLoading(false);
+      return;
+    }
+
+    setIsLoading(false);
+    toast.success(result?.message || 'Condominio criado!');
+    navigate("/condominium");
   };
 
   return (
     <>
       <form onSubmit={handleSubmit}>
-        {error && <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg">{error}</div>}
+        {error && <ErrorBar error={error}/>}
         <div className="space-y-4">
           <InputWithIcon
             icon={Building}
@@ -63,6 +90,16 @@ const CreateCondominiumForm = () => {
             onChange={(e) => setCondPhone(e.target.value)}
             required
             maxLength={9}
+          />
+          <InputWithIcon
+            icon={Euro}
+            name="monQuota"
+            type="number"
+            placeholder="Cota mensal"
+            value={condQuota}
+            onChange={(e) => setcondQuota(e.target.value)}
+            required
+            maxLength={6}
           />
           <div className="mt-6">
             <Button type="submit" isLoading={isLoading} fullWidth>
