@@ -9,7 +9,7 @@ const SideBarHomePage = ({ currentUser, condominium, logout }) => {
         { title: 'Home', path: `/condominium/${condominium.id}`, icon: 'home' },
         { title: 'Pedidos', path: '/pedidos', icon: 'file-text', onClick: null },
         { title: 'Espaços', path: `/condominium/${condominium.id}/espacos`, icon: 'grid', onClick: null },
-        { title: 'Serviços', path: '/servicos', icon: 'tool', onClick: null },
+        { title: 'Serviços', path: `/condominium/${condominium.id}/services`, icon: 'tool', onClick: null },
         { title: 'Finanças', path: '/financas', icon: 'dollar-sign', onClick: null },
         { title: 'Moradores', path: '/moradores', icon: 'users', onClick: null },
         { title: 'Definições', path: '/definicoes', icon: 'settings', onClick: null },
