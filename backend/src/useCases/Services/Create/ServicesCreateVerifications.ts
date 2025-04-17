@@ -9,7 +9,7 @@ export default class ServicesCreateVerifications {
 
     if (typeof description !== 'string') throw new AppError('Descrição inválida', 400);
 
-    if (typeof cost !== 'number') throw new AppError('Custo inválido', 400);
+    if (cost && (typeof cost !== 'number' || cost < 0)) throw new AppError('Custo inválido', 400);
 
     if (!condId || typeof condId !== 'string') throw new AppError('Id do condominio inválido', 400);
 
