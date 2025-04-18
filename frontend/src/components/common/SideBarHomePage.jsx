@@ -31,7 +31,7 @@ const SideBarHomePage = ({ currentUser, condominium, logout }) => {
                                 to={link.path}
                                 onClick={link.onClick}
                                 className={`flex items-center px-4 py-3 text-gray-700 ${
-                                location.pathname === link.path ? 'bg-gray-100' : ''
+                                location.pathname === link.path ? 'bg-gray-200' : ''
                                 }`}
                             >
                                 <FeatherIcon size={20} icon={link.icon} />

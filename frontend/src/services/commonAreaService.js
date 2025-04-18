@@ -1,9 +1,10 @@
+import { encodeQueryData } from '../utils/helperFunctions';
 import apiClient from './apiClient';
 
 const commonAreaService = {
-  getCommonAreasByCondominiumId: async (condominiumId) => {
+  getCommonAreasByCondominiumId: async (condominiumId, queryStringObj) => {
     try {
-      const response = await apiClient.get(`/condominium/${condominiumId}/commonarea`);
+      const response = await apiClient.get(`/condominium/${condominiumId}/commonarea${encodeQueryData(queryStringObj)}`);
       return response?.data || [];
     } catch (error) {
         return { error: error?.response?.data?.message };

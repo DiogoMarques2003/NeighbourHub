@@ -8,7 +8,7 @@ import condominiumService from '../../services/condominiumService';
 
 const HomeLayout = () => {
     const { condominiumId } = useParams();
-    const { currentUser, isLoading, logout } = useAuthContext();
+    const { currentUser, logout } = useAuthContext();
     const [loading, setLoading] = useState(true);
     const [condominium, setCondominium] = useState(null);
 
@@ -31,7 +31,7 @@ const HomeLayout = () => {
     
     return (
         <div>
-            {isLoading || loading ? (
+            {loading ? (
                 <Loading className="flex justify-center" />
             ) : (
                 <div >

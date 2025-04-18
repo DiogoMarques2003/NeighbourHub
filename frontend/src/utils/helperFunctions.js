@@ -11,4 +11,12 @@ const encodeQueryData = (data = {}) => {
   return `?${queryStrings.join('&')}`;
 };
 
-export { getToken, setToken, removeToken, encodeQueryData };
+const getTypeName = (type) => {
+  const types = {
+    1: 'Lazer',
+    2: 'Fitness',
+  };
+  return types[type] || 'Outros';
+};
+
+export { getToken, setToken, removeToken, encodeQueryData, getTypeName };
