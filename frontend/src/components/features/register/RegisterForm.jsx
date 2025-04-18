@@ -99,13 +99,13 @@ const RegisterForm = () => {
 
     return (
         <form onSubmit={handleSubmit}>
-            {error && (
+          {error && (
             <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg">
                 {error}
             </div>
-            )}
+          )}
             
-            <UploadPhoto onImageChange={onImageChange}/>
+          <UploadPhoto onImageChange={onImageChange}/>
 
             <div className="space-y-4">
           <InputWithIcon

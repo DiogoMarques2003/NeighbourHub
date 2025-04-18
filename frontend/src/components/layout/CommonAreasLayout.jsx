@@ -3,6 +3,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import commonAreaService from "../../services/commonAreaService"
 import Loading from '../common/Loading';
 import { useOutletContext } from 'react-router-dom';
+import ScrollableList from "../common/ScrollableList";
+import TitleWithAddButton from "../common/TitleWithAddButton";
 
 const CommonAreasLayout = () => {
     const { currentUser, condominium } = useOutletContext();
@@ -10,22 +12,7 @@ const CommonAreasLayout = () => {
     const [loading, setLoading] = useState(true);
     const [pageNumber, setPageNumber] = useState(1);
     const [hasMore, setHasMore] = useState(true);
-    const observer = useRef();
-
-    const lastCommonAreaElementRef = useCallback((commonArea) => {
-        if(loading) return;
-
-        if (observer.current) observer.current.disconnect();
-
-        observer.current = new IntersectionObserver(entries => {
-            if (entries[0].isIntersecting && hasMore) {
-                setPageNumber(prev => prev + 1);
-            }
-        });
-
-        if(commonArea) observer.current.observe(commonArea);
-    }, [loading, hasMore]);
-
+    
     useEffect(() => {
         async function fetchCommonAreas() {
             setLoading(true);
@@ -38,31 +25,28 @@ const CommonAreasLayout = () => {
             }
     
             setCommonAreas(prev => [...prev, ...data.data]);
-            setHasMore(data.actualPage < data.pages);
-        }
+            setHasMore(data.actualPage < data.pages);        }
         
         fetchCommonAreas();
     }, [condominium.id, pageNumber]);
+
+    const onCreateCommonArea = () => {
+
+    };
     
     return (
         <div>
             {loading ? (
                 <Loading className="flex justify-center" />
             ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
-                    {commonAreas.map((area, index) => {
-                        if(commonAreas.length === index + 1) {
-                            <div key={area.id} ref={lastCommonAreaElementRef}>
-                                <CommonAreaCard area={area} />
-                            </div>
-                        } else {
-                            return (
-                                <div key={area.id}>
-                                    <CommonAreaCard area={area} />
-                                </div>
-                            );
-                        }
-                    })}
+                <div>
+                    <TitleWithAddButton title="Teste" onAddClick={onCreateCommonArea}/>
+                    <ScrollableList 
+                        items={commonAreas}
+                        renderItem={(item) => <CommonAreaCard area={item} />}
+                        setPageNumber={setPageNumber}
+                        hasMore={hasMore}
+                    />
                 </div>
             )}
         </div>

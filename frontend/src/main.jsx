@@ -4,7 +4,7 @@ import './index.css'
 import App from './App.jsx'
 
 async function enableMocking() {
-  if(1 === 2) return Promise.resolve();
+  if(1 === 1) return Promise.resolve();
 
 
   if (import.meta.env.DEV) {
