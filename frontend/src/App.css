@@ -1,4 +1,8 @@
 /* App-specific styling */
+*{
+    font-family: "Roboto", sans-serif;
+}
+
 .app-color{
     background-color: #3E94BF;
 }
