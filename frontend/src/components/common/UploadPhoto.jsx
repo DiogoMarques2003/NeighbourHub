@@ -1,10 +1,16 @@
 import { useState, useRef } from 'react';
 import { Camera } from 'lucide-react';
 
-const UploadPhoto = ({ onImageChange }) => {
+const UploadPhoto = ({ onImageChange , type="circular", previewUrlImage }) => {
     const [profileImage, setProfileImage] = useState(null);
-    const [previewUrl, setPreviewUrl] = useState(null);
+    const [previewUrl, setPreviewUrl] = useState(previewUrlImage);
     const fileInputRef = useRef(null);
+
+    const variantTypes= {
+      circular: "w-24 h-24 rounded-full",
+      square_normal: "w-full h-55 rounded-lg",
+      square_large: "w-full h-120 rounded-lg"
+    }
 
     const handleImageClick = () => {
         fileInputRef.current.click();
@@ -28,10 +34,10 @@ const UploadPhoto = ({ onImageChange }) => {
     };
 
     return (
-        <div className="flex justify-center mb-6">
+        <div className="flex justify-center">
           <div 
             onClick={handleImageClick}
-            className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center cursor-pointer overflow-hidden"
+            className={`${variantTypes[type]} bg-gray-200 flex items-center justify-center cursor-pointer overflow-hidden`}
           >
             {previewUrl ? (
               <img 

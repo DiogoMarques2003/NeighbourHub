@@ -1,34 +1,48 @@
 import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 
-const DropDown = ({ listOptions, setChoice, choice, dropBoxPlaceHolder }) => {
+const DropDown = ({ listOptions, setChoice, choice, dropBoxPlaceHolder, icon: Icon }) => {
   const [open, setOpen] = useState(false);
+  let dropdownOptions = listOptions;
 
   const handleSelect = (code) => {
     setChoice(code);
     setOpen(false); // fecha o dropdown depois de escolher
   };
 
+  if (listOptions && typeof listOptions === 'object' && !Array.isArray(listOptions)) {
+    dropdownOptions = Object.entries(listOptions).map(([key, value]) => ({
+      code: Number(key),
+      description: value,
+    }));
+  }
+
   return (
-    <div className="relative inline-block text-left">
+    <div className="relative">
+      <Icon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none" size={20} />
       <button
         onClick={() => setOpen(!open)}
         type="button"
-        className="w-max border border-gray-200 hover:bg-gray-100 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center"
+        className="w-full pl-10 pr-10 py-3 rounded-lg border border-gray-200 border-opacity-50 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-all bg-white bg-opacity-30 text-gray-800 placeholder-gray-500 text-left"
       >
+
         {choice
-          ? listOptions.find((option) => option.code === choice)?.description || dropBoxPlaceHolder
-          : dropBoxPlaceHolder}
-        <ChevronDown size={20} className="ml-2" />
+          ? dropdownOptions.find((option) => option.code === choice)?.description || dropBoxPlaceHolder
+          : dropBoxPlaceHolder
+        }
+
+        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+          <ChevronDown size={20} className="ml-2" />
+        </div>
       </button>
 
       {open && (
-        <div className="absolute z-10 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 ">
+        <div className="absolute z-10 mt-1 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-full max-h-60 overflow-auto">
           <ul className="py-2 text-sm text-gray-700">
-            {listOptions.map((option) => (
+            {dropdownOptions.map((option) => (
               <li key={option.code}> 
                 <button
-                  className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                  className="text-left px-4 py-2 hover:bg-gray-100 cursor-pointer"
                   onClick={() => handleSelect(option.code)}
                 >
                   {option.description}
