@@ -3,13 +3,10 @@ import IUserCreateAccountDTO from './IUserCreateAccountDTO';
 import AppError from '@errors/AppError';
 import bcrypt from 'bcryptjs';
 import { v4 as uuid } from 'uuid';
-import {
-  PROFILE_PICTURES_PATH,
-  BASE_PROFILE_PICTURES_PATH,
-} from '@constants/filesPaths';
+import { PROFILE_PICTURES_PATH, BASE_PROFILE_PICTURES_PATH } from '@constants/filesPaths';
 import Users from '@entities/Users';
 import generateToken from '@shared/generateToken';
-import { copyFileSync, unlinkSync } from 'fs';
+import { copyFileSync, existsSync, mkdirSync, unlinkSync } from 'fs';
 import { join } from 'path';
 
 export default class UserCreateAccountcase {
@@ -26,14 +23,16 @@ export default class UserCreateAccountcase {
     let fotoUri: string;
 
     if (foto) {
+      // Validar se pasta existe, se naõ existir criar
+      if (!existsSync(PROFILE_PICTURES_PATH)) {
+        mkdirSync(PROFILE_PICTURES_PATH, { recursive: true });
+      }
+
       const extension = foto.originalname.split('.').pop();
       const photoName = `${uuid()}.${extension}`;
       fotoUri = join(BASE_PROFILE_PICTURES_PATH, photoName);
       // Copiar a imagem para o diretorio de arquivos
-      copyFileSync(
-        join(foto.destination, foto.filename),
-        join(PROFILE_PICTURES_PATH, photoName)
-      );
+      copyFileSync(join(foto.destination, foto.filename), join(PROFILE_PICTURES_PATH, photoName));
       // Apagar imagem temporaria
       unlinkSync(join(foto.destination, foto.filename));
     }

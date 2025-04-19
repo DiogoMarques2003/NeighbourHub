@@ -6,8 +6,8 @@ import OrderWorks from '@entities/OrderWorks';
 import AppError from '@errors/AppError';
 import { v4 as uuid } from 'uuid';
 import { join } from 'path';
-import { BASE_REPORT_FILES_PATH } from '@constants/filesPaths';
-import { copyFileSync, unlinkSync } from 'fs';
+import { BASE_REPORT_FILES_PATH, REPORT_FILES_PATH } from '@constants/filesPaths';
+import { copyFileSync, existsSync, mkdirSync, unlinkSync } from 'fs';
 import generatePathToFile from '@shared/generatePathToFile';
 import { STATUS_ORDER_IN_PROGRESS } from '@constants/status';
 
@@ -37,11 +37,16 @@ export default class CreateOrdersWorkCase {
     });
 
     if (reportFile) {
+      // Validar se pasta existe, se naõ existir criar
+      if (!existsSync(REPORT_FILES_PATH)) {
+        mkdirSync(REPORT_FILES_PATH, { recursive: true });
+      }
+
       const extension = reportFile.originalname.split('.').pop();
       const reportName = `${uuid()}.${extension}`;
       orderWorkClass.reportFile = join(BASE_REPORT_FILES_PATH, reportName);
       // Copiar a imagem para o diretorio de arquivos
-      copyFileSync(join(reportFile.destination, reportFile.filename), join(BASE_REPORT_FILES_PATH, reportName));
+      copyFileSync(join(reportFile.destination, reportFile.filename), join(REPORT_FILES_PATH, reportName));
       // Apagar imagem temporaria
       unlinkSync(join(reportFile.destination, reportFile.filename));
     }

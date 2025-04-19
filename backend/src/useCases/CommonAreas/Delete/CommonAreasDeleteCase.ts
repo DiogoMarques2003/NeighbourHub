@@ -3,7 +3,7 @@ import ICondominiumsRepository from '@repositories/ICondominiumsRepository';
 import ICommonAreasDeleteDTO from './ICommonAreasDeleteDTO';
 import AppError from '@errors/AppError';
 import { join, sep } from 'path';
-import { existsSync, unlinkSync } from 'fs';
+import { existsSync, mkdirSync, unlinkSync } from 'fs';
 import { COMMON_AREAS_PATH } from '@constants/filesPaths';
 
 export default class CommonAreasDeleteCase {
@@ -25,6 +25,11 @@ export default class CommonAreasDeleteCase {
       throw new AppError('Área comum não pertence a este condomínio', 403);
 
     const isDeleted = await this.commonAreasRepository.delete(commonAreaId);
+
+    // Validar se pasta existe, se naõ existir criar
+    if (!existsSync(COMMON_AREAS_PATH)) {
+      mkdirSync(COMMON_AREAS_PATH, { recursive: true });
+    }
 
     if (isDeleted) {
       for (const image of commonAreaDb.images) {

@@ -6,7 +6,7 @@ import { v4 as uuid } from 'uuid';
 import CommonAreas from '@entities/CommonAreas';
 import { BASE_COMMON_AREAS_PICTURES_PATH, COMMON_AREAS_PATH } from '@constants/filesPaths';
 import path, { join, sep } from 'path';
-import { copyFileSync, existsSync, unlinkSync } from 'fs';
+import { copyFileSync, existsSync, mkdirSync, unlinkSync } from 'fs';
 import generatePathToFile from '@shared/generatePathToFile';
 
 export default class CommonAreasEditCase {
@@ -59,6 +59,11 @@ export default class CommonAreasEditCase {
 
     if (resultImagesNumber > 4) throw new AppError('Número máximo de imagens atingido. (max. 4)', 400);
     if (resultImagesNumber <= 0) throw new AppError('Número mínimo de imagens atingido. (min. 1)', 400);
+
+    // Validar se pasta existe, se naõ existir criar
+    if (!existsSync(COMMON_AREAS_PATH)) {
+      mkdirSync(COMMON_AREAS_PATH, { recursive: true });
+    }
 
     // Remover as imagens que o utilizador pedir
     if (imagesRemove) {

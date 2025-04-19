@@ -3,7 +3,7 @@ import IUserEditDTO from './IUserEditDTO';
 import AppError from '@errors/AppError';
 import bcrypt from 'bcryptjs';
 import { v4 as uuid } from 'uuid';
-import { copyFileSync, existsSync, unlinkSync } from 'fs';
+import { copyFileSync, existsSync, mkdirSync, unlinkSync } from 'fs';
 import { join, sep } from 'path';
 import { BASE_PROFILE_PICTURES_PATH, PROFILE_PICTURES_PATH } from '@constants/filesPaths';
 import generatePathToFile from '@shared/generatePathToFile';
@@ -28,6 +28,11 @@ export default class UserEditCase {
     }
 
     if (foto) {
+      // Validar se pasta existe, se naõ existir criar
+      if (!existsSync(PROFILE_PICTURES_PATH)) {
+        mkdirSync(PROFILE_PICTURES_PATH, { recursive: true });
+      }
+
       // Apagar a imagem caso o utilizador tenha uma
       if (userDb.foto) {
         const userPhotoName = userDb.foto.split(sep).pop();

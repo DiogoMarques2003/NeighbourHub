@@ -4,7 +4,7 @@ import IOrderWorksRepository from '@repositories/IOrderWorksRepository';
 import { v4 as uuid } from 'uuid';
 import { join, sep } from 'path';
 import { BASE_REPORT_FILES_PATH, REPORT_FILES_PATH } from '@constants/filesPaths';
-import { copyFileSync, existsSync, unlinkSync } from 'fs';
+import { copyFileSync, existsSync, mkdirSync, unlinkSync } from 'fs';
 import generatePathToFile from '@shared/generatePathToFile';
 import OrderWorks from '@entities/OrderWorks';
 import AppError from '@errors/AppError';
@@ -37,6 +37,11 @@ export default class EditOrdersWorkCase {
 
     // Apagar a imagem existente caso necessario
     if ((reportFile || deleteReportFile) && orderWorkDb.reportFile) {
+      // Validar se pasta existe, se naõ existir criar
+      if (!existsSync(REPORT_FILES_PATH)) {
+        mkdirSync(REPORT_FILES_PATH, { recursive: true });
+      }
+
       const imageName = orderWorkDb.reportFile.split(sep).pop();
       const imagePath = join(REPORT_FILES_PATH, imageName);
       if (existsSync(imagePath)) {

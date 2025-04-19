@@ -3,7 +3,7 @@ import IOrdersRepository from '@repositories/IOrdersRepository';
 import IOrderWorksRepository from '@repositories/IOrderWorksRepository';
 import IDeleteOrdersWorkDTO from './IDeleteOrdersWorkDTO';
 import AppError from '@errors/AppError';
-import { existsSync, unlinkSync } from 'fs';
+import { existsSync, mkdirSync, unlinkSync } from 'fs';
 import { join, sep } from 'path';
 import { REPORT_FILES_PATH } from '@constants/filesPaths';
 
@@ -32,6 +32,11 @@ export default class DeleteOrdersWorkCase {
     const isDeleted = await this.orderWorksRepository.delete(orderWorkId);
 
     if (isDeleted) {
+      // Validar se pasta existe, se naõ existir criar
+      if (!existsSync(REPORT_FILES_PATH)) {
+        mkdirSync(REPORT_FILES_PATH, { recursive: true });
+      }
+
       if (orderWorkDb.reportFile) {
         const imageName = orderWorkDb.reportFile.split(sep).pop();
         const imagePath = join(REPORT_FILES_PATH, imageName);
