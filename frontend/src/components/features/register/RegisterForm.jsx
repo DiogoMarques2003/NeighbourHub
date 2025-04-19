@@ -8,7 +8,7 @@ import Button from '../../common/Button';
 import authService from "@services/authService";
 import InputMaskWithIcon from "@common/InputMaskWithIcon";
 import { toast } from 'react-toastify';
-import { setToken } from "../../../utils/helperFunctions";
+import { handleFormDataChange } from "../../../utils/helperFunctions";
 
 const RegisterForm = () => {
     const navigate = useNavigate();
@@ -25,14 +25,6 @@ const RegisterForm = () => {
         password: '',
         confirmPassword: ''
     });
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({
-          ...prev,
-          [name]: value
-        }));
-    };
 
     const validateForm = () => {
         if (!formData.name.trim()) {
@@ -74,9 +66,10 @@ const RegisterForm = () => {
         formDataToSend.append('iban', formData.iban);
         formDataToSend.append('password', formData.password);
         
-        // Append profile image if it exists
-        if (profileImage) {
-          formDataToSend.append('foto', profileImage);
+        if (formData.images && Array.isArray(formData.images)) {
+          formData.images.forEach((file) => {
+              formDataToSend.append('images', file);
+          });
         }
       
         const result = await authService.register(formDataToSend);
@@ -89,7 +82,7 @@ const RegisterForm = () => {
         updateCurrentUser(await authService.getCurrentUser(result?.token));
 
         navigate('/condominium');
-        toast.success(result?.message || 'Registration successful!');
+        toast.success(result?.message || 'Registo bem sucedido!');
         setIsLoading(false);
     };
 
@@ -107,93 +100,92 @@ const RegisterForm = () => {
             
           <UploadPhoto onImageChange={onImageChange}/>
 
-            <div className="space-y-4">
-          <InputWithIcon
-            icon={User}
-            type="text"
-            name="name"
-            placeholder="Nome"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-          
-          <InputWithIcon
-            icon={Mail}
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-          
-          <InputWithIcon
-            icon={Phone}
-            name="phoneNumber"
-            type="tel"
-            placeholder="Numero de telefone"
-            value={formData.phoneNumber}
-            onChange={handleChange}
-            required
-            maxLength={9}
-          />
-
-          {/* <InputMaskWithIcon
-            icon={Phone}
-            name="phone"
-            type="tel"
-            placeholder="(351) 999 999 999"
-            value={formData.iban}
-            onChange={(e) => handleChange(e)}
-            mask="(351) 999 999 999"
-          /> */}
-
-          <InputMaskWithIcon
-            icon={CreditCard}
-            name="iban"
-            placeholder="Iban"
-            value={formData.iban}
-            onChange={(e) => handleChange(e)}
-            mask="PT50 9999 9999 99999999999 99"
-          />
-          
-          <div className="relative">
+          <div className="space-y-4 mt-6">
             <InputWithIcon
-              icon={Lock}
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
+              icon={User}
+              type="text"
+              name="name"
+              placeholder="Nome"
+              value={formData.name}
+              onChange={(e) => handleFormDataChange(e, setFormData)}
               required
             />
-          </div>
-          
-          <div className="relative">
+            
             <InputWithIcon
-              icon={Lock}
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirmar Password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
+              icon={Mail}
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={(e) => handleFormDataChange(e, setFormData)}
               required
             />
-          </div>
-        </div>
-        
-        <div className="mt-6">
-          <Button 
-            type="submit" 
-            isLoading={isLoading}
-            fullWidth
-          >
-            Registar
-          </Button>
-        </div>
-      </form>
+            
+            <InputWithIcon
+              icon={Phone}
+              name="phoneNumber"
+              type="tel"
+              placeholder="Numero de telefone"
+              value={formData.phoneNumber}
+              onChange={(e) => handleFormDataChange(e, setFormData)}
+              required
+              maxLength={9}
+            />
 
+            {/* <InputMaskWithIcon
+              icon={Phone}
+              name="phone"
+              type="tel"
+              placeholder="(351) 999 999 999"
+              value={formData.iban}
+              onChange={(e) => handleChange(e)}
+              mask="(351) 999 999 999"
+            /> */}
+
+            <InputMaskWithIcon
+              icon={CreditCard}
+              name="iban"
+              placeholder="Iban"
+              value={formData.iban}
+              onChange={(e) => handleFormDataChange(e, setFormData)}
+              mask="PT50 9999 9999 99999999999 99"
+            />
+            
+            <div className="relative">
+              <InputWithIcon
+                icon={Lock}
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={(e) => handleFormDataChange(e, setFormData)}
+                required
+              />
+            </div>
+            
+            <div className="relative">
+              <InputWithIcon
+                icon={Lock}
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirmar Password"
+                value={formData.confirmPassword}
+                onChange={(e) => handleFormDataChange(e, setFormData)}
+                required
+              />
+            </div>
+          </div>
+      
+          <div className="mt-6">
+            <Button 
+              type="submit" 
+              isLoading={isLoading}
+              fullWidth
+            >
+              Registar
+            </Button>
+          </div>
+        </form>
     )
 }
 

@@ -10,6 +10,7 @@ const HomeLayout = () => {
     const { condominiumId } = useParams();
     const { currentUser, logout } = useAuthContext();
     const [loading, setLoading] = useState(true);
+    const [isAdmin, setIsAdmin] = useState(false);
     const [condominium, setCondominium] = useState(null);
 
     useEffect(() => {
@@ -21,13 +22,15 @@ const HomeLayout = () => {
                 return;
             }
 
-            setCondominium(data.condominium);
+            const condominiumData = data.condominium;
+            setCondominium(condominiumData);
+            setIsAdmin(condominiumData.adminId === currentUser.id);
         }
 
         if (condominiumId) {
             fetchCondominium();
         }
-    }, [condominiumId]);
+    }, [condominiumId, currentUser.id]);
     
     return (
         <div>
@@ -37,7 +40,7 @@ const HomeLayout = () => {
                 <div >
                     <SideBarHomePage currentUser={currentUser} condominium={condominium} logout={logout}/>
                     <main className="ml-68 p-6 h-full overflow-auto">
-                        <Outlet context={{ currentUser, condominium }}/>
+                        <Outlet context={{ currentUser, condominium, isAdmin }}/>
                     </main>
                 </div>
             )}

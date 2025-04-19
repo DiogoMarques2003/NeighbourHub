@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import InputWithIcon from '../../common/InputWithIcon';
 import Button from '../../common/Button';
 import { useAuthContext } from '../../../hooks/useAuthContext';
-import { removeToken } from '../../../utils/helperFunctions.js';
+import { handleFormDataChange, removeToken } from '../../../utils/helperFunctions.js';
 import ErrorBar from '../../common/ErrorBar.jsx';
 
 const LoginForm = () => {
@@ -31,14 +31,6 @@ const LoginForm = () => {
 
     setError("");
     return true;
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setCredentials(prev => ({
-      ...prev,
-      [name]: value
-    }));
   };
 
   const handleSubmit = async (e) => {
@@ -78,7 +70,7 @@ const LoginForm = () => {
           name="email"
           placeholder="Email"
           value={credentials.email}
-          onChange={handleChange}
+          onChange={(e) => handleFormDataChange(e, setCredentials)}
         />
         
         <InputWithIcon
@@ -87,7 +79,7 @@ const LoginForm = () => {
           name="password"
           placeholder="Password"
           value={credentials.password}
-          onChange={handleChange}
+          onChange={(e) => handleFormDataChange(e, setCredentials)}
         />
 
         <div className="mt-6">

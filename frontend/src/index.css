@@ -1,3 +1,9 @@
 /* global styles, resets, fonts, etc  */
 
 @import "tailwindcss";
+
+@theme {
+    --breakpoint-tablet: 59rem;
+    --breakpoint-laptop: 70rem;
+    --breakpoint-desktop: 80rem;
+}
