@@ -13,9 +13,7 @@ export default class CommonAreasGetCase {
     private addressRepository: IAddressesRepository
   ) {}
 
-  async execute(
-    data: ICommonAreasGetDTO
-  ): Promise<DataPagination<CommonAreas[]>> {
+  async execute(data: ICommonAreasGetDTO): Promise<DataPagination<CommonAreas[]>> {
     const { type, pageNumber, pageSize, userId, condId } = data;
 
     const condDb = await this.condominiumRepository.findById(condId);
@@ -24,17 +22,13 @@ export default class CommonAreasGetCase {
     const user = await this.addressRepository.getByUserAndCond(userId, condId);
     if (!user && condDb.adminId !== userId) throw new AppError('User não pertence ao condomínio', 403);
 
-    const count = await this.commonAreasRepository.countByType(type);
+    const count = await this.commonAreasRepository.countByType(condId, type);
     if (!count) throw new AppError('Não existem espaços', 404);
 
     const pages = Math.ceil(count / pageSize);
     if (pageNumber > pages) throw new AppError('Página inválida', 404);
 
-    const areas = await this.commonAreasRepository.getCommonAreasWithPagination(
-      pageNumber,
-      pageSize,
-      type
-    );
+    const areas = await this.commonAreasRepository.getCommonAreasWithPagination(pageNumber, pageSize, condId, type);
 
     // Alterar as imagens para ter o url de acesso
     for (const area of areas) {
