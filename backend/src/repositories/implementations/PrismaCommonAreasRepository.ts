@@ -17,15 +17,20 @@ export default class PrismaCommonAreasRepository implements ICommonAreasReposito
     return this.prisma.commonAreas.create({ data: commonArea });
   }
 
-  countByType(type?: number): Promise<number> {
-    return this.prisma.commonAreas.count({ where: type ? { type } : {} });
+  countByType(condId: string, type?: number): Promise<number> {
+    return this.prisma.commonAreas.count({ where: { condominiumId: condId, ...(type && { type }) } });
   }
 
-  getCommonAreasWithPagination(pageNumber: number, pageSize: number, type?: number): Promise<CommonAreas[]> {
+  getCommonAreasWithPagination(
+    pageNumber: number,
+    pageSize: number,
+    condId: string,
+    type?: number
+  ): Promise<CommonAreas[]> {
     return this.prisma.commonAreas.findMany({
       skip: (pageNumber - 1) * pageSize,
       take: pageSize,
-      where: type ? { type } : {},
+      where: { condominiumId: condId, ...(type && { type }) },
       orderBy: { createdAT: 'desc' },
     });
   }
