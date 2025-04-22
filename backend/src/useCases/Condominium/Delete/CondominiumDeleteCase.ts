@@ -1,5 +1,4 @@
 import ICondominiumsRepository from '@repositories/ICondominiumsRepository';
-import IUsersRepository from '@repositories/IUsersRepository';
 import ICondominiumCreateDTO from './ICondominiumDeleteDTO';
 import AppError from '@errors/AppError';
 import ICommonAreasRepository from '@repositories/ICommonAreasRepository';
