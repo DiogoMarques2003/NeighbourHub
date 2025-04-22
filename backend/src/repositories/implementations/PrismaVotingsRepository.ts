@@ -39,19 +39,33 @@ export default class PrismaVotingsRepository implements IVotingsRepository {
     });
   }
 
-  async countByOrder(orderId: string): Promise<{ upVotes: number; downVotes: number; }> {
-    const votes = await this.prisma.votings.groupBy({
-      by: ['decision'],
-      where: {
-        orderID: orderId,
-      },
-      _count: {
+  async countByOrder(orderId: string, condominiumId: string): Promise<{ upVotes: number; downVotes: number }> {
+    const votings = await this.prisma.votings.findMany({
+      where: { orderID: orderId },
+      select: {
         decision: true,
+        userID: true,
       },
     });
 
-    const upVotes = votes.find((vote) => vote.decision === true)?._count.decision || 0;
-    const downVotes = votes.find((vote) => vote.decision === false)?._count.decision || 0;
+    let upVotes = 0;
+    let downVotes = 0;
+
+    for await (const vote of votings) {
+      const addressCount = await this.prisma.addresses.count({
+        where: {
+          userId: vote.userID,
+          condominiumId,
+        },
+      });
+
+      if (vote.decision) {
+        upVotes += addressCount;
+      } else {
+        downVotes += addressCount;
+      }
+    }
+
     return { upVotes, downVotes };
   }
 }

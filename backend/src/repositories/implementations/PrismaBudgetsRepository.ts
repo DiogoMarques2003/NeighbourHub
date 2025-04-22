@@ -21,28 +21,54 @@ export default class PrismaBudgetsRepository implements IBudgetsRepository {
     return this.prisma.budgets.createMany({ data: budgets });
   }
 
-  async getBudgetsByOrderIdWithVotes(orderId: string): Promise<GetVotingDetailsResponse['budgets']> {
-    const data = await this.prisma.budgets.findMany({
+  async getBudgetsByOrderIdWithVotes(
+    orderId: string,
+    condominiumId: string
+  ): Promise<GetVotingDetailsResponse['budgets']> {
+    const budgets = await this.prisma.budgets.findMany({
       where: { orderId },
       select: {
         id: true,
         description: true,
         amount: true,
         createdAt: true,
-        _count: {
-          select: {
-            Votings: { where: { decision: true } },
-          },
-        },
       },
     });
 
-    return data.map((budget) => ({
-      id: budget.id,
-      description: budget.description,
-      amount: budget.amount,
-      createdAt: budget.createdAt,
-      votes: budget._count.Votings,
-    }));
+    const result = [];
+    for await (const budget of budgets) {
+      const votings = await this.prisma.votings.findMany({
+        where: {
+          orderID: orderId,
+          budgetID: budget.id,
+          decision: true,
+        },
+        select: {
+          userID: true,
+        },
+      });
+
+      let votes = 0;
+      for await (const vote of votings) {
+        const addressCount = await this.prisma.addresses.count({
+          where: {
+            userId: vote.userID,
+            condominiumId,
+          },
+        });
+
+        votes += addressCount;
+      }
+
+      result.push({
+        id: budget.id,
+        description: budget.description,
+        amount: budget.amount,
+        createdAt: budget.createdAt,
+        votes,
+      });
+    }
+
+    return result;
   }
 }

@@ -5,5 +5,5 @@ export default interface IBudgetsRepository {
   findById(id: string): Promise<Budgets | null>;
   countByOrderID(id: string): Promise<number>;
   createMany(budgets: Budgets[]): Promise<Prisma.BatchPayload>;
-  getBudgetsByOrderIdWithVotes(orderId: string): Promise<GetVotingDetailsResponse['budgets']>;
+  getBudgetsByOrderIdWithVotes(orderId: string, condominiumId: string): Promise<GetVotingDetailsResponse['budgets']>;
 }

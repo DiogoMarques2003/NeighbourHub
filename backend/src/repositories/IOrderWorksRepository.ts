@@ -13,4 +13,5 @@ export default interface IOrderWorksRepository {
     status?: string,
     hasReport?: boolean,
   ): Promise<OrderWorks[]>;
+  getFilesByCondominiumId(condominiumId: string): Promise<string[]>;
 }
