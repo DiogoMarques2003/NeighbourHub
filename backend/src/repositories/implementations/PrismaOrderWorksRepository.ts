@@ -53,4 +53,20 @@ export default class PrismaOrderWorksRepository implements IOrderWorksRepository
       orderBy: { postedAt: 'desc' },
     });
   }
+
+  async getFilesByCondominiumId(condominiumId: string): Promise<string[]> {
+    const files = await this.prisma.orderWorks.findMany({
+      where: {
+        reportFile: { not: null },
+        order: {
+          condominiumId,
+        },
+      },
+      select: {
+        reportFile: true,
+      },
+    });
+
+    return files.map((f) => f.reportFile);
+  }
 }

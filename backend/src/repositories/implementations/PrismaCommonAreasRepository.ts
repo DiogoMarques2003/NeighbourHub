@@ -45,4 +45,13 @@ export default class PrismaCommonAreasRepository implements ICommonAreasReposito
   async delete(id: string): Promise<Boolean> {
     return !!(await this.prisma.commonAreas.delete({ where: { id } }));
   }
+
+  async getImagesByCondominiumId(condominiumId: string): Promise<string[]> {
+    const areas = await this.prisma.commonAreas.findMany({
+      where: { condominiumId },
+      select: { images: true },
+    });
+
+    return areas.flatMap((area) => area.images);
+  }
 }

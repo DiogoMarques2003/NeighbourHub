@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import CondominiumDeleteCase from './CondominiumDeleteCase';
 import CondominiumDeleteVerifications from './CondominiumDeleteVerifications';
 import ICondominiumDeleteDTO from './ICondominiumDeleteDTO';
-import AppError from '@errors/AppError';
 import errorHandler from '@handlers/errorHandler';
 
 export default class CondominiumDeleteController {

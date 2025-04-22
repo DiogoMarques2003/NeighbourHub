@@ -12,4 +12,5 @@ export default interface ICommonAreasRepository {
   ): Promise<CommonAreas[]>;
   update(commonArea: CommonAreas): Promise<CommonAreas>;
   delete(id: string): Promise<Boolean>;
+  getImagesByCondominiumId(condominiumId: string): Promise<string[]>;
 }
