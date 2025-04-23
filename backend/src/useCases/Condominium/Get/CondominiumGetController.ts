@@ -14,6 +14,7 @@ export default class CondominiumGetController {
     try {
       const requestData: ICondominiumGetDTO = {
         id: req.params.id,
+        userId: req.userID,
       };
 
       this.condominiumGetVerifications.execute(requestData);
