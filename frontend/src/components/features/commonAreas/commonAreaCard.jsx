@@ -2,12 +2,15 @@ import { useState } from 'react';
 import noImageAvaliable from '../../../../public/images/no_image_avaliable.jpg'
 import { getCommonAreaTypeName } from "../../../utils/helperFunctions"
 import { Users, Banknote, Clock } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const CommonAreaCard = ({area}) => {
     const [imgSrc, setImgSrc] = useState(area?.images[0] || noImageAvaliable);
+    const navigate = useNavigate();
 
     return (
-        <div key={area.id} className="bg-white rounded-lg overflow-hidden shadow-md transform transition duration-300 hover:scale-105">
+        <div key={area.id} className="bg-white rounded-lg overflow-hidden shadow-md transform transition duration-300 hover:scale-105 cursor-pointer"
+        onClick={() => navigate(`${area.id}`)}>
             <img 
                 src={imgSrc} 
                 alt={area.name}

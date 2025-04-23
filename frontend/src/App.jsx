@@ -12,6 +12,7 @@ import CreateCondominium from './pages/CreateCondominiumPage';
 import ServicesPage from './pages/ServicesPage';
 import './App.css';
 import CreateCommonAreasPage from './pages/CreateCommonAreasPage';
+import ReservationCommonAreaPage from './pages/ReservationCommonAreaPage';
 
 const App = () => {
   return (
@@ -32,8 +33,9 @@ const App = () => {
               {/* Protected routes with fixed side bar */}
               <Route element={<HomeLayout />}>
                 <Route path={"/condominium/:condominiumId"} element={<HomePage />} />
-                <Route path={"/condominium/:condominiumId/spaces"} element={<CommonAreasPage />} />
-                <Route path={"/condominium/:condominiumId/spaces/create"} element={<CreateCommonAreasPage />} />
+                <Route path={"/condominium/:condominiumId/commonarea"} element={<CommonAreasPage />} />
+                <Route path={"/condominium/:condominiumId/commonarea/:commonAreaId"} element={<ReservationCommonAreaPage />} />
+                <Route path={"/condominium/:condominiumId/commonarea/create"} element={<CreateCommonAreasPage />} />
                 <Route path={"/condominium/:condominiumId/services"} element={<ServicesPage />} />
               </Route>
             </Route>
