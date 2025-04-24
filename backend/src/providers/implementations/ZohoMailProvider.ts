@@ -9,7 +9,6 @@ export default class ZohoMailProvider implements IMailProvider {
   private MailClient: Mail;
 
   constructor() {
-    console.log(process.env)
     this.MailClient = nodemailer.createTransport({
       host: process.env.MAIL_HOST,
       port: process.env.MAIL_PORT,
