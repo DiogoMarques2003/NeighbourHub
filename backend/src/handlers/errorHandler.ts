@@ -5,10 +5,9 @@ export default function errorHandler(err: Error, res: Response) {
   let message = `Internal server error: ${err.message}`;
   let statusCode = 500;
   if (err instanceof AppError) {
-    console.log(`New Error: ${err.message}`);
     message = err.message;
     statusCode = err.statusCode;
-  }
+  } else console.log(`New Error: ${err.stack || err.message || err}`);
 
   res.status(statusCode).json({ message });
 }
