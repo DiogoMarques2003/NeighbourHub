@@ -13,6 +13,7 @@ import ServicesPage from './pages/ServicesPage';
 import './App.css';
 import CreateCommonAreasPage from './pages/CreateCommonAreasPage';
 import ReservationCommonAreaPage from './pages/ReservationCommonAreaPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
             {/* Public routes */}
             <Route path={'/login'} element={<LoginPage />} />
             <Route path={'/register'} element={<RegisterPage />} />
+            <Route path={'/NotFound'} element={<NotFoundPage />} />
 
             {/* Protected routes */}
             <Route element={<ProtectedRoute />}>

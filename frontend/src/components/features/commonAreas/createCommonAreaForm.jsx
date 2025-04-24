@@ -106,7 +106,7 @@ const CreateCommonAreaForm = ({condominium}) => {
         }
 
         
-        navigate(`/condominium/${condominium.id}/spaces`);
+        navigate(`/condominium/${condominium.id}/commonarea`);
 
         toast.success(result?.message || 'Área comum criada com sucesso!');
         setIsLoading(false);
