@@ -38,14 +38,6 @@ const App = () => {
 
               {/* Protected routes with fixed side bar */}
               <Route element={<HomeLayout />}>
-
-                <Route path={"/condominium/:condominiumId"} element={<HomePage />} />
-                <Route path={"/condominium/:condominiumId/commonarea"} element={<CommonAreasPage />} />
-                <Route path={"/condominium/:condominiumId/commonarea/:commonAreaId"} element={<ReservationCommonAreaPage />} />
-                <Route path={"/condominium/:condominiumId/commonarea/create"} element={<CreateCommonAreasPage />} />
-                <Route path={"/condominium/:condominiumId/services"} element={<ServicesPage />} />
-                <Route path={"/condominium/:condominiumId/services/:serviceId"} element={<ServiceDetailsPage />} />
-
                 <Route path={'/condominium/:condominiumId'} element={<HomePage />} />
                 <Route path={'/condominium/:condominiumId/commonarea'} element={<CommonAreasPage />} />
                 <Route
@@ -54,8 +46,8 @@ const App = () => {
                 />
                 <Route path={'/condominium/:condominiumId/commonarea/create'} element={<CreateCommonAreasPage />} />
                 <Route path={'/condominium/:condominiumId/services'} element={<ServicesPage />} />
+                <Route path={'/condominium/:condominiumId/services/:serviceId'} element={<ServiceDetailsPage />} />
                 <Route path={'/condominium/:condominiumId/orders'} element={<OrdersPage />} />
-
               </Route>
             </Route>
 
