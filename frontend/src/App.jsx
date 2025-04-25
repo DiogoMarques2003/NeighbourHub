@@ -10,6 +10,7 @@ import HomeLayout from './components/layout/HomeLayout';
 import CommonAreasPage from './pages/CommonAreasPage';
 import CreateCondominium from './pages/CreateCondominiumPage';
 import ServicesPage from './pages/ServicesPage';
+import ServiceDetailsPage from './pages/ServiceDetailsPage';
 import './App.css';
 import CreateCommonAreasPage from './pages/CreateCommonAreasPage';
 
@@ -35,6 +36,7 @@ const App = () => {
                 <Route path={"/condominium/:condominiumId/spaces"} element={<CommonAreasPage />} />
                 <Route path={"/condominium/:condominiumId/spaces/create"} element={<CreateCommonAreasPage />} />
                 <Route path={"/condominium/:condominiumId/services"} element={<ServicesPage />} />
+                <Route path={"/condominium/:condominiumId/services/:serviceId"} element={<ServiceDetailsPage />} />
               </Route>
             </Route>
             
