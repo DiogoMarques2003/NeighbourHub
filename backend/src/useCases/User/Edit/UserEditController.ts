@@ -16,6 +16,7 @@ export default class UserEditController {
         phoneNumber: req.body.phoneNumber,
         iban: req.body.iban,
         foto: req?.file as Express.Multer.File,
+        deleteFoto: req.body.deleteFoto === 'true',
       };
 
       this.userEditVerifications.execute(requestData);
