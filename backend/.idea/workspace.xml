@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6404cb6a-1b66-4df0-b613-ba1f89c2895e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/@types/ServicesWithAvgReview.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/repositories/IServicesRepository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/repositories/IServicesRepository.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/repositories/implementations/PrismaServicesRepository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/repositories/implementations/PrismaServicesRepository.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/useCases/Services/GetAll/IServicesGetAllDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/useCases/Services/GetAll/IServicesGetAllDTO.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/useCases/Services/GetAll/ServicesGetAllCase.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/useCases/Services/GetAll/ServicesGetAllCase.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/useCases/Services/GetAll/ServicesGetAllController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/useCases/Services/GetAll/ServicesGetAllController.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/useCases/Services/GetAll/ServicesGetAllVerifications.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/useCases/Services/GetAll/ServicesGetAllVerifications.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/useCases/Services/GetAll/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/useCases/Services/GetAll/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/repositories/IServiceReviewsRepository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/repositories/IServiceReviewsRepository.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/repositories/implementations/PrismaServiceReviewsRepository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/repositories/implementations/PrismaServiceReviewsRepository.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/useCases/Services/GetByID/ServicesGetByIdCase.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/useCases/Services/GetByID/ServicesGetByIdCase.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +83,7 @@
       <option name="presentableId" value="Default" />
       <updated>1744994567976</updated>
       <workItem from="1744994569120" duration="3513000" />
-      <workItem from="1745588149029" duration="4696000" />
+      <workItem from="1745588149029" duration="5975000" />
     </task>
     <servers />
   </component>

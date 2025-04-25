@@ -4,10 +4,12 @@ import IServicesRepository from '@repositories/IServicesRepository';
 import IServicesGetByIdDTO from './IServicesGetByIdDTO';
 import IAddressesRepository from '@repositories/IAddressesRepository';
 import generatePathToFile from '@shared/generatePathToFile';
+import IServiceReviewsRepository from '@repositories/IServiceReviewsRepository';
 
 export default class ServicesGetByIdCase {
   constructor(
     private servicesRepository: IServicesRepository,
+    private servicesReviewRepository: IServiceReviewsRepository,
     private condominiumsRepository: ICondominiumsRepository,
     private addressRepository: IAddressesRepository
   ) {}
@@ -24,11 +26,12 @@ export default class ServicesGetByIdCase {
     if (!userCondDb && condDb.adminId !== userId) throw new AppError('Não faz parte do condomínio', 403);
 
     const serviceWithUser = await this.servicesRepository.findByIdWithUserData(serviceId);
+    const serviceAvgReview = await this.servicesReviewRepository.getReviewByService(serviceId);
 
     if (serviceWithUser.owner.foto) serviceWithUser.owner.foto = generatePathToFile(serviceWithUser.owner.foto);
     else delete serviceWithUser.owner.foto;
     if (!serviceWithUser.cost) delete serviceWithUser.cost;
 
-    return serviceWithUser;
+    return {...serviceWithUser, avgReview: serviceAvgReview};
   }
 }
