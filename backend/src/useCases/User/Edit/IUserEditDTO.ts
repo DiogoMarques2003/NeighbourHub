@@ -5,4 +5,5 @@ export default interface IUserEditDTO {
   phoneNumber?: string;
   iban?: string;
   foto?: Express.Multer.File;
+  deleteFoto?: boolean;
 }

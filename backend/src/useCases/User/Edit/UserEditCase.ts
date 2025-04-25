@@ -12,7 +12,7 @@ export default class UserEditCase {
   constructor(private userRepository: IUsersRepository) {}
 
   async execute(data: IUserEditDTO) {
-    const { id, name, password, phoneNumber, iban, foto } = data;
+    const { id, name, password, phoneNumber, iban, foto, deleteFoto } = data;
 
     const userDb = await this.userRepository.findById(id);
     if (!userDb) throw new AppError('Volte a fazer login', 401);
@@ -27,7 +27,7 @@ export default class UserEditCase {
       userDb.password = await bcrypt.hash(password, 10);
     }
 
-    if (foto) {
+    if (foto || deleteFoto) {
       // Validar se pasta existe, se naõ existir criar
       if (!existsSync(PROFILE_PICTURES_PATH)) {
         mkdirSync(PROFILE_PICTURES_PATH, { recursive: true });
@@ -40,6 +40,10 @@ export default class UserEditCase {
         if (existsSync(userPhotoPath)) unlinkSync(userDb.foto);
       }
 
+      userDb.foto = null;
+    }
+
+    if (foto) {
       const extension = foto.originalname.split('.').pop();
       const photoName = `${uuid()}.${extension}`;
       userDb.foto = join(BASE_PROFILE_PICTURES_PATH, photoName);
