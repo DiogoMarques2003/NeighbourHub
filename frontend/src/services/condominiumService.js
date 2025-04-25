@@ -1,6 +1,5 @@
 import apiClient from './apiClient';
 import { encodeQueryData } from '../utils/helperFunctions';
-import { data } from 'react-router-dom';
 
 const condominiumService = {
   getCondominiumByUser: async (queryStringObj) => {
@@ -29,6 +28,24 @@ const condominiumService = {
       return { error: error?.response?.data?.message };
     }
   },
+
+  editCondominium: async (condominiumId, condominiumData) => {
+    try {
+      const response = await apiClient.put(`/condominium/${condominiumId}`, condominiumData);
+      return response?.data;
+    } catch (err) {
+      return { error: err?.response?.data?.message };
+    }
+  },
+
+  deleteCondominium: async (condominiumId) => {
+    try {
+      const response = await apiClient.delete(`/condominium/${condominiumId}`);
+      return response?.data;
+    } catch (err) {
+      return { error: err?.response?.data?.message };
+    }
+  }
 
 };
 
