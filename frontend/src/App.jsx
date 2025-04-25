@@ -10,6 +10,7 @@ import HomeLayout from './components/layout/HomeLayout';
 import CommonAreasPage from './pages/CommonAreasPage';
 import CreateCondominium from './pages/CreateCondominiumPage';
 import ServicesPage from './pages/ServicesPage';
+import ServiceDetailsPage from './pages/ServiceDetailsPage';
 import './App.css';
 import CreateCommonAreasPage from './pages/CreateCommonAreasPage';
 import UserSettingsPage from './pages/UserSettingsPage';
@@ -41,6 +42,7 @@ const App = () => {
                 <Route path={"/condominium/:condominiumId/commonarea/:commonAreaId"} element={<ReservationCommonAreaPage />} />
                 <Route path={"/condominium/:condominiumId/commonarea/create"} element={<CreateCommonAreasPage />} />
                 <Route path={"/condominium/:condominiumId/services"} element={<ServicesPage />} />
+                <Route path={"/condominium/:condominiumId/services/:serviceId"} element={<ServiceDetailsPage />} />
               </Route>
             </Route>
             

@@ -9,7 +9,15 @@ const servicesService = {
         }catch (error) {
             return { error: error?.response?.data?.message };
         }
-    }
+    },
+    getServiceById: async (condominiumId, serviceId) => {
+        try {
+          const response = await apiClient.get(`/condominium/${condominiumId}/services/${serviceId}`);
+          return response?.data;
+        } catch (error) {
+          return { error: error?.response?.data?.message };
+        }
+      }
 }
 
 export default servicesService;
