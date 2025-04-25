@@ -16,6 +16,7 @@ import CreateCommonAreasPage from './pages/CreateCommonAreasPage';
 import UserSettingsPage from './pages/UserSettingsPage';
 import ReservationCommonAreaPage from './pages/ReservationCommonAreaPage';
 import NotFoundPage from './pages/NotFoundPage';
+import OrdersPage from './pages/OrdersPage';
 
 const App = () => {
   return (
@@ -33,19 +34,31 @@ const App = () => {
               <Route path={'/'} element={<ChooseCondominium />} />
               <Route path={'/condominium'} element={<ChooseCondominium />} />
               <Route path={'/condominiumcreate'} element={<CreateCondominium />} />
-              <Route path={"/settings"} element={<UserSettingsPage />} />
+              <Route path={'/settings'} element={<UserSettingsPage />} />
 
               {/* Protected routes with fixed side bar */}
               <Route element={<HomeLayout />}>
+
                 <Route path={"/condominium/:condominiumId"} element={<HomePage />} />
                 <Route path={"/condominium/:condominiumId/commonarea"} element={<CommonAreasPage />} />
                 <Route path={"/condominium/:condominiumId/commonarea/:commonAreaId"} element={<ReservationCommonAreaPage />} />
                 <Route path={"/condominium/:condominiumId/commonarea/create"} element={<CreateCommonAreasPage />} />
                 <Route path={"/condominium/:condominiumId/services"} element={<ServicesPage />} />
                 <Route path={"/condominium/:condominiumId/services/:serviceId"} element={<ServiceDetailsPage />} />
+
+                <Route path={'/condominium/:condominiumId'} element={<HomePage />} />
+                <Route path={'/condominium/:condominiumId/commonarea'} element={<CommonAreasPage />} />
+                <Route
+                  path={'/condominium/:condominiumId/commonarea/:commonAreaId'}
+                  element={<ReservationCommonAreaPage />}
+                />
+                <Route path={'/condominium/:condominiumId/commonarea/create'} element={<CreateCommonAreasPage />} />
+                <Route path={'/condominium/:condominiumId/services'} element={<ServicesPage />} />
+                <Route path={'/condominium/:condominiumId/orders'} element={<OrdersPage />} />
+
               </Route>
             </Route>
-            
+
             {/* Default redirect */}
             <Route path="*" element={<Navigate to="/NotFound" replace />} />
           </Routes>
