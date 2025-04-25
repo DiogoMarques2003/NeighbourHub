@@ -7,6 +7,7 @@ export default interface ServicesWithUserData {
   createdAt: Date;
   owner: {
     id: string;
+    name: string;
     email: string;
     phoneNumber: string;
     foto?: string;

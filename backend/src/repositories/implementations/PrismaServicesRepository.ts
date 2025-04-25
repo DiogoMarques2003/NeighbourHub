@@ -33,6 +33,7 @@ export default class PrismaServicesRepository implements IServicesRepository {
         owner: {
           select: {
             id: true,
+            name: true,
             email: true,
             phoneNumber: true,
             foto: true,
