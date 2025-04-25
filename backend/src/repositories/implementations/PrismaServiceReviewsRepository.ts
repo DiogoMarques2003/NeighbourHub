@@ -21,6 +21,21 @@ export default class PrismaServiceReviewsRepository implements IServiceReviewsRe
     return this.prisma.serviceReviews.findFirst({ where: { serviceRequestId: id } });
   }
 
+  async getReviewByService(id: string): Promise<number> {
+    const agregation = await this.prisma.serviceReviews.aggregate({
+      _avg: {
+        rating: true,
+      },
+      where: {
+        serviceRequest: {
+          serviceId: id,
+        },
+      },
+    });
+
+    return agregation._avg.rating || 0;
+  }
+
   update(serviceReview: ServiceReviews): Promise<ServiceReviews> {
     return this.prisma.serviceReviews.update({ where: { id: serviceReview.id }, data: serviceReview });
   }
@@ -33,7 +48,7 @@ export default class PrismaServiceReviewsRepository implements IServiceReviewsRe
     pageNumber: number,
     pageSize: number,
     filters?: Prisma.ServiceReviewsWhereInput,
-    orderBy?: Prisma.ServiceReviewsOrderByWithRelationInput
+    orderBy?: Prisma.ServiceReviewsOrderByWithRelationInput,
   ): Promise<ServicesReviewsWithUserData[]> {
     const data = await this.prisma.serviceReviews.findMany({
       where: filters,

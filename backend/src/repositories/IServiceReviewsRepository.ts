@@ -6,6 +6,7 @@ export default interface IServiceReviewsRepository {
   create(serviceReview: ServiceReviews): Promise<ServiceReviews>;
   findByReq(id: string): Promise<ServiceReviews | null>;
   update(serviceReview: ServiceReviews): Promise<ServiceReviews>;
+  getReviewByService(id: string): Promise<number>;
   countWithFilters(filters?: Prisma.ServiceReviewsWhereInput): Promise<number>;
   findWithFilters(
     pageNumber: number,
