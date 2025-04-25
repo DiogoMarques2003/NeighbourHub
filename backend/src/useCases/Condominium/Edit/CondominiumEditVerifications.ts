@@ -12,7 +12,7 @@ export default class CondominiumEditVerifications {
       typeof idCondominium !== 'string' ||
       !isValidUUID(idCondominium)
     )
-      throw new AppError('Email inválido', 400);
+      throw new AppError('Id do condominio inválido', 400);
 
     if (email && (typeof email !== 'string' || !EMAIL_REGEX.test(email)))
       throw new AppError('Email inválido', 400);
