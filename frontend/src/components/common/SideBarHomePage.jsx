@@ -8,7 +8,7 @@ const SideBarHomePage = ({ currentUser, condominium, logout }) => {
   const navLinks = [
     { title: 'Home', path: `/condominium/${condominium.id}`, icon: 'home' },
     { title: 'Pedidos', path: '/pedidos', icon: 'file-text', onClick: null },
-    { title: 'Espaços', path: `/condominium/${condominium.id}/spaces`, icon: 'grid', onClick: null },
+        { title: 'Espaços', path: `/condominium/${condominium.id}/commonarea`, icon: 'grid', onClick: null },
     { title: 'Serviços', path: `/condominium/${condominium.id}/services`, icon: 'tool', onClick: null },
     { title: 'Finanças', path: '/financas', icon: 'dollar-sign', onClick: null },
     { title: 'Moradores', path: '/moradores', icon: 'users', onClick: null, forAdmin: true },

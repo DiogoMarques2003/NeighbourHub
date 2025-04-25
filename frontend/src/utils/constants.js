@@ -7,7 +7,7 @@ const CHOOSE_COND_ROLE = [
 
 const COMMON_AREA_TYPES = {
   1: 'Lazer',
-  2: 'Fitness',
+  2: 'Fitness'
 };
 
 export { API_URL, CHOOSE_COND_ROLE, COMMON_AREA_TYPES };

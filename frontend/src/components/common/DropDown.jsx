@@ -42,7 +42,7 @@ const DropDown = ({ listOptions, setChoice, choice, dropBoxPlaceHolder, icon: Ic
             {dropdownOptions.map((option) => (
               <li key={option.code}> 
                 <button
-                  className="text-left px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  className="text-left w-full px-4 py-2 hover:bg-gray-100 cursor-pointer"
                   onClick={() => handleSelect(option.code)}
                 >
                   {option.description}
