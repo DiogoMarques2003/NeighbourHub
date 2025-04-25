@@ -34,6 +34,15 @@ const authService = {
         } catch(error) {
             return { error: error?.response?.data?.message };
         }
+    },
+
+    editUser: async(userData) => {
+        try {
+            const response = await apiClient.put('/user', userData);
+            return response?.data;
+        } catch (error) {
+            return { error: error?.response?.data?.message };
+        }
     }
 }
 
