@@ -12,6 +12,10 @@ export default class ServicesGetAllController {
     try {
       const requestData: IServicesGetAllDTO = {
         condId: req.params.condId,
+        userId: req.userID,
+        myServices: req.query.myServices === 'true',
+        minReviews: Number(req.query.minReviews),
+        maxReviews: Number(req.query.maxReviews),
         pageNumber: Number(req.query.pageNumber),
         pageSize: Number(req.query.pageSize),
       };
