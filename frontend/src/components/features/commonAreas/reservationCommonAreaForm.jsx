@@ -6,19 +6,22 @@ import Loading from '../../common/Loading';
 import noImageAvaliable from '../../../../public/images/no_image_avaliable.jpg';
 import ErrorBar from '../../common/ErrorBar';
 import InputWithIcon from '../../common/InputWithIcon';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Banknote, Clock, Users } from 'lucide-react';
 import { COMMON_AREA_STATUS_ICONS } from '../../../utils/htmlConstants';
 import CheckBox from '../../common/CheckBox';
 import Button from '../../common/Button';
 import commonAreaReservation from '../../../services/commonAreaReservation';
+import { toast } from 'react-toastify';
 
 const ReservationCommonAreaFrom = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingButton, setIsLoadingButton] = useState(false);
   const [areaData, setAreaData] = useState('');
   const [error, setError] = useState('');
   const [date, setDate] = useState('');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
+  const [checkbox, setCheckbox] = useState(false);
   const { condominiumId, commonAreaId } = useParams();
   const { condominium } = useOutletContext();
 
@@ -48,15 +51,19 @@ const ReservationCommonAreaFrom = () => {
 
   const validateForm = () => {
     if (!date.trim()) {
-      setError('É obrigatório escolher uma data');
+      toast.error('É obrigatório escolher uma data');
       return false;
     }
     if (!startTime.trim()) {
-      setError('Insira um horário');
+      toast.error('Insira um horário');
       return false;
     }
     if (!endTime.trim()) {
-      setError('Insira um horário');
+      toast.error('Insira um horário');
+      return false;
+    }
+    if (!checkbox) {
+      toast.error('Obrigatório aceitar as regras');
       return false;
     }
     setError('');
@@ -65,24 +72,23 @@ const ReservationCommonAreaFrom = () => {
 
   const createReservation = async () => {
     if (!validateForm()) return;
+    setIsLoadingButton(true);
 
     const reservation = {
-        startDate: new Date(`${date}T${startTime}:00`),
-        endDate: new Date(`${date}T${endTime}:00`)
-    }
+      startDate: new Date(`${date}T${startTime}:00`),
+      endDate: new Date(`${date}T${endTime}:00`),
+    };
 
-    const result = await commonAreaReservation.postCreateReservation(reservation,condominiumId,commonAreaId);
+    const result = await commonAreaReservation.postCreateReservation(reservation, condominiumId, commonAreaId);
 
     if (result?.error || !result) {
-        setError(result?.error || 'Não foi possivel criar condominio');
-        console.log(error)
-        setIsLoading(false);
-        return;
+      toast.error(result?.error || 'Não foi criar reserva');
+      setIsLoadingButton(false);
+      return;
     }
 
-    setIsLoading(false);
-    toast.success(result?.message || 'Condominio criado!');
-
+    setIsLoadingButton(false);
+    toast.success(result?.message || 'Reserva registada com sucesso!');
   };
 
   return (
@@ -118,37 +124,63 @@ const ReservationCommonAreaFrom = () => {
             <div className="md:w-1/2 px-5">
               <h1 class="text-3xl font-bold font-app-color pb-4">{areaData.name}</h1>
               {COMMON_AREA_STATUS_ICONS[areaData.status]}
-              {areaData.status == 'READY' && condominium.isResident && (
-                <div className="flex justify-start pt-4 pb-2 items-center">
-                  <InputWithIcon
-                    icon={null}
-                    type="date"
-                    name="date"
-                    required
-                    className="pr-4"
-                    value={date}
-                    onChange={(e) => (setDate(e.target.value))}
-                  />
-                  <InputWithIcon
-                    icon={null}
-                    type="time"
-                    name="startSchedule"
-                    required
-                    className="pr-4"
-                    value={startTime}
-                    onChange={(e) => (setStartTime(e.target.value))}
-                  />
-                  <p className="pr-4">até</p>
-                  <InputWithIcon
-                    icon={null}
-                    type="time"
-                    name="endSchedule"
-                    required
-                    className="pr-4"
-                    value={endTime}
-                    onChange={(e) => (setEndTime(e.target.value))}
-                  />
+
+              {/* INFORMAÇÃO */}
+              <div className="mt-3 justify-between flex-col items-center gap-3 text-gray-600 sm:text-md">
+                <div className="flex items-center ">
+                  <h1 className="pr-2 font-medium">Capacidade: </h1>
+                  <span className="pr-2">{areaData.capacity}</span>
+                  <Users size={20} className="mr-2" />
                 </div>
+                {areaData.cost > 0 && (
+                  <>
+                    <div className="flex items-center">
+                      <h1 className="pr-2 font-medium">Custo:</h1>
+                      <span>{areaData.cost.toFixed(2)}€</span>
+                    </div>
+                  </>
+                )}
+                <div className="flex items-center">
+                  <h1 className="pr-2 font-medium">Horário:</h1>
+                  <span className="pr-2">{areaData.startSchedule} - {areaData.endSchedule} </span>
+                  <Clock size={20} className="mr-1" />
+                </div>
+              </div>
+
+              {areaData.status == 'READY' && condominium.isResident && (
+                <>
+                  <h1 className="text-gray-600 sm:text-md font-medium">Reservar:</h1>
+                  <div className="flex justify-start pt-2 pb-2 items-center">
+                    <InputWithIcon
+                      icon={null}
+                      type="date"
+                      name="date"
+                      required
+                      className="pr-4"
+                      value={date}
+                      onChange={(e) => (setDate(e.target.value))}
+                    />
+                    <InputWithIcon
+                      icon={null}
+                      type="time"
+                      name="startSchedule"
+                      required
+                      className="pr-4"
+                      value={startTime}
+                      onChange={(e) => (setStartTime(e.target.value))}
+                    />
+                    <p className="pr-4">até</p>
+                    <InputWithIcon
+                      icon={null}
+                      type="time"
+                      name="endSchedule"
+                      required
+                      className="pr-4"
+                      value={endTime}
+                      onChange={(e) => (setEndTime(e.target.value))}
+                    />
+                  </div>
+                </>
               )}
               <h1 className="text-2xl font-bold font-app-color pt-4 pb-2">Regras</h1>
               <ul>
@@ -160,8 +192,9 @@ const ReservationCommonAreaFrom = () => {
               </ul>
               {areaData.status == 'READY' && condominium.isResident && (
                 <>
-                  <CheckBox className="pt-4" description="Li e aceito as regras" />
-                  <Button type="submit" isLoading={isLoading} fullWidth onClick={createReservation}>
+                  <CheckBox className="pt-4" description="Li e aceito as regras" checkBox={checkbox}
+                            handleCheckbox={setCheckbox} />
+                  <Button type="submit" isLoading={isLoadingButton} fullWidth onClick={createReservation}>
                     Reservar Espaço
                   </Button>
                 </>
