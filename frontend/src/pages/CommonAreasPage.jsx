@@ -1,4 +1,4 @@
-import CommonAreaList from '@features/commonAreas/commonAreaList';
+import CommonAreaList from '@features/commonAreas/CommonAreaList';
 
 export default function CommonAreasPage() {
     
