@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import CreateServiceForm from "../components/features/createService/CreateServiceForm";
+import CreateServiceForm from "@features/services/createService/CreateServiceForm";
 
 const ServicesPage = () => {
     const navigate = useNavigate();

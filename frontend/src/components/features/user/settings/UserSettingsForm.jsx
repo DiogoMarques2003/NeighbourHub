@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom';
-import { useAuthContext } from '../../../hooks/useAuthContext';
+import { useAuthContext } from '@hooks/useAuthContext';
 import { useState } from 'react';
-import EditPhoto from '../../common/Edithoto';
-import ErrorBar from '../../common/ErrorBar';
+import EditPhoto from '@common/Edithoto';
+import ErrorBar from '@common/ErrorBar';
 import { CreditCard, Phone, User, Lock } from 'lucide-react';
-import InputWithIcon from '../../common/InputWithIcon';
+import InputWithIcon from '@common/InputWithIcon';
 import InputMaskWithIcon from '@common/InputMaskWithIcon';
 import Button from '@common/Button';
-import authService from '../../../services/authService';
+import authService from '@services/authService';
 import { toast } from 'react-toastify';
 
 const UserSettingsForm = () => {

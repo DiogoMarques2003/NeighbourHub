@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import condominiumService from '../../../services/condominiumService';
-import Card from '../../common/Card';
-import Pagination from '../../common/Pagination';
-import Loading from '../../common/Loading';
-import SideTabs from '../../common/SideTabs';
+import condominiumService from '@services/condominiumService';
+import Card from '@common/Card';
+import Pagination from '@common/Pagination';
+import Loading from '@common/Loading';
+import SideTabs from '@common/SideTabs';
 import { Phone, Mail } from 'lucide-react';
-import { CHOOSE_COND_ROLE } from '../../../utils/constants';
-import ErrorBar from '../../common/ErrorBar';
+import { CHOOSE_COND_ROLE } from '@utils/constants';
+import ErrorBar from '@common/ErrorBar';
 
 const ChooseCondominiumForm = () => {
   const navigate = useNavigate();

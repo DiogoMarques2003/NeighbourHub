@@ -1,7 +1,7 @@
-import AuthBackgroundVideo from '../components/common/AuthBackgroundVideo';
-import ChooseCondBox from '../components/layout/ChooseCondBox';
-import ChooseCondominiumForm from '../components/features/chooseCondominium/ChooseCondominiumForm';
-import LogoutCreateCondDiv from '../components/layout/LogoutCreateCondDiv';
+import AuthBackgroundVideo from '@common/AuthBackgroundVideo';
+import ChooseCondBox from '@layout/ChooseCondBox';
+import ChooseCondominiumForm from '@features/condominium/chooseCondominium/ChooseCondominiumForm';
+import LogoutCreateCondDiv from '@layout/LogoutCreateCondDiv';
 
 export default function ChooseCondominium() {
   return (

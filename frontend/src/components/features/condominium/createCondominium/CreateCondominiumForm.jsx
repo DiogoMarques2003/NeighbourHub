@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Mail, Building, Phone, Euro } from 'lucide-react';
-import InputWithIcon from '../../common/InputWithIcon';
-import Button from '../../common/Button';
-import ErrorBar from '../../common/ErrorBar';
+import InputWithIcon from '@common/InputWithIcon';
+import Button from '@common/Button';
+import ErrorBar from '@common/ErrorBar';
 import { toast } from 'react-toastify';
-import condominiumService from '../../../services/condominiumService';
+import condominiumService from '@services/condominiumService';
 import { useNavigate } from 'react-router-dom';
 
 const CreateCondominiumForm = () => {

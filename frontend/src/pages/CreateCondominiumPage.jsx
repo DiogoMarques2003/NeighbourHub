@@ -1,6 +1,6 @@
-import CreateCondominiumForm from "../components/features/createCondominium/CreateCondominiumForm";
-import CentralBoxWithBackGroundVideo from "../components/layout/CentralBoxWithBackGroundVideo";
-import GoBackLayout from "../components/layout/GoBackLayout";
+import CreateCondominiumForm from "@features/condominium/createCondominium/CreateCondominiumForm";
+import CentralBoxWithBackGroundVideo from "@layout/CentralBoxWithBackGroundVideo";
+import GoBackLayout from "@layout/GoBackLayout";
 
 export default function CreateCondominium() {
     return (

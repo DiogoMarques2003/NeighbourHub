@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ServiceDetailsForm from '../components/features/requestService/ServiceDetailsForm';
+import ServiceDetailsForm from '@features/services/requestService/ServiceDetailsForm';
 
 const ServiceDetailsPage = () => {
   return (

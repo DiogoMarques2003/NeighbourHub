@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import servicesService from '../../../services/servicesService';
-import apiClient from '../../../services/apiClient';
-import Button from '../../../components/common/Button';
-import defaultUserPhoto from '../../../../public/images/defaultUserAvatar.jpg';
-import CircleLogo from '../../../components/common/CircleLogo';
+import servicesService from '@services/servicesService';
+import apiClient from '@services/apiClient';
+import Button from '@common/Button';
+import defaultUserPhoto from '@public/images/defaultUserAvatar.jpg';
+import CircleLogo from '@common/CircleLogo';
 import { Euro } from 'lucide-react';
-import RatingStars from '../../common/RatingStars';
+import RatingStars from '@common/RatingStars';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import requestService from '../../../services/requestService';
+import requestService from '@services/requestService';
 
 const ServiceDetailsForm = () => {
   const { condominiumId, serviceId } = useParams();

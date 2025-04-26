@@ -1,10 +1,10 @@
 import { useState } from "react";
-import Button from "../../common/Button";
-import InputWithIcon from "../../common/InputWithIcon";
-import Popup from "../../common/Popup";
+import Button from "@common/Button";
+import InputWithIcon from "@common/InputWithIcon";
+import Popup from "@common/Popup";
 import { Hammer, Text, Euro } from 'lucide-react';
-import servicesService from '../../../services/servicesService';
-import ErrorBar from "../../common/ErrorBar";
+import servicesService from '@services/servicesService';
+import ErrorBar from "@common/ErrorBar";
 import { toast } from 'react-toastify';
 import { useOutletContext } from "react-router-dom";
 

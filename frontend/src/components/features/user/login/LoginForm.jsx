@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Mail, Lock } from "lucide-react";
-import authService from '../../../services/authService';
+import authService from '@services/authService';
 import { useNavigate } from 'react-router-dom';
-import InputWithIcon from '../../common/InputWithIcon';
-import Button from '../../common/Button';
-import { useAuthContext } from '../../../hooks/useAuthContext';
-import { handleFormDataChange, removeToken } from '../../../utils/helperFunctions.js';
-import ErrorBar from '../../common/ErrorBar.jsx';
+import InputWithIcon from '@common/InputWithIcon';
+import Button from '@common/Button';
+import { useAuthContext } from '@hooks/useAuthContext';
+import { handleFormDataChange, removeToken } from '@utils/helperFunctions.js';
+import ErrorBar from '@common/ErrorBar.jsx';
 
 const LoginForm = () => {
   const [credentials, setCredentials] = useState({

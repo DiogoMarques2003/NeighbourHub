@@ -1,14 +1,14 @@
-import UploadPhoto from "../../common/UploadPhoto";
+import UploadPhoto from "@common/UploadPhoto";
 import { useState } from 'react';
 import { User, Mail, Phone, Lock, CreditCard } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useAuthContext } from "../../../hooks/useAuthContext";
-import InputWithIcon from "../../common/InputWithIcon";
-import Button from '../../common/Button';
+import { useAuthContext } from "@hooks/useAuthContext";
+import InputWithIcon from "@common/InputWithIcon";
+import Button from '@common/Button';
 import authService from "@services/authService";
 import InputMaskWithIcon from "@common/InputMaskWithIcon";
 import { toast } from 'react-toastify';
-import { handleFormDataChange } from "../../../utils/helperFunctions";
+import { handleFormDataChange } from "@utils/helperFunctions";
 
 const RegisterForm = () => {
     const navigate = useNavigate();

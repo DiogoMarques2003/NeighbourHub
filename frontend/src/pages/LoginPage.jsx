@@ -1,7 +1,7 @@
-import LoginForm from '../components/features/login/LoginForm';
-import CircleLogo from '../components/common/CircleLogo';
-import logo from '../../public/images/logo.png'
-import CentralBoxWithBackGroundVideo from '../components/layout/CentralBoxWithBackGroundVideo';
+import LoginForm from '@features/user/login/LoginForm';
+import CircleLogo from '@common/CircleLogo';
+import logo from '@public/images/logo.png'
+import CentralBoxWithBackGroundVideo from '@layout/CentralBoxWithBackGroundVideo';
 
 export default function LoginPage() {
 
