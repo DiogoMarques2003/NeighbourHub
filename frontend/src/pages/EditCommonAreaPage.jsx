@@ -1,5 +1,5 @@
 import Title from '../components/common/Title';
-import EditCommonAreaForm from '../components/features/commonAreas/EditCommonAreaForm';
+import EditCommonAreaForm from '@features/commonAreas/EditCommonAreaForm';
 
 const EditCommonAreaPage = () => {
   return (

@@ -1,4 +1,4 @@
-import ReservationCommonAreaFrom from "../components/features/commonAreas/ReservationCommonAreaForm"
+import ReservationCommonAreaFrom from "@features/commonAreas/ReservationCommonAreaForm"
 import GoBackLayout from "../components/common/GoBack";
 
 const ReservationCommonAreaPage = () => {
