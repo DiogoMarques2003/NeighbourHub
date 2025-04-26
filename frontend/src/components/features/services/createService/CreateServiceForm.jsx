@@ -39,11 +39,11 @@ const CreateServiceForm = () => {
       };
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
         if(!validateForm()) return;
 
-        setIsLoading(true)
+        setIsLoading(true);
         
         const serviceData = {
             name: serviceName,
