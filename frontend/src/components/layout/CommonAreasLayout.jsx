@@ -33,7 +33,7 @@ const CommonAreasLayout = () => {
     
     return (
         <div>
-            {loading ? (
+            {loading && (!commonAreas || commonAreas.length === 0) ? (
                 <Loading className="flex justify-center" />
             ) : (
                 <div>

@@ -17,9 +17,11 @@ const ResidentsLists = () => {
 
     useEffect(() => {
         async function fetchResidents() {
+            if(openPopup === true) return;
+
             setIsLoading(true);
     
-            const data = await addressesService.getAddressesByCondominium(condominium.id, {pageNumber, pageSize : 10});
+            const data = await addressesService.getAddressesByCondominium(condominium.id, {pageNumber, pageSize : 1});
             setIsLoading(false);
     
             if(!data || data?.error) {
@@ -31,7 +33,7 @@ const ResidentsLists = () => {
         }
         
         fetchResidents();
-    }, [condominium.id, pageNumber]);
+    }, [condominium.id, pageNumber, openPopup]);
 
     const onResidentAdd = () => {
         setPopup(true);
@@ -39,7 +41,7 @@ const ResidentsLists = () => {
 
     return (
         <div>
-            {isLoading 
+            {isLoading && (!residents || residents.length === 0)
                 ? <Loading />
                 : <div>
                     <TitleWithAddButton title="Moradores" onAddClick={ isAdmin ? onResidentAdd : null} />
