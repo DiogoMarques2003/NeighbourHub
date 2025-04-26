@@ -74,7 +74,7 @@ const OrderCard = ({ area }) => {
   return (
     <div
       key={area.id}
-      className="p-4 border rounded-md shadow-sm bg-white flex flex-col justify-between min-h-45 h-45 cursor-pointer transform transition duration-300 hover:scale-105"
+      className="p-4 border rounded-md shadow-sm bg-white flex flex-col justify-between h-full cursor-pointer transform transition duration-300 hover:scale-105"
       onClick={() => navigate('')}
     >
       {/* Topo */}

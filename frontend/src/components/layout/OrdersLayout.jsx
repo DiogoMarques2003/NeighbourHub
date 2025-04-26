@@ -4,6 +4,8 @@ import { useNavigate, useOutletContext } from 'react-router-dom';
 import ScrollableList from '../common/ScrollableList';
 import ordersService from '../../services/orders';
 import OrderCard from '../features/orders/orderCard';
+import DropDown from '../common/DropDown';
+import { SquareArrowDown, AlarmClock, Tags } from 'lucide-react';
 
 const OrdersLayout = () => {
   const navigate = useNavigate();
@@ -12,12 +14,28 @@ const OrdersLayout = () => {
   const [loading, setLoading] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [hasMore, setHasMore] = useState([]);
-  const [selectedStatus, setSelectedStatus] = useState('');
-  const [selectedUrgency, setSelectedUrgency] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState(null);
+  const [selectedUrgency, setSelectedUrgency] = useState(null);
+
+  const statusOptions = [
+    { code: 'ALL', description: 'Todos' },
+    { code: 'PENDING', description: 'Pendente' },
+    { code: 'VOTING', description: 'Em Votação' },
+    { code: 'IN_PROGRESS', description: 'Em Progresso' },
+    { code: 'COMPLETED', description: 'Concluído' },
+    { code: 'CANCELLED', description: 'Cancelado' },
+  ];
+
+  const urgencyOptions = [
+    { code: 'ALL', description: 'Todos' },
+    { code: 'LOW', description: 'Baixa' },
+    { code: 'MEDIUM', description: 'Média' },
+    { code: 'HIGH', description: 'Alta' },
+  ];
 
   const filteredOrders = orders.filter((order) => {
-    const statusMatch = selectedStatus ? order.status === selectedStatus : true;
-    const urgencyMatch = selectedUrgency ? order.urgency === selectedUrgency : true;
+    const statusMatch = selectedStatus !== 'ALL' ? order.status === selectedStatus : true;
+    const urgencyMatch = selectedUrgency !== 'ALL' ? order.urgency === selectedUrgency : true;
     return statusMatch && urgencyMatch;
   });
 
@@ -53,30 +71,22 @@ const OrdersLayout = () => {
 
             <div className="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-4">
               {/* Filtro de Status */}
-              <select
-                value={selectedStatus}
-                onChange={(e) => setSelectedStatus(e.target.value)}
-                className="border rounded-md p-2 text-sm text-gray-700"
-              >
-                <option value="">Todos os Status</option>
-                <option value="PENDING">Pendente</option>
-                <option value="VOTING">Em Votação</option>
-                <option value="IN_PROGRESS">Em Progresso</option>
-                <option value="COMPLETED">Concluído</option>
-                <option value="CANCELLED">Cancelado</option>
-              </select>
+              <DropDown
+                listOptions={statusOptions}
+                setChoice={setSelectedStatus}
+                choice={selectedStatus}
+                dropBoxPlaceHolder="Status"
+                icon={Tags}
+              />
 
               {/* Filtro de Urgência */}
-              <select
-                value={selectedUrgency}
-                onChange={(e) => setSelectedUrgency(e.target.value)}
-                className="border rounded-md p-2 text-sm text-gray-700"
-              >
-                <option value="">Todas as Urgências</option>
-                <option value="LOW">Baixa</option>
-                <option value="MEDIUM">Média</option>
-                <option value="HIGH">Alta</option>
-              </select>
+              <DropDown
+                listOptions={urgencyOptions}
+                setChoice={setSelectedUrgency}
+                choice={selectedUrgency}
+                dropBoxPlaceHolder="Urgência"
+                icon={AlarmClock}
+              />
             </div>
           </div>
 
