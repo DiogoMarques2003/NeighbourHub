@@ -1,6 +1,6 @@
 import { useOutletContext } from "react-router-dom";
 import Title from "../components/common/Title";
-import CreateCommonAreaForm from "../components/features/commonAreas/CreateCommonAreaForm";
+import CreateCommonAreaForm from "@features/commonAreas/CreateCommonAreaForm";
 
 const CreateCommonAreasPage = () => {
     const { currentUser, condominium, isAdmin } = useOutletContext();
