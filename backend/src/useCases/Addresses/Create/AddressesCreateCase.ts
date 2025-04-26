@@ -62,7 +62,7 @@ export default class AddressesCreateCase {
       {
         moradorNome: user.name,
         condominioNome: cond.name,
-        linkCondominio: `https://neighbourhub.diogomarques.dev/condominiums/${condominiumId}`
+        linkCondominio: `https://neighbourhub.diogomarques.dev/condominium/${condominiumId}`
       }
     )
 
