@@ -1,7 +1,7 @@
 // services/apiClient.js
 import axios from 'axios';
-import { API_URL } from '../utils/constants';
-import { getToken, removeToken } from '../utils/helperFunctions';
+import { API_URL } from '@utils/constants';
+import { getToken, removeToken } from '@utils/helperFunctions';
 
 // Create axios instance
 const apiClient = axios.create({

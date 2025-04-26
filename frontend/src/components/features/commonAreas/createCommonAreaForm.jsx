@@ -86,7 +86,7 @@ const CreateCommonAreaForm = ({condominium}) => {
         formDataToSend.append('name', formData.name);
         formDataToSend.append('startSchedule', formData.startSchedule);
         formDataToSend.append('endSchedule', formData.endSchedule);
-        formDataToSend.append('cost', formData.cost);
+        formDataToSend.append('cost', formData.cost | 0);
         formDataToSend.append('rules', formData.rules);
         formDataToSend.append('capacity', formData.capacity);
         formDataToSend.append('type', formData.type);

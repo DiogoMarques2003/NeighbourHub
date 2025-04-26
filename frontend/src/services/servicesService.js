@@ -1,5 +1,5 @@
 import apiClient from './apiClient';
-import { encodeQueryData } from '../utils/helperFunctions';
+import { encodeQueryData } from '@utils/helperFunctions';
 
 const servicesService = {
     postCreateService: async (serviceData, condId) => {

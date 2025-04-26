@@ -1,4 +1,4 @@
-import { getToken, setToken } from '../utils/helperFunctions';
+import { getToken, setToken } from '@utils/helperFunctions';
 import apiClient from './apiClient';
 
 const authService = {

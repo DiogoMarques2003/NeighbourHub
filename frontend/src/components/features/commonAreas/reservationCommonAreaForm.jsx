@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import commonAreaService from '../../../services/commonAreaService';
 import { useOutletContext, useParams } from 'react-router-dom';
 import PhotoContainer from '../../common/PhotoContainer';
@@ -6,7 +6,7 @@ import Loading from '../../common/Loading';
 import noImageAvaliable from '../../../../public/images/no_image_avaliable.jpg';
 import ErrorBar from '../../common/ErrorBar';
 import InputWithIcon from '../../common/InputWithIcon';
-import { ArrowRight, Banknote, Clock, Users } from 'lucide-react';
+import { ArrowRight, Clock, Users } from 'lucide-react';
 import { COMMON_AREA_STATUS_ICONS } from '../../../utils/htmlConstants';
 import CheckBox from '../../common/CheckBox';
 import Button from '../../common/Button';

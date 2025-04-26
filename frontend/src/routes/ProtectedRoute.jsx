@@ -1,5 +1,5 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { getToken } from '../utils/helperFunctions';
+import { getToken } from '@utils/helperFunctions';
 
 const ProtectedRoute = () => {
   const token = getToken();

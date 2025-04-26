@@ -22,7 +22,7 @@ export default class CommonAreasCreateVerifications {
 
     data.cost = Number(data.cost);
 
-    if (!data.cost || typeof data.cost !== 'number')
+    if (data.cost && typeof data.cost !== 'number')
       throw new AppError('Preço inválido', 400);
 
     data.capacity = Number(data.capacity);

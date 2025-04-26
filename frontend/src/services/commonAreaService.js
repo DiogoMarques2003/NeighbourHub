@@ -1,4 +1,4 @@
-import { encodeQueryData } from '../utils/helperFunctions';
+import { encodeQueryData } from '@utils/helperFunctions';
 import apiClient from './apiClient';
 
 const commonAreaService = {
