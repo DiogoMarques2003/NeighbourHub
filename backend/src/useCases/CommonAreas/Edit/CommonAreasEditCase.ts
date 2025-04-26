@@ -68,12 +68,12 @@ export default class CommonAreasEditCase {
     // Remover as imagens que o utilizador pedir
     if (imagesRemove) {
       for (const imageRemove of imagesRemove) {
-        const imageName = imageRemove.split('/').pop();
+        const imageName = imageRemove.split(sep).pop();
         const imagePath = path.resolve(COMMON_AREAS_PATH, imageName);
         if (existsSync(imagePath)) {
           unlinkSync(imagePath);
         }
-        commonAreaDb.images = commonAreaDb.images.filter((image) => image.split(sep).pop() !== imageRemove);
+        commonAreaDb.images = commonAreaDb.images.filter((image) => image.split(sep).pop() !== imageRemove.split(sep).pop());
       }
     }
 
