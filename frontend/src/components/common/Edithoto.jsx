@@ -2,7 +2,6 @@ import { useState, useRef } from 'react';
 import { Camera, X } from 'lucide-react';
 
 const EditPhoto = ({ onImageChange, type = 'circular', previewUrlImage, showRemove = false }) => {
-  const [_, setProfileImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(previewUrlImage);
   const fileInputRef = useRef(null);
 
@@ -14,8 +13,8 @@ const EditPhoto = ({ onImageChange, type = 'circular', previewUrlImage, showRemo
   };
 
   const buttonPositionClass = {
-    circular: 'top-0 right-0',
-    circular_large: 'top-2 right-2',
+    circular: 'top-0 right-28',
+    circular_large: 'top-2 right-24',
     square_normal: 'top-2 right-2',
     square_large: 'top-2 right-2',
   };
@@ -27,7 +26,6 @@ const EditPhoto = ({ onImageChange, type = 'circular', previewUrlImage, showRemo
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setProfileImage(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreviewUrl(reader.result);
@@ -41,7 +39,6 @@ const EditPhoto = ({ onImageChange, type = 'circular', previewUrlImage, showRemo
   };
 
   const handleRemoveImage = () => {
-    setProfileImage(null);
     setPreviewUrl(null);
     fileInputRef.current.value = null;
 
@@ -52,7 +49,7 @@ const EditPhoto = ({ onImageChange, type = 'circular', previewUrlImage, showRemo
 
   return (
     <div className="flex flex-col items-center gap-2 relative">
-      <div className="relative group">
+      <div className="flex flex-col items-center w-full h-full relative group">
         <div
           onClick={handleImageClick}
           className={`${variantTypes[type]} bg-gray-200 flex items-center justify-center cursor-pointer overflow-hidden`}
