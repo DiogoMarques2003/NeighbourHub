@@ -136,9 +136,6 @@ const EditCommonAreaForm = () => {
       }
     }
 
-    console.log('images ADd', formData.getAll('imagesAdd'));
-    console.log('images Remove', formData.getAll('imagesRemove'));
-
     const result = await commonAreaService.updateCommonArea(condominiumId, commonAreaId, formData);
     if (!result || result.error) {
       toast.error(result?.error || 'Erro ao atualizar o espaço');
@@ -270,7 +267,7 @@ const EditCommonAreaForm = () => {
 
           <div className="mt-9 flex justify-center max-w-[400px] mx-auto">
             <Button type="submit" isLoading={buttonLoading} fullWidth>
-              Criar Espaço
+              Editar espaço
             </Button>
           </div>
         </>
