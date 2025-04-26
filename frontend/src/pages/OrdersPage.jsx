@@ -1,7 +1,9 @@
+import OrdersLayout from '../components/layout/OrdersLayout';
+
 export default function OrdersPage() {
   return (
     <div>
-      <p>SIU</p>
+      <OrdersLayout />
     </div>
   );
 }
