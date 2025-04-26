@@ -21,25 +21,20 @@ export default class CommonAreasEditVerifications {
       startSchedule,
     } = data;
 
-    if (!id || typeof id !== 'string' || !isValidUUID(id))
-      throw new AppError('ID inválido', 400);
+    if (!id || typeof id !== 'string' || !isValidUUID(id)) throw new AppError('ID inválido', 400);
 
-    if (status && (typeof name !== 'string' || !STATUS.includes(status)))
-      throw new AppError('Status Inválido', 400);
+    if (status && (typeof name !== 'string' || !STATUS.includes(status))) throw new AppError('Status Inválido', 400);
 
-    if (name && typeof name !== 'string')
-      throw new AppError('Nome inválido', 400);
+    if (name && typeof name !== 'string') throw new AppError('Nome inválido', 400);
 
     if (data.cost) {
       data.cost = Number(data.cost);
-      if (isNaN(data.cost) || data.cost < 0)
-        throw new AppError('Preço inválido', 400);
+      if (isNaN(data.cost) || data.cost < 0) throw new AppError('Preço inválido', 400);
     }
 
     if (capacity) {
       data.capacity = Number(data.capacity);
-      if (isNaN(data.capacity) || data.capacity <= 0)
-        throw new AppError('Capacidade inválida', 400);
+      if (isNaN(data.capacity) || data.capacity <= 0) throw new AppError('Capacidade inválida', 400);
     }
 
     if (type !== undefined) {
@@ -50,38 +45,26 @@ export default class CommonAreasEditVerifications {
     if (!condominiumId || typeof condominiumId !== 'string' || !isValidUUID(id))
       throw new AppError('Condomínio inválido', 400);
 
-    if (startSchedule && typeof startSchedule !== 'string')
-      throw new AppError('Horário inválido', 400);
+    if (startSchedule && typeof startSchedule !== 'string') throw new AppError('Horário inválido', 400);
 
-    if (endSchedule && typeof endSchedule !== 'string')
-      throw new AppError('Horário inválido', 400);
+    if (endSchedule && typeof endSchedule !== 'string') throw new AppError('Horário inválido', 400);
 
     if (startSchedule && endSchedule) {
-      if (
-        isHoursIntervalValid(
-          stringToHours(startSchedule),
-          stringToHours(endSchedule)
-        )
-      ) {
+      if (isHoursIntervalValid(stringToHours(startSchedule), stringToHours(endSchedule))) {
         throw new AppError('Horário inválido', 400);
       }
     }
 
-    if (imagesAdd && imagesAdd.length > 4)
-      throw new AppError('Número máximo de imagens atingido. (max. 4)', 400);
+    if (imagesAdd && imagesAdd.length > 4) throw new AppError('Número máximo de imagens atingido. (max. 4)', 400);
 
-    if (imagesAdd) {
+    if (imagesAdd.length) {
       for (const image of imagesAdd) {
-        if (
-          typeof image !== 'object' ||
-          !PICTURES_EXTENSIONS.includes(image.originalname.split('.').pop())
-        ) {
+        if (typeof image !== 'object' || !PICTURES_EXTENSIONS.includes(image.originalname.split('.').pop())) {
           throw new AppError('Foto inválida', 400);
         }
       }
     }
-
-    if (imagesRemove && imagesRemove.length > 4)
-      throw new AppError('Número máximo de imagens atingido. (max. 4)', 400);
+    if (imagesRemove && typeof imagesRemove !== 'object') data.imagesRemove = [imagesRemove];
+    if (data.imagesRemove && data.imagesRemove.length > 4) throw new AppError('Número máximo de imagens atingido. (max. 4)', 400);
   }
 }
