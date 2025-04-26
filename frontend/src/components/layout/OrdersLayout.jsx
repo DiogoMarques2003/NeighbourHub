@@ -14,8 +14,8 @@ const OrdersLayout = () => {
   const [loading, setLoading] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [hasMore, setHasMore] = useState([]);
-  const [selectedStatus, setSelectedStatus] = useState(null);
-  const [selectedUrgency, setSelectedUrgency] = useState(null);
+  const [selectedStatus, setSelectedStatus] = useState('ALL');
+  const [selectedUrgency, setSelectedUrgency] = useState('ALL');
 
   const statusOptions = [
     { code: 'ALL', description: 'Todos' },
