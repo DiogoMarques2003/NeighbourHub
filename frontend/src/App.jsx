@@ -18,6 +18,7 @@ import ReservationCommonAreaPage from './pages/ReservationCommonAreaPage';
 import NotFoundPage from './pages/NotFoundPage';
 import OrdersPage from './pages/OrdersPage';
 import EditCommonAreaPage from './pages/EditCommonAreaPage';
+import SettingsCondominiumPage from './pages/SettingsCondominiumPage';
 
 const App = () => {
   return (
@@ -53,6 +54,7 @@ const App = () => {
                 <Route path={'/condominium/:condominiumId/services'} element={<ServicesPage />} />
                 <Route path={'/condominium/:condominiumId/services/:serviceId'} element={<ServiceDetailsPage />} />
                 <Route path={'/condominium/:condominiumId/orders'} element={<OrdersPage />} />
+                <Route path={'/condominium/:condominiumId/settings'} element={<SettingsCondominiumPage />} />
               </Route>
             </Route>
 
