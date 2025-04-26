@@ -44,7 +44,7 @@ export default class CommonAreasEditCase {
 
     // Atualiza as informações do espaço comum, se fornecido
     if (name) commonAreaDb.name = name;
-    if (cost) commonAreaDb.cost = cost;
+    if (typeof cost === 'number') commonAreaDb.cost = cost;
     if (rules) commonAreaDb.rules = rules;
     if (capacity) commonAreaDb.capacity = capacity;
     if (type) commonAreaDb.type = type;

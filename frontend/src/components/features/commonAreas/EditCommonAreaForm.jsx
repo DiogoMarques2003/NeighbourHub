@@ -168,7 +168,7 @@ const EditCommonAreaForm = () => {
 
               <DropDown
                 listOptions={COMMON_AREA_TYPES}
-                setChoice={(e) => setType(e.target.value)}
+                setChoice={(e) => setType(e)}
                 choice={type}
                 dropBoxPlaceHolder="Tipo de espaço"
                 icon={MapPin}
