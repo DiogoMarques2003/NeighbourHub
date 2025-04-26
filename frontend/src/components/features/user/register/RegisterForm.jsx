@@ -66,10 +66,8 @@ const RegisterForm = () => {
         formDataToSend.append('iban', formData.iban);
         formDataToSend.append('password', formData.password);
         
-        if (formData.images && Array.isArray(formData.images)) {
-          formData.images.forEach((file) => {
-              formDataToSend.append('images', file);
-          });
+        if (profileImage) {
+          formDataToSend.append('foto', profileImage);
         }
       
         const result = await authService.register(formDataToSend);

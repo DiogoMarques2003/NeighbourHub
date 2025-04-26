@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft} from 'lucide-react';
 
-const GoBackLayout = () => {
+const GoBack = () => {
     const navigate = useNavigate();
 
     return (
@@ -17,5 +17,5 @@ const GoBackLayout = () => {
     )
 }
 
-export default GoBackLayout;
+export default GoBack;
 

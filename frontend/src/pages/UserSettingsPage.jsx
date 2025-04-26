@@ -1,6 +1,6 @@
 import UserSettingsForm from '@features/user/settings/UserSettingsForm';
 import CentralBoxWithBackGroundVideo from '@layout/CentralBoxWithBackGroundVideo';
-import GoBackLayout from '@layout/GoBackLayout';
+import GoBackLayout from '@common/GoBack';
 
 const UserSettingsPage = () => {
   return (

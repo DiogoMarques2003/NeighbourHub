@@ -1,6 +1,6 @@
 import AuthBackgroundVideo from "../components/common/AuthBackgroundVideo";
 import ChooseCondBox from "../components/layout/ChooseCondBox";
-import GoBackLayout from "../components/layout/GoBackLayout";
+import GoBackLayout from "../components/common/GoBack";
 
 export default function NotFoundPage() {
     return (
