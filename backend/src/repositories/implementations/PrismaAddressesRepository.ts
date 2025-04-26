@@ -57,6 +57,7 @@ export default class PrismaAddressesRepository implements IAddressesRepository {
         user: {
           select: {
             id: true,
+            name: true,
             email: true,
             phoneNumber: true,
             foto: true,

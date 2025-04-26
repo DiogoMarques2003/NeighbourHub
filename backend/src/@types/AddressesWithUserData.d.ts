@@ -11,6 +11,7 @@ interface AddressesWithUserData {
   user: {
     id: string;
     email: string;
+    name: string;
     phoneNumber: string;
     foto?: string;
   }

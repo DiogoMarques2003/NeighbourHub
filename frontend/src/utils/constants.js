@@ -10,4 +10,12 @@ const COMMON_AREA_TYPES = {
   2: 'Fitness'
 };
 
-export { API_URL, CHOOSE_COND_ROLE, COMMON_AREA_TYPES };
+const HOUSE_TYPE_TYPES = {
+  1: 'Moradia',
+  2: 'Apartamento',
+  3: 'Garagem',
+  4: 'Outro',
+  5: 'Prédio'
+};
+
+export { API_URL, CHOOSE_COND_ROLE, COMMON_AREA_TYPES, HOUSE_TYPE_TYPES };
