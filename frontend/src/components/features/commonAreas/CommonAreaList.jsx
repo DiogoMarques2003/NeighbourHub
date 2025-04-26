@@ -1,5 +1,5 @@
 import { useNavigate, useOutletContext } from "react-router-dom";
-import CommonAreaCard from "./commonAreaCard";
+import CommonAreaCard from "./CommonAreaCard";
 import { useEffect, useState } from 'react';
 import commonAreaService from "@services/commonAreaService";
 import Loading from "@common/Loading";
