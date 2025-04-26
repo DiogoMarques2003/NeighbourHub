@@ -1,4 +1,5 @@
 import PhotoContainer from "@common/PhotoContainer";
+import CardLayout from "@layout/CardLayout";
 import defaultAvatar from "@public/images/defaultUserAvatar.jpg"
 import { Mail, Phone, PhoneCall } from "lucide-react";
 
@@ -7,8 +8,7 @@ const ResidentCard = ({ resident }) => {
     const { user, street, houseNumber, postalCode, city, country } = resident;
     
     return (
-      <div className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col">
-
+      <CardLayout item={resident}>
         <div className="w-full h-48 bg-gray-200 overflow-hidden">
             <img 
                 src={user.foto ? user.foto : defaultAvatar} 
@@ -42,7 +42,7 @@ const ResidentCard = ({ resident }) => {
             Email
           </a>
         </div>
-      </div>
+    </CardLayout>
     );
 };
 

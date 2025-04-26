@@ -1,12 +1,12 @@
-import CommonAreaCard from "../features/commonAreas/commonAreaCard";
+import { useNavigate, useOutletContext } from "react-router-dom";
+import CommonAreaCard from "./commonAreaCard";
 import { useEffect, useState } from 'react';
-import commonAreaService from "../../services/commonAreaService"
-import Loading from '../common/Loading';
-import { useNavigate, useOutletContext } from 'react-router-dom';
-import ScrollableList from "../common/ScrollableList";
-import TitleWithAddButton from "../common/TitleWithAddButton";
+import commonAreaService from "@services/commonAreaService";
+import Loading from "@common/Loading";
+import ScrollableList from "@common/ScrollableList";
+import TitleWithAddButton from "@common/TitleWithAddButton";
 
-const CommonAreasLayout = () => {
+const CommonAreaList = () => {
     const navigate = useNavigate();
     const { currentUser, condominium, isAdmin } = useOutletContext();
     const [commonAreas, setCommonAreas] = useState([]);
@@ -26,7 +26,8 @@ const CommonAreasLayout = () => {
             }
     
             setCommonAreas(prev => [...prev, ...data.data]);
-            setHasMore(data.actualPage < data.pages);        }
+            setHasMore(data.actualPage < data.pages);        
+        }
         
         fetchCommonAreas();
     }, [condominium.id, pageNumber]);
@@ -51,6 +52,6 @@ const CommonAreasLayout = () => {
             )}
         </div>
     )
-}
+};
 
-export default CommonAreasLayout;
+export default CommonAreaList;

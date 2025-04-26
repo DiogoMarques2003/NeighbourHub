@@ -1,4 +1,4 @@
-import GoBackLayout from '@layout/GoBackLayout';
+import GoBackLayout from '@common/GoBack';
 import RegisterForm from '@features/user/register/RegisterForm';
 import CentralBoxWithBackGroundVideo from '@layout/CentralBoxWithBackGroundVideo';
 

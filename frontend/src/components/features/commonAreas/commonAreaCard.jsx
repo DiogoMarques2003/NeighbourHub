@@ -3,14 +3,14 @@ import noImageAvaliable from '../../../../public/images/no_image_avaliable.jpg'
 import { getCommonAreaTypeName } from "../../../utils/helperFunctions"
 import { Users, Banknote, Clock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import CardLayout from '@layout/CardLayout';
 
 const CommonAreaCard = ({area}) => {
     const [imgSrc, setImgSrc] = useState(area?.images[0] || noImageAvaliable);
     const navigate = useNavigate();
 
     return (
-        <div key={area.id} className="bg-white rounded-lg overflow-hidden shadow-md transform transition duration-300 hover:scale-105 cursor-pointer"
-        onClick={() => navigate(`${area.id}`)}>
+        <CardLayout item={area}>
             <img 
                 src={imgSrc} 
                 alt={area.name}
@@ -20,7 +20,6 @@ const CommonAreaCard = ({area}) => {
             
             <div className="bg-opacity-50 p-3 sm:p-4 flex flex-col justify-between text-gray-600">
                 <h2 className="text-sm font-bold">{area.name}</h2>
-                {/* <div className="flex justify-between"> */}
                     <p className=" text-sm mt-1">
                         {getCommonAreaTypeName(area.type)} 
                     </p>
@@ -28,9 +27,6 @@ const CommonAreaCard = ({area}) => {
                         <Clock size={16} className="mr-1" />
                         <span>{area.startSchedule} - {area.endSchedule} </span>
                     </div>
-                        
-                {/* </div> */}
-                
                 
                 <div className="mt-3 flex justify-between items-center text-gray-600 text-sm sm:text-md font-medium">
                     <div className="flex ">
@@ -38,14 +34,14 @@ const CommonAreaCard = ({area}) => {
                         <span>{area.capacity}</span>
                     </div>
                     {area.cost > 0 && (
-                         <div className="flex ">
+                            <div className="flex ">
                             <Banknote size={18} className="mr-2" />
                             <span>{area.cost.toFixed(2)}€</span>
                         </div>
                     )}
                 </div>
             </div>
-        </div>
+        </CardLayout>
     )
 }
 

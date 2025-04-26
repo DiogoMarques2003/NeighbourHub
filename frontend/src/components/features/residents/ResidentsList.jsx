@@ -21,7 +21,7 @@ const ResidentsLists = () => {
 
             setIsLoading(true);
     
-            const data = await addressesService.getAddressesByCondominium(condominium.id, {pageNumber, pageSize : 1});
+            const data = await addressesService.getAddressesByCondominium(condominium.id, {pageNumber, pageSize : 3});
             setIsLoading(false);
     
             if(!data || data?.error) {
@@ -44,7 +44,7 @@ const ResidentsLists = () => {
             {isLoading && (!residents || residents.length === 0)
                 ? <Loading />
                 : <div>
-                    <TitleWithAddButton title="Moradores" onAddClick={ isAdmin ? onResidentAdd : null} />
+                    <TitleWithAddButton onAddClick={ isAdmin ? onResidentAdd : null} />
                     <CreateResidentPopup openPopup={openPopup} setPopup={setPopup}/>
                     
                     <ScrollableList

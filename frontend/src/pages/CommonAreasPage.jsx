@@ -1,10 +1,10 @@
-import CommonAreasLayout from '../components/layout/CommonAreasLayout';
+import CommonAreaList from '@features/commonAreas/commonAreaList';
 
 export default function CommonAreasPage() {
     
     return (
         <div>
-            <CommonAreasLayout />
+            <CommonAreaList />
         </div>
     )
 }
