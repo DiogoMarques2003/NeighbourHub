@@ -1,7 +1,8 @@
 import apiClient from './apiClient';
+import { encodeQueryData } from '../utils/helperFunctions';
 
 const ordersService = {
-  getOrders: async () => {
+  getOrders: async (condominiumId, queryStringObj) => {
     try {
       const response = await apiClient.get(`/condominium/${condominiumId}/orders${encodeQueryData(queryStringObj)}`);
       return response?.data || [];
