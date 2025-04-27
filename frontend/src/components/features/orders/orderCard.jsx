@@ -1,6 +1,5 @@
 import { dateFormat, truncateText } from '../../../utils/helperFunctions';
 import ItemCard from '@common/ItemCard';
-import { dateFormat } from '../../../utils/helperFunctions';
 
 const OrderCard = ({ order }) => {
   const getStatusText = (status) => {
