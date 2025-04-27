@@ -98,8 +98,8 @@ export default class PrismaServiceRequestsRepository implements IServiceRequests
       skip: (pageNumber - 1) * pageSize,
       take: pageSize,
       where: {
+        serviceId: serviceID,
         service: {
-          id: serviceID,
           ownerId: userId,
           condominium: {
             id: condominiumId
@@ -151,8 +151,8 @@ export default class PrismaServiceRequestsRepository implements IServiceRequests
   countReceived(userId: string, condominiumId: string, serviceID: string): Promise<number> {
     return this.prisma.serviceRequests.count({
       where: {
+        serviceId: serviceID,
         service: {
-          id: serviceID,
           ownerId: userId,
           condominium: {
             id: condominiumId
