@@ -11,6 +11,7 @@ export default interface OrdersWithUserData {
   condominiumId: string;
   user: {
     id: string;
+    name: string;
     email: string;
     phoneNumber: string;
     foto?: string;
