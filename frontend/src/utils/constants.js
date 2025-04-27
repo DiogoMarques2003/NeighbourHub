@@ -7,7 +7,13 @@ const CHOOSE_COND_ROLE = [
 
 const COMMON_AREA_TYPES = {
   1: 'Lazer',
-  2: 'Fitness'
+  2: 'Fitness',
+};
+
+const ORDER_URGENCY_TYPES = {
+  LOW: 'Baixa',
+  MEDIUM: 'Média',
+  HIGH: 'Alta',
 };
 
 const HOUSE_TYPE_TYPES = {
@@ -15,7 +21,7 @@ const HOUSE_TYPE_TYPES = {
   2: 'Apartamento',
   3: 'Garagem',
   4: 'Outro',
-  5: 'Prédio'
+  5: 'Prédio',
 };
 
-export { API_URL, CHOOSE_COND_ROLE, COMMON_AREA_TYPES, HOUSE_TYPE_TYPES };
+export { API_URL, CHOOSE_COND_ROLE, COMMON_AREA_TYPES, HOUSE_TYPE_TYPES, ORDER_URGENCY_TYPES };

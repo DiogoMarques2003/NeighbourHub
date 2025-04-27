@@ -6,6 +6,8 @@ import ordersService from '../../services/orders';
 import OrderCard from '../features/orders/orderCard';
 import DropDown from '../common/DropDown';
 import { AlarmClock, Tags } from 'lucide-react';
+import Title from '@common/Title';
+import TitleWithAddButton from '@common/TitleWithAddButton';
 
 const OrdersLayout = () => {
   const navigate = useNavigate();
@@ -16,6 +18,8 @@ const OrdersLayout = () => {
   const [hasMore, setHasMore] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState('ALL');
   const [selectedUrgency, setSelectedUrgency] = useState('ALL');
+
+  const [openPopup, setOpenPopup] = useState(false);
 
   const statusOptions = [
     { code: 'ALL', description: 'Todos' },
@@ -38,6 +42,10 @@ const OrdersLayout = () => {
     const urgencyMatch = selectedUrgency !== 'ALL' ? order.urgency === selectedUrgency : true;
     return statusMatch && urgencyMatch;
   });
+
+  function onAddClick() {
+    navigate('./create');
+  }
 
   useEffect(() => {
     async function fetchOrders() {
@@ -63,32 +71,24 @@ const OrdersLayout = () => {
         <Loading className="flex justify-center" />
       ) : (
         <div>
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 space-y-4 md:space-y-0">
-            <h1 className="text-3xl font-bold text-gray-800" style={{ color: 'rgb(62, 148, 191)' }}>
-              Pedidos
-            </h1>
+          <TitleWithAddButton title="Pedidos" onAddClick={condominium.isResident && onAddClick} />
+          <div className="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-4">
+            <DropDown
+              listOptions={statusOptions}
+              setChoice={setSelectedStatus}
+              choice={selectedStatus}
+              dropBoxPlaceHolder="Status"
+              icon={Tags}
+            />
 
-            <div className="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-4">
-              {/* Filtro de Status */}
-              <DropDown
-                listOptions={statusOptions}
-                setChoice={setSelectedStatus}
-                choice={selectedStatus}
-                dropBoxPlaceHolder="Status"
-                icon={Tags}
-              />
-
-              {/* Filtro de Urgência */}
-              <DropDown
-                listOptions={urgencyOptions}
-                setChoice={setSelectedUrgency}
-                choice={selectedUrgency}
-                dropBoxPlaceHolder="Urgência"
-                icon={AlarmClock}
-              />
-            </div>
+            <DropDown
+              listOptions={urgencyOptions}
+              setChoice={setSelectedUrgency}
+              choice={selectedUrgency}
+              dropBoxPlaceHolder="Urgência"
+              icon={AlarmClock}
+            />
           </div>
-
           <ScrollableList
             items={filteredOrders}
             renderItem={(item) => <OrderCard order={item} />}
