@@ -22,6 +22,7 @@ import ResidentsPage from './pages/ResidentsPage';
 import SettingsCondominiumPage from './pages/SettingsCondominiumPage';
 import ServiceRequestDetailsPage from './pages/ServiceRequestDetailsPage';
 import CreateOrderPage from './pages/CreateOrderPage';
+import OrderDetailsPage from './pages/orderDetailsPage';
 
 const App = () => {
   return (
@@ -57,6 +58,7 @@ const App = () => {
                 <Route path={'/condominium/:condominiumId/services'} element={<ServicesPage />} />
                 <Route path={'/condominium/:condominiumId/services/:serviceId'} element={<ServiceDetailsPage />} />
                 <Route path={'/condominium/:condominiumId/orders'} element={<OrdersPage />} />
+                <Route path={'/condominium/:condominiumId/orders/:orderId'} element={<OrderDetailsPage />} />
                 <Route path={'/condominium/:condominiumId/orders/create'} element={<CreateOrderPage />} />
                 <Route path={'/condominium/:condominiumId/residents'} element={<ResidentsPage />} />
                 <Route path={'/condominium/:condominiumId/settings'} element={<SettingsCondominiumPage />} />
