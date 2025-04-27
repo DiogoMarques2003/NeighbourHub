@@ -20,7 +20,7 @@ const ScrollableList = ({ items, renderItem, setPageNumber, hasMore}) => {
     }, [hasMore, setPageNumber]);
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 p-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 py-4">
             {items.map((item, index) => (
                 <div key={item?.id || index} ref={items.length === index + 1 ? lastElementRef : null}>
 

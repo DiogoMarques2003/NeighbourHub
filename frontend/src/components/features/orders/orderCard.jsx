@@ -1,10 +1,7 @@
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { dateFormat } from '../../../utils/helperFunctions';
+import { dateFormat, truncateText } from '../../../utils/helperFunctions';
+import ItemCard from '@common/ItemCard';
 
-const OrderCard = ({ area }) => {
-  const navigate = useNavigate();
-
+const OrderCard = ({ order }) => {
   const getStatusText = (status) => {
     switch (status) {
       case 'PENDING':
@@ -65,42 +62,32 @@ const OrderCard = ({ area }) => {
     }
   };
 
-  const truncateText = (text, maxLength) => {
-    if (!text) return '';
-    if (text.length <= maxLength) return text;
-    return text.substring(0, maxLength) + '...';
-  };
-
   return (
-    <div
-      key={area.id}
-      className="p-4 border rounded-md shadow-sm bg-white flex flex-col justify-between h-full cursor-pointer transform transition duration-300 hover:scale-105"
-      onClick={() => navigate('')}
-    >
+    <ItemCard navigateTo={order.id}>
       {/* Topo */}
       <div>
         <p className="font-medium text-gray-800">Pedido</p>
-        <p className="text-sm text-gray-600 mb-4">{truncateText(area.description, 60)}</p>
+        <p className="text-sm text-gray-600 mb-4">{truncateText(order.description, 60)}</p>
       </div>
 
       {/* Fundo */}
       <div className="mt-auto space-y-1">
         <p className="text-sm text-gray-600">
           <b>Urgência: </b>
-          <span className={getUrgencyColor(area.urgency)}>{getUrgencyText(area.urgency)}</span>
+          <span className={getUrgencyColor(order.urgency)}>{getUrgencyText(order.urgency)}</span>
         </p>
 
         <p className="text-sm text-gray-600">
           <b>Deadline: </b>
-          {area.votingDeadline ? dateFormat(new Date(area.votingDeadline)) : 'N/A'}
+          {order.votingDeadline ? dateFormat(new Date(order.votingDeadline)) : 'N/A'}
         </p>
 
         <p className="text-sm text-gray-600">
           <b>Status: </b>
-          <span className={getStatusColor(area.status)}>{getStatusText(area.status)}</span>
+          <span className={getStatusColor(order.status)}>{getStatusText(order.status)}</span>
         </p>
       </div>
-    </div>
+    </ItemCard>
   );
 };
 

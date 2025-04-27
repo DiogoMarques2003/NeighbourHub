@@ -3,15 +3,12 @@ import TitleWithAddButton from '@common/TitleWithAddButton';
 import { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import CreateServicePopup from '../createService/CreateServicePopup';
-import InputWithIcon from '@common/InputWithIcon';
-import { Eye, EyeOff, Star } from 'lucide-react';
-import CheckBox from '@common/CheckBox';
-import Button from '@common/Button';
 import ListServiceFiltersCard from './ListServiceFiltersCard';
 import servicesService from '@services/servicesService';
 import Loading from '@common/Loading';
 import ErrorBar from '@common/ErrorBar';
 import ScrollableList from '@common/ScrollableList';
+import ServiceCard from './ServiceCard';
 
 const ListServices = () => {
   const { condominium } = useOutletContext();
@@ -45,6 +42,8 @@ const ListServices = () => {
       return false;
     }
 
+    setFilterError('');
+
     return true;
   }
 
@@ -55,7 +54,7 @@ const ListServices = () => {
     setIsLoading(true);
     const result = await servicesService.getServices(condominium.id, {
       pageNumber,
-      pageSize: 3,
+      pageSize: 4,
       minReviews,
       maxReviews,
       myServices,
@@ -126,7 +125,7 @@ const ListServices = () => {
           items={services}
           hasMore={hasMore}
           setPageNumber={setPageNumber}
-          renderItem={(item) => <p>{item.name}</p>}
+          renderItem={(service) => <ServiceCard key={service.id} service={service} />}
         />
       )}
     </>

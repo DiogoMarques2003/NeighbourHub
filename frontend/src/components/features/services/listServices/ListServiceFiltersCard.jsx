@@ -17,7 +17,7 @@ const ListServiceFiltersCard = ({
 
   return (
     <div className="my-8 bg-white px-6 py-2 rounded-lg shadow-sm border border-gray-200">
-      <div className="flex items-center gap-4 mb-2">
+      <div className="flex items-center gap-4">
         <h2 className="text-lg font-semibold text-gray-700">Filtros</h2>
         <button
           className="text-blue-500 flex items-center cursor-pointer"
@@ -26,11 +26,11 @@ const ListServiceFiltersCard = ({
         >
           {showFilters ? <ChevronsUp /> : <ChevronsDown />}
         </button>
-        <ErrorBar error={filterError} />
+        <ErrorBar className="" error={filterError} />
       </div>
 
       {showFilters && (
-        <div className="flex flex-wrap gap-8 items-end transition-all duration-300 ease-in-out">
+        <div className="flex flex-wrap gap-8 items-end transition-all duration-300 ease-in-out mt-3">
           <div className="flex flex-col min-w-[120px]">
             <label className="text-xs text-gray-500 mb-1">Nota mínima</label>
             <InputWithIcon
