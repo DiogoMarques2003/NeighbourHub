@@ -15,7 +15,8 @@ const Button = ({
   const variantClasses = {
     primary: "bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 hover:shadow-lg hover:-translate-y-1 focus:ring-blue-300",
     secondary: "bg-gray-200 text-gray-800 hover:bg-gray-300 hover:shadow-md hover:-translate-y-1 focus:ring-gray-300",
-    outline: "bg-transparent border border-blue-500 text-blue-500 hover:bg-blue-50 hover:shadow-md hover:-translate-y-1 focus:ring-blue-200"
+    outline: "bg-transparent border border-blue-500 text-blue-500 hover:bg-blue-50 hover:shadow-md hover:-translate-y-1 focus:ring-blue-200",
+    danger: "bg-red-500 text-white hover:bg-red-600 hover:shadow-lg hover:-translate-y-1 focus:ring-red-300",
   };
   
   const widthClass = fullWidth ? "w-full" : "";

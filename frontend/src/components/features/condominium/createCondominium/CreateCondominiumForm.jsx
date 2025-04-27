@@ -74,20 +74,22 @@ const CreateCondominiumForm = () => {
             placeholder="Nome do Condominio"
             value={condName}
             onChange={(e) => setCondName(e.target.value)}
+            required
           />
           <InputWithIcon
             icon={Mail}
             type="email"
             name="email"
-            placeholder="Email"
+            placeholder="Email do Condomínio"
             value={condEmail}
             onChange={(e) => setCondEmail(e.target.value)}
+            required
           />
           <InputWithIcon
             icon={Phone}
             name="phoneNumber"
             type="tel"
-            placeholder="Numero de telefone"
+            placeholder="Numero de telefone do Condomínio"
             value={condPhone}
             onChange={(e) => setCondPhone(e.target.value)}
             required

@@ -1,14 +1,11 @@
-import { useNavigate } from 'react-router-dom';
-import CreateServiceForm from "@features/services/createService/CreateServiceForm";
+import ListServices from '@features/services/listServices/ListServices';
 
 const ServicesPage = () => {
-    const navigate = useNavigate();
-
-    return(
-        <>
-         <CreateServiceForm/>
-        </>
-    )
-}
+  return (
+    <>
+      <ListServices />
+    </>
+  );
+};
 
 export default ServicesPage;

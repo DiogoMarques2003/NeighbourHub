@@ -236,11 +236,11 @@ router.get('/condominium/:condominiumId/services/:serviceId/request/:serviceRequ
   getByIdServiceRequestsController.handle(req, res);
 });
 
-router.get('/condominium/:condominiumId/services-requests', verifyJWT, (req, res) => {
+router.get('/condominium/:condominiumID/services-requests', verifyJWT, (req, res) => {
   serviceRequestsGetController.handle(req, res);
 });
 
-router.get('/condominium/:condominiumId/services/:serviceId/received-requests', verifyJWT, (req, res) => {
+router.get('/condominium/:condominiumID/services/:serviceId/received-requests', verifyJWT, (req, res) => {
   serviceRequestsReceivedGetController.handle(req, res);
 });
 
