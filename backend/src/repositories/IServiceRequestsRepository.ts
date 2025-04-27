@@ -11,4 +11,5 @@ export default interface IServiceRequestsRepository {
   update(serviceRequest: ServiceRequests): Promise<ServiceRequests>;
   delete(id: string): Promise<boolean>;
   count(userId: string, condominiumId: string): Promise<number>;
+  countReceived(userId: string, condominiumId: string, serviceID: string): Promise<number>;
 }

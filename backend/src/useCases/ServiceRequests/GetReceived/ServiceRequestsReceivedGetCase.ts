@@ -21,7 +21,7 @@ export default class ServiceRequestsReceivedGetCase {
         const userAddress = await this.addressRepository.getByUserAndCond(userID, condominiumID);
         if (!userAddress) throw new AppError('Utilizador não pertence ao condomínio!', 403);
 
-        const count = await this.servicesRequestsRepository.count(userID, condominiumID);
+        const count = await this.servicesRequestsRepository.countReceived(userID, condominiumID, serviceID);
         if(!count) return { data: [], pages: 0, actualPage: pageNumber, nRecords: count }
         
         const pages = Math.ceil(count / pageSize);

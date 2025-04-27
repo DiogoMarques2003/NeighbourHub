@@ -147,4 +147,18 @@ export default class PrismaServiceRequestsRepository implements IServiceRequests
       },
     });
   }
+
+  countReceived(userId: string, condominiumId: string, serviceID: string): Promise<number> {
+    return this.prisma.serviceRequests.count({
+      where: {
+        service: {
+          id: serviceID,
+          ownerId: userId,
+          condominium: {
+            id: condominiumId
+          }
+        }
+      },
+    });
+  }
 }
