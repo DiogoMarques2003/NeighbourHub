@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useOutletContext } from 'react-router-dom';
 import condominiumService from '@services/condominiumService';
 import Popup from '@common/Popup';
 
@@ -8,7 +8,9 @@ const SettingsCondominiumForm = () => {
   const { condominiumId } = useParams();
   const navigate = useNavigate();
 
-  const [condominium, setCondominium] = useState(null);
+  const { condominium, isAdmin } = useOutletContext();
+
+  // const [condominium, setCondominium] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -19,23 +21,11 @@ const SettingsCondominiumForm = () => {
     monthlyQuota: '',
   });
 
-  // Buscar condomínio ao carregar a página
   useEffect(() => {
-    const fetchCondominium = async () => {
-      try {
-        const result = await condominiumService.getConduminiumByID(condominiumId);
-
-        if (result?.error) {
-          toast.error('Erro ao carregar dados do condomínio.');
-        } else {
-          setCondominium(result); // Guarda o condomínio, mas não altera formData
-        }
-      } catch (error) {
-        toast.error('Erro inesperado.');
-      }
-    };
-
-    fetchCondominium();
+    if (!isAdmin || condominiumId !== condominium?.id) {
+      toast.error('Não tens permissão para aceder a esta página.');
+      navigate(-1);
+    }
   }, [condominiumId]);
 
   const handleChange = (e) => {
@@ -62,7 +52,7 @@ const SettingsCondominiumForm = () => {
       ...formData,
     };
 
-    if (!cleanedData.monthlyQuota) delete cleanedData.monthlyQuota
+    if (!cleanedData.monthlyQuota) delete cleanedData.monthlyQuota;
 
     const result = await condominiumService.editCondominium(condominiumId, cleanedData);
 
