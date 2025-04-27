@@ -3,6 +3,7 @@ import ServiceRequestsWithUserData from 'src/@types/ServiceRequestsWithUserData'
 
 export default interface IServiceRequestsRepository {
   findById(id: string): Promise<ServiceRequests | null>;
+  findByIdWithUserData(id: string): Promise<ResponseServiceRequestWithUserData | null>;
   getWithPagination(userId: string, condominiumId: string, pageSize: number, pageNumber: number): Promise<ServiceRequests[]>;
   getReceivedWithPagination(userId: string, condominiumId: string, pageSize: number, pageNumber: number): Promise<ServiceRequestsWithUserData[]>;
   create(serviceRequest: ServiceRequests): Promise<ServiceRequests>;

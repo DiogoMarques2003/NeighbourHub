@@ -14,6 +14,27 @@ export default class PrismaServiceRequestsRepository implements IServiceRequests
     return this.prisma.serviceRequests.findUnique({ where: { id } });
   }
 
+  findByIdWithUserData(id: string): Promise<ResponseServiceRequestWithUserData | null> {
+    return this.prisma.serviceRequests.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        requestDate: true,
+        status: true,
+        serviceId: true,
+        userId: true,
+        user: {
+          select : {
+            name: true,
+            email: true,
+            phoneNumber: true,
+            foto: true
+          }
+        }
+      },
+    });
+  }
+
   getWithPagination(userId: string, condominiumId: string, pageSize: number, pageNumber: number): Promise<ServiceRequests[]> {
     return this.prisma.serviceRequests.findMany({
       skip: (pageNumber - 1) * pageSize,
