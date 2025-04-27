@@ -1,5 +1,4 @@
 import OrderVoteForm from '@features/orders/orderVoteForm';
-import Title from '../components/common/Title';
 
 export default function OrderVotePage() {
   return (

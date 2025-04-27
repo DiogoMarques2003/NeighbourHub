@@ -23,7 +23,7 @@ import SettingsCondominiumPage from './pages/SettingsCondominiumPage';
 import ServiceRequestDetailsPage from './pages/ServiceRequestDetailsPage';
 import CreateOrderPage from './pages/CreateOrderPage';
 import OrderDetailsPage from './pages/orderDetailsPage';
-import OrderVotePage from './pages/orderVote';
+import OrderVotePage from './pages/OrderVotePage';
 
 const App = () => {
   return (
