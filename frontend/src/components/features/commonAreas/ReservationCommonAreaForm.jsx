@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import commonAreaService from '../../../services/commonAreaService';
-import { useOutletContext, useParams } from 'react-router-dom';
+import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import PhotoContainer from '../../common/PhotoContainer';
 import Loading from '../../common/Loading';
 import noImageAvaliable from '../../../../public/images/no_image_avaliable.jpg';
@@ -12,8 +12,13 @@ import CheckBox from '../../common/CheckBox';
 import Button from '../../common/Button';
 import commonAreaReservation from '../../../services/commonAreaReservation';
 import { toast } from 'react-toastify';
+import DeleteCommonAreaPopup from './DeleteCommonAreaPopup';
 
 const ReservationCommonAreaFrom = () => {
+  const navigate = useNavigate();
+
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const [areaData, setAreaData] = useState('');
@@ -23,7 +28,7 @@ const ReservationCommonAreaFrom = () => {
   const [endTime, setEndTime] = useState('');
   const [checkbox, setCheckbox] = useState(false);
   const { condominiumId, commonAreaId } = useParams();
-  const { condominium } = useOutletContext();
+  const { condominium, isAdmin } = useOutletContext();
 
   useEffect(() => {
     const getData = async () => {
@@ -91,6 +96,10 @@ const ReservationCommonAreaFrom = () => {
     toast.success(result?.message || 'Reserva registada com sucesso!');
   };
 
+  const onDeleted = () => {
+    navigate(-1);
+  };
+
   return (
     <>
       {isLoading ? (
@@ -99,6 +108,12 @@ const ReservationCommonAreaFrom = () => {
         <ErrorBar error={error} />
       ) : (
         <>
+          <DeleteCommonAreaPopup
+            commonArea={areaData}
+            openPopup={showDeletePopup}
+            setOpenPopup={setShowDeletePopup}
+            onDeleted={onDeleted}
+          />
           <div className="w-full min-h-screen flex">
             <div className="flex flex-col md:w-1/2 gap-3 h-full">
               <PhotoContainer
@@ -142,7 +157,9 @@ const ReservationCommonAreaFrom = () => {
                 )}
                 <div className="flex items-center">
                   <h1 className="pr-2 font-medium">Horário:</h1>
-                  <span className="pr-2">{areaData.startSchedule} - {areaData.endSchedule} </span>
+                  <span className="pr-2">
+                    {areaData.startSchedule} - {areaData.endSchedule}{' '}
+                  </span>
                   <Clock size={20} className="mr-1" />
                 </div>
               </div>
@@ -158,7 +175,7 @@ const ReservationCommonAreaFrom = () => {
                       required
                       className="pr-4"
                       value={date}
-                      onChange={(e) => (setDate(e.target.value))}
+                      onChange={(e) => setDate(e.target.value)}
                     />
                     <InputWithIcon
                       icon={null}
@@ -167,7 +184,7 @@ const ReservationCommonAreaFrom = () => {
                       required
                       className="pr-4"
                       value={startTime}
-                      onChange={(e) => (setStartTime(e.target.value))}
+                      onChange={(e) => setStartTime(e.target.value)}
                     />
                     <p className="pr-4">até</p>
                     <InputWithIcon
@@ -177,7 +194,7 @@ const ReservationCommonAreaFrom = () => {
                       required
                       className="pr-4"
                       value={endTime}
-                      onChange={(e) => (setEndTime(e.target.value))}
+                      onChange={(e) => setEndTime(e.target.value)}
                     />
                   </div>
                 </>
@@ -192,12 +209,26 @@ const ReservationCommonAreaFrom = () => {
               </ul>
               {areaData.status == 'READY' && condominium.isResident && (
                 <>
-                  <CheckBox className="pt-4" description="Li e aceito as regras" checkBox={checkbox}
-                            handleCheckbox={setCheckbox} />
+                  <CheckBox
+                    className="pt-4"
+                    description="Li e aceito as regras"
+                    checkBox={checkbox}
+                    handleCheckbox={setCheckbox}
+                  />
                   <Button type="submit" isLoading={isLoadingButton} fullWidth onClick={createReservation}>
                     Reservar Espaço
                   </Button>
                 </>
+              )}
+              {isAdmin && (
+                <div className="flex items-center mt-3 space-x-2">
+                  <Button fullWidth onClick={() => navigate('edit')}>
+                    Editar
+                  </Button>
+                  <Button variant="danger" fullWidth onClick={() => setShowDeletePopup(true)}>
+                    Apagar
+                  </Button>
+                </div>
               )}
             </div>
           </div>
