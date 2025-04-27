@@ -26,6 +26,14 @@ const ordersService = {
       return { error: error?.response?.data?.message };
     }
   },
+  createOrderVote: async (condominiumId, orderId, voteData) => {
+    try {
+      const response = await apiClient.post(`/condominium/${condominiumId}/orders/${orderId}/voting`, voteData);
+      return response?.data;
+    } catch (error) {
+      return { error: error?.response?.data?.message };
+    }
+  },
 };
 
 export default ordersService;
