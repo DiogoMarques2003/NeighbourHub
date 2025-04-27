@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import ErrorBar from '@common/ErrorBar';
 import { ORDER_URGENCY_TYPES } from '../../../utils/constants.js';
 import ordersService from '@services/orders';
-import { MapPin, MessageSquareText } from 'lucide-react';
+import { AlarmCheck, MapPin, MessageSquareText } from 'lucide-react';
 import DropDown from '@common/DropDown';
 import { handleFormDataChange } from '@utils/helperFunctions.js';
 import TextAreaWithIcon from '@common/TextAreaWithIcon';
@@ -74,7 +74,7 @@ const CreateOrderForm = () => {
             setChoice={(e) => handleFormDataChange(e, setFormData, 'urgency')}
             choice={formData.urgency}
             dropBoxPlaceHolder="Urgência"
-            icon={MapPin}
+            icon={AlarmCheck}
           />
         </div>
       </div>
