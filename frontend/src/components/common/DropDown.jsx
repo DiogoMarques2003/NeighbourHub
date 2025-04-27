@@ -12,7 +12,7 @@ const DropDown = ({ listOptions, setChoice, choice, dropBoxPlaceHolder, icon: Ic
 
   if (listOptions && typeof listOptions === 'object' && !Array.isArray(listOptions)) {
     dropdownOptions = Object.entries(listOptions).map(([key, value]) => ({
-      code: Number(key),
+      code: key,
       description: value,
     }));
   }
