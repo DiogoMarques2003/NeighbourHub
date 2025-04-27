@@ -25,6 +25,10 @@ const ListServices = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
+  function onAddClick() {
+    setOpenPopup(true);
+  }
+
   // Validar os filtros
   function checkFilterValidation() {
     if (minReviews < 0 || minReviews > 5) {
@@ -94,12 +98,7 @@ const ListServices = () => {
 
   return (
     <>
-      {/* Titulo da página para se for morador ou não */}
-      {condominium.isResident ? (
-        <TitleWithAddButton title="Serviços" onAddClick={() => condominium.isResident && setOpenPopup(true)} />
-      ) : (
-        <Title title="Serviços" />
-      )}
+      <TitleWithAddButton title="Serviços" onAddClick={condominium.isResident && onAddClick} />
 
       {/* Popup para criar o serviço */}
       <CreateServicePopup openPopup={openPopup} setOpenPopup={setOpenPopup} onServiceAdded={onServiceAdded} />
