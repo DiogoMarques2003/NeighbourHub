@@ -31,6 +31,7 @@ export default class PrismaOrdersRepository implements IOrdersRepository {
         user: {
           select: {
             id: true,
+            name: true,
             email: true,
             phoneNumber: true,
             foto: true,
