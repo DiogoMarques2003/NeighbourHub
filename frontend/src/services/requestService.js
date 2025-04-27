@@ -1,6 +1,7 @@
 import apiClient from './apiClient';
 
-const postRequestService = {
+const requestService = {
+
   postRequestService: async (condominiumId, serviceId) => {
     try {
       const response = await apiClient.post(`/condominium/${condominiumId}/services/${serviceId}/request`);
@@ -23,6 +24,14 @@ const postRequestService = {
       return { error: error?.response?.data?.message || 'Erro ao atualizar status.' };
     }
   },
+  getServiceRequests: async (condominiumId, serviceId) => {
+    try {
+      const response = await apiClient.get(`/condominium/${condominiumId}/services/${serviceId}/received-requests`);
+      return response?.data;
+    } catch (error) {
+      return { error: error?.response?.data?.message || 'Erro ao obter serviços requisitados' };
+    }
+  },
   getServiceRequestById: async (condominiumId, serviceId, serviceRequestId) => {
     try {
       const response = await apiClient.get(
@@ -35,5 +44,4 @@ const postRequestService = {
     }
   },
 };
-
-export default postRequestService;
+export default requestService;

@@ -37,6 +37,7 @@ const CreateResidentPopup = ({ openPopup, setPopup }) => {
   });
 
   const isValidForm = () => {
+
     if (formData.houseType == 0) {
       setError('Por favor preencha o tipo da casa!');
       return false;

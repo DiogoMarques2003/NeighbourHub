@@ -1,6 +1,6 @@
 import { X } from 'lucide-react';
 
-const Popup = ({ openPopUp, closePopUp, popupTitle, children, popupHandleSubmit, className = '' }) => {
+const Popup = ({ openPopUp, closePopUp, popupTitle, children, popupHandleSubmit, className = '', classNamePopUp = '' }) => {
   const handlelosePopUp = (e) => {
     if (e.target.id === 'ModelContainer') {
       closePopUp();
@@ -15,7 +15,8 @@ const Popup = ({ openPopUp, closePopUp, popupTitle, children, popupHandleSubmit,
       onClick={handlelosePopUp}
       className={`${className} z-10 fixed inset-0 flex justify-center items-center bg-opacity-20 backdrop-blur-sm`}
     >
-      <div className="p-2 bg-white w-11/12 md:w-1/3 lg:1/4 shadow-inner border border-gray-200 rounded-lg py-5">
+      <div className={` ${classNamePopUp} p-2 bg-white min-w-11/12 md:min-w-1/3 lg:min-w-1/4 w-auto shadow-inner border border-gray-200 rounded-lg py-5 overflow-auto`}>
+
         <div className="w-full p-3 justify-center items-center">
           <div className="flex items-center justify-between w-full">
             <div className="flex-1" />
@@ -35,7 +36,7 @@ const Popup = ({ openPopUp, closePopUp, popupTitle, children, popupHandleSubmit,
               </button>
             </div>
           </div>
-          <hr class="h-px my-4 bg-gray-300 border-0"></hr>
+          <hr class="h-px mb-4 mt-1 bg-gray-300 border-0"></hr>
           <div className="space-y-4">
             <form onSubmit={popupHandleSubmit} className="space-y-4">
               {children}
