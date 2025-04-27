@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useOutletContext, useParams, useNavigate } from 'react-router-dom';
 import ordersService from '@services/orders';
 import { dateFormat } from '@utils/helperFunctions';
 import defaultAvatar from '@public/images/defaultUserAvatar.jpg';
+import { Plus } from 'lucide-react';
+import { getStatusText, getUrgencyColor, getUrgencyText, getStatusColor } from './orderConsts';
 
 const OrderDetailsForm = () => {
+  const navigate = useNavigate();
+  const { isAdmin } = useOutletContext();
   const { condominiumId, orderId } = useParams();
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState(null);
@@ -48,7 +52,7 @@ const OrderDetailsForm = () => {
           <h2 className="text-xl font-semibold mb-4" style={{ color: '#3e94bf' }}>
             Urgência
           </h2>
-          <div className="text-gray-700 mb-2">{order.urgency}</div>
+          <div className={`mb-2 ${getUrgencyColor(order.urgency)}`}>{getUrgencyText(order.urgency)}</div>
 
           <h2 className="text-xl font-semibold mb-4" style={{ color: '#3e94bf' }}>
             Requisitante
@@ -69,7 +73,11 @@ const OrderDetailsForm = () => {
           <h2 className="text-xl font-semibold mb-4" style={{ color: '#3e94bf' }}>
             Orçamento aceite
           </h2>
-          <div className="text-gray-700 mb-2">Mostrar isto no fim da votação só</div>
+          {order.status === 'COMPLETED' ? (
+            <div className="text-gray-700 mb-2">Falta ir buscar o orçamento</div>
+          ) : (
+            <div className="text-gray-700 mb-2">A votação ainda não terminou</div>
+          )}
         </div>
 
         {/* Caixa da Direita */}
@@ -77,12 +85,28 @@ const OrderDetailsForm = () => {
           <h2 className="text-xl font-semibold mb-4" style={{ color: '#3e94bf' }}>
             Status
           </h2>
-          <div className="text-gray-700 mb-2">{order.status}</div>
+          <div className={`mb-2 ${getStatusColor(order.status)}`}>{getStatusText(order.status)}</div>
 
           <h2 className="text-xl font-semibold mb-4" style={{ color: '#3e94bf' }}>
             Data do Pedido
           </h2>
           <div className="text-gray-700 mb-2">{order.createdAt ? dateFormat(new Date(order.createdAt)) : 'N/A'}</div>
+
+          {order.status === 'PENDING' && isAdmin && (
+            <div className="flex items-center mb-4">
+              <h2 className="text-xl font-semibold" style={{ color: '#3e94bf' }}>
+                Criar Votação
+              </h2>
+              <button
+                className="text-xl font-semibold flex items-center cursor-pointer"
+                style={{ color: '#3e94bf' }}
+                onClick={() => navigate('./createVote')}
+                type="button"
+              >
+                <Plus size={30} />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
