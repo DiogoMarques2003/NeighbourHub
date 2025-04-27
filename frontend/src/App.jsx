@@ -20,6 +20,7 @@ import OrdersPage from './pages/OrdersPage';
 import EditCommonAreaPage from './pages/EditCommonAreaPage';
 import ResidentsPage from './pages/ResidentsPage';
 import SettingsCondominiumPage from './pages/SettingsCondominiumPage';
+import ServiceRequestDetailsPage from './pages/ServiceRequestDetailsPage';
 
 const App = () => {
   return (
@@ -51,6 +52,7 @@ const App = () => {
                 <Route path={'/condominium/:condominiumId/orders'} element={<OrdersPage />} />
                 <Route path={'/condominium/:condominiumId/residents'} element={<ResidentsPage />} />
                 <Route path={'/condominium/:condominiumId/settings'} element={<SettingsCondominiumPage />} />
+                <Route path={'/condominium/:condominiumId/services/:serviceId/request/:serviceRequestId'} element={<ServiceRequestDetailsPage />} />
               </Route>
             </Route>
 
