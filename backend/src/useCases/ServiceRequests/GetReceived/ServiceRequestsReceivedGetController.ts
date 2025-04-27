@@ -15,6 +15,7 @@ export default class ServiceRequestsReceivedGetController {
             const requestData: IServiceRequestsReceivedGetDTO = {
                 userID: req.userID,
                 condominiumID: req.params.condominiumID,
+                serviceID: req.params.serviceID,
                 pageNumber: Number(req.query.pageNumber),
                 pageSize: Number(req.query.pageSize),
             };

@@ -93,12 +93,13 @@ export default class PrismaServiceRequestsRepository implements IServiceRequests
     });
   }
 
-  getReceivedWithPagination(userId: string, condominiumId: string, pageSize: number, pageNumber: number): Promise<ServiceRequestsWithUserData[]> {
+  getReceivedWithPagination(userId: string, condominiumId: string, serviceID: string, pageSize: number, pageNumber: number): Promise<ServiceRequestsWithUserData[]> {
     return this.prisma.serviceRequests.findMany({
       skip: (pageNumber - 1) * pageSize,
       take: pageSize,
       where: {
         service: {
+          id: serviceID,
           ownerId: userId,
           condominium: {
             id: condominiumId
