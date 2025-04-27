@@ -54,7 +54,7 @@ const ListServices = () => {
     setIsLoading(true);
     const result = await servicesService.getServices(condominium.id, {
       pageNumber,
-      pageSize: 4,
+      pageSize: 5,
       minReviews,
       maxReviews,
       myServices,
