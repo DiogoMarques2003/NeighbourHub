@@ -5,6 +5,7 @@ import IServicesRepository from '@repositories/IServicesRepository';
 import IGetByIdServiceRequestsDTO from './IGetByIdServiceRequestsDTO';
 import AppError from '@errors/AppError';
 import IServiceReviewsRepository from '@repositories/IServiceReviewsRepository';
+import generatePathToFile from '@shared/generatePathToFile';
 
 export default class GetByIdServiceRequestsCase {
   constructor(
@@ -28,15 +29,17 @@ export default class GetByIdServiceRequestsCase {
     if (!service) throw new AppError('Serviço não encontrado', 404);
     if (service.condominiumId !== condominiumId) throw new AppError('Serviço não encontrado', 404);
 
-    const serviceRequest = await this.serviceRequestRepository.findById(serviceRequestId);
+    const serviceRequest = await this.serviceRequestRepository.findByIdWithUserData(serviceRequestId);
     if (!serviceRequest) throw new AppError('Pedido de serviço não encontrado', 404);
     if (serviceRequest.serviceId !== serviceId) throw new AppError('Pedido de serviço não encontrado', 404);
 
     if (serviceRequest.userId !== userId && service.ownerId !== userId)
       throw new AppError('Não tens permissão para ver este pedido de serviço', 403);
 
+    if (serviceRequest.user.foto) serviceRequest.user.foto = generatePathToFile(serviceRequest.user.foto);
+
     const review = await this.serviceReviewsRepository.findByReq(serviceRequestId);
 
-    return {...serviceRequest, review};
+    return { ...serviceRequest, review };
   }
 }
