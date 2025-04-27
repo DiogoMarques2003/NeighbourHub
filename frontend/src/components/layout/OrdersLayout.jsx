@@ -5,7 +5,7 @@ import ScrollableList from '../common/ScrollableList';
 import ordersService from '../../services/orders';
 import OrderCard from '../features/orders/orderCard';
 import DropDown from '../common/DropDown';
-import { SquareArrowDown, AlarmClock, Tags } from 'lucide-react';
+import { AlarmClock, Tags } from 'lucide-react';
 
 const OrdersLayout = () => {
   const navigate = useNavigate();
@@ -44,7 +44,6 @@ const OrdersLayout = () => {
       setLoading(true);
 
       const data = await ordersService.getOrders(condominium.id, { pageNumber, pageSize: 3 });
-      console.log(data.data);
       setLoading(false);
 
       if (!data || data?.error) {
