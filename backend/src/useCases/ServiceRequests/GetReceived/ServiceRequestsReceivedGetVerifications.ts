@@ -1,0 +1,20 @@
+import { isValidUUID } from "@shared/verifications";
+import AppError from "@errors/AppError";
+import IServiceRequestsReceivedGetDTO from "./IServiceRequestsReceivedGetDTO";
+
+export default class ServiceRequestsReceivedGetVerifications {
+    execute(data: IServiceRequestsReceivedGetDTO) {
+        const { condominiumID, pageNumber, pageSize } = data;
+
+        if (
+            !condominiumID ||
+            typeof condominiumID !== 'string' ||
+            !isValidUUID(condominiumID)
+          )
+            throw new AppError('Id de condomínio inválido!', 400);
+        
+        if (!pageSize || typeof pageSize !== 'number') data.pageSize = 25;
+
+        if (!pageNumber || typeof pageNumber !== 'number') data.pageNumber = 1;
+    }
+}

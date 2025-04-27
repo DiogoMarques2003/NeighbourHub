@@ -57,6 +57,8 @@ import { areaReservationsGetByIdController } from '@useCases/AreaReservations/Ge
 import { editServiceRequestsController } from '@useCases/ServiceRequests/Edit';
 import { getByIdServiceRequestsController } from '@useCases/ServiceRequests/GetById';
 import { deleteServiceRequestController } from '@useCases/ServiceRequests/Delete';
+import { serviceRequestsGetController } from '@useCases/ServiceRequests/Get';
+import { serviceRequestsReceivedGetController } from '@useCases/ServiceRequests/GetReceived';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -232,6 +234,14 @@ router.delete('/condominium/:condominiumId/services/:serviceId/request/:serviceR
 
 router.get('/condominium/:condominiumId/services/:serviceId/request/:serviceRequestId', verifyJWT, (req, res) => {
   getByIdServiceRequestsController.handle(req, res);
+});
+
+router.get('/condominium/:condominiumId/services-requests', verifyJWT, (req, res) => {
+  serviceRequestsGetController.handle(req, res);
+});
+
+router.get('/condominium/:condominiumId/services/:serviceId/received-requests', verifyJWT, (req, res) => {
+  serviceRequestsReceivedGetController.handle(req, res);
 });
 
 //--Reviews
