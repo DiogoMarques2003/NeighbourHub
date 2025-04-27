@@ -72,7 +72,6 @@ const CreateServicePopup = ({ openPopup, setOpenPopup, onServiceAdded }) => {
         closePopUp={HandleRemovePopUp}
         popupTitle={'Novo Serviço'}
         popupHandleSubmit={handleSubmit}
-        className=""
       >
         {error && <ErrorBar error={error} />}
         <InputWithIcon
