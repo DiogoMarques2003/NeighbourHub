@@ -4,10 +4,9 @@ import ServiceDetailsForm from '@features/services/requestService/ServiceDetails
 const ServiceDetailsPage = () => {
   return (
     <>
-    <ServiceDetailsForm/>
+      <ServiceDetailsForm />
     </>
-
-  )
-}
+  );
+};
 
 export default ServiceDetailsPage;

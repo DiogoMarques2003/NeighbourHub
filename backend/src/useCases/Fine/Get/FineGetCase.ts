@@ -39,7 +39,7 @@ export default class FineGetCase {
       AND: andCondition,
     };
 
-    if (hasAddress) filters.areaReservation.userId = userId;
+    if (hasAddress && condominium.adminId !== userId) filters.areaReservation.userId = userId;
     else if (fromUserId && condominium.adminId === userId) {
       const existeAddress = await this.addressRepository.getByUserAndCond(fromUserId, condominiumId);
       if (!existeAddress) throw new AppError('Utilizador não faz parte do condominio', 404);

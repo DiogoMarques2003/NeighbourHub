@@ -92,7 +92,7 @@ const OrdersLayout = () => {
 
           <ScrollableList
             items={filteredOrders}
-            renderItem={(item) => <OrderCard area={item} />}
+            renderItem={(item) => <OrderCard order={item} />}
             setPageNumber={setPageNumber}
             hasMore={hasMore}
           />

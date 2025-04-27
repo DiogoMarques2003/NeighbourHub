@@ -43,4 +43,10 @@ function dateFormat(date) {
   return `${day}/${month}/${year} ${hours}:${minutes}`;
 }
 
-export { getToken, setToken, removeToken, encodeQueryData, getCommonAreaTypeName, handleFormDataChange, dateFormat };
+const truncateText = (text, maxLength) => {
+  if (!text) return '';
+  if (text.length <= maxLength) return text;
+  return text.substring(0, maxLength) + '...';
+};
+
+export { getToken, setToken, removeToken, encodeQueryData, getCommonAreaTypeName, handleFormDataChange, dateFormat, truncateText };

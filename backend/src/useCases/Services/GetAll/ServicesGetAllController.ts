@@ -24,7 +24,7 @@ export default class ServicesGetAllController {
       const services = await this.servicesCase.execute(requestData);
       if (!services) throw new AppError('Nenhum serviço registado no condominio', 500);
 
-      res.status(201).json( services );
+      res.status(200).json(services);
     } catch (err) {
       errorHandler(err, res);
     }
