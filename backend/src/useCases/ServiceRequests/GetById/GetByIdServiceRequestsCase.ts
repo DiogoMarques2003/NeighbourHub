@@ -37,6 +37,6 @@ export default class GetByIdServiceRequestsCase {
 
     const review = await this.serviceReviewsRepository.findByReq(serviceRequestId);
 
-    return {serviceRequest, review};
+    return {...serviceRequest, review};
   }
 }
