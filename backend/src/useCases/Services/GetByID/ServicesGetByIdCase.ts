@@ -26,12 +26,14 @@ export default class ServicesGetByIdCase {
     if (!userCondDb && condDb.adminId !== userId) throw new AppError('Não faz parte do condomínio', 403);
 
     const serviceWithUser = await this.servicesRepository.findByIdWithUserData(serviceId);
+    if (!serviceWithUser) throw new AppError('Serviço não encontrado', 404);
+    if (serviceWithUser.condominiumId !== condId) throw new AppError('Serviço não encontrado', 404);
     const serviceAvgReview = await this.servicesReviewRepository.getReviewByService(serviceId);
 
     if (serviceWithUser.owner.foto) serviceWithUser.owner.foto = generatePathToFile(serviceWithUser.owner.foto);
     else delete serviceWithUser.owner.foto;
     if (!serviceWithUser.cost) delete serviceWithUser.cost;
 
-    return {...serviceWithUser, avgReview: serviceAvgReview};
+    return { ...serviceWithUser, avgReview: serviceAvgReview };
   }
 }
