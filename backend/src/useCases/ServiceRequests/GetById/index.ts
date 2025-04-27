@@ -5,18 +5,21 @@ import PrismaServicesRepository from '@repositories/implementations/PrismaServic
 import GetByIdServiceRequestsVerifications from './GetByIdServiceRequestsVerifications';
 import GetByIdServiceRequestsCase from './GetByIdServiceRequestsCase';
 import GetByIdServiceRequestsController from './GetByIdServiceRequestsController';
+import PrismaServiceReviewsRepository from '@repositories/implementations/PrismaServiceReviewsRepository';
 
 const servicesRepository = new PrismaServicesRepository();
 const condominiumRepository = new PrismaCondominiumsRepository();
 const addressRepository = new PrismaAddressesRepository();
 const serviceRequestRepository = new PrismaServiceRequestsRepository();
+const serviceReviewsRepository = new PrismaServiceReviewsRepository();
 
 const getByIdServiceRequestsVerifications = new GetByIdServiceRequestsVerifications();
 const getByIdServiceRequestsCase = new GetByIdServiceRequestsCase(
   servicesRepository,
   condominiumRepository,
   addressRepository,
-  serviceRequestRepository
+  serviceRequestRepository,
+  serviceReviewsRepository
 );
 
 const getByIdServiceRequestsController = new GetByIdServiceRequestsController(

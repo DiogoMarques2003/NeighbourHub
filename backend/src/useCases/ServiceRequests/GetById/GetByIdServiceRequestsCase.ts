@@ -4,13 +4,15 @@ import IServiceRequestsRepository from '@repositories/IServiceRequestsRepository
 import IServicesRepository from '@repositories/IServicesRepository';
 import IGetByIdServiceRequestsDTO from './IGetByIdServiceRequestsDTO';
 import AppError from '@errors/AppError';
+import IServiceReviewsRepository from '@repositories/IServiceReviewsRepository';
 
 export default class GetByIdServiceRequestsCase {
   constructor(
     private servicesRepository: IServicesRepository,
     private condominiumsRepository: ICondominiumsRepository,
     private addressRepository: IAddressesRepository,
-    private serviceRequestRepository: IServiceRequestsRepository
+    private serviceRequestRepository: IServiceRequestsRepository,
+    private serviceReviewsRepository: IServiceReviewsRepository
   ) {}
 
   async execute(data: IGetByIdServiceRequestsDTO) {
@@ -33,6 +35,8 @@ export default class GetByIdServiceRequestsCase {
     if (serviceRequest.userId !== userId && service.ownerId !== userId)
       throw new AppError('Não tens permissão para ver este pedido de serviço', 403);
 
-    return serviceRequest;
+    const review = await this.serviceReviewsRepository.findByReq(serviceRequestId);
+
+    return {...serviceRequest, review};
   }
 }
