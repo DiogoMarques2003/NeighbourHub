@@ -19,6 +19,7 @@ const SideBarHomePage = ({ currentUser, condominium, logout }) => {
       onClick: null,
       forAdmin: true,
     },
+    { title: 'Trocar de condomínio', path: '/condominium', icon: 'list', onClick: null },
     { title: 'Terminar sessão', path: '/login', icon: 'log-out', onClick: logout },
   ];
 
