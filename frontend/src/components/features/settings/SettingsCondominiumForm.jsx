@@ -1,15 +1,20 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useOutletContext } from 'react-router-dom';
 import condominiumService from '@services/condominiumService';
 import Popup from '@common/Popup';
+import InputWithIcon from '@common/InputWithIcon';
+import { Building, Euro, Mail, Phone } from 'lucide-react';
+import { handleFormDataChange } from '@utils/helperFunctions';
+import Button from '@common/Button';
 
 const SettingsCondominiumForm = () => {
-  const { condominiumId } = useParams();
   const navigate = useNavigate();
+  const { condominiumId } = useParams();
+  const { condominium, isAdmin, setCondominium } = useOutletContext();
 
-  const [condominium, setCondominium] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingUpdate, setIsLoadingUpdate] = useState(false);
+  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -19,142 +24,145 @@ const SettingsCondominiumForm = () => {
     monthlyQuota: '',
   });
 
-  // Buscar condomínio ao carregar a página
   useEffect(() => {
-    const fetchCondominium = async () => {
-      try {
-        const result = await condominiumService.getConduminiumByID(condominiumId);
+    if (!isAdmin || condominiumId !== condominium?.id) {
+      toast.error('Não tens permissão para aceder a esta página.');
+      navigate(-1);
+    }
 
-        if (result?.error) {
-          toast.error('Erro ao carregar dados do condomínio.');
-        } else {
-          setCondominium(result); // Guarda o condomínio, mas não altera formData
-        }
-      } catch (error) {
-        toast.error('Erro inesperado.');
-      }
-    };
-
-    fetchCondominium();
+    setFormData({ ...condominium });
   }, [condominiumId]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
   const handleResetFields = () => {
-    if (condominium) {
-      setFormData({
-        name: condominium.name || '',
-        email: condominium.email || '',
-        phoneNumber: condominium.phoneNumber || '',
-        monthlyQuota: Number(condominium.monthlyQuota),
-      });
-      toast.info('Campos revertidos para os dados originais.');
-    }
+    setFormData({ ...condominium });
+    toast.info('Campos revertidos para os dados originais.');
   };
 
-  const handleSave = async () => {
-    setIsLoading(true);
+  const validateForm = () => {
+    if (!formData.name.trim()) {
+      toast.error('Nome é obrigatório');
+      return false;
+    }
+
+    if (!formData.email.trim()) {
+      toast.error('Email é obrigatório');
+      return false;
+    }
+
+    if (!formData.phoneNumber.trim()) {
+      toast.error('Número de telemóvel é obrigatório');
+      return false;
+    }
+
+    if (!formData.monthlyQuota) {
+      toast.error('Cota mensal é obrigatória');
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) return;
+
+    setIsLoadingUpdate(true);
 
     const cleanedData = {
       ...formData,
+      monthlyQuota: Number(formData.monthlyQuota),
     };
-
-    if (!cleanedData.monthlyQuota) delete cleanedData.monthlyQuota
 
     const result = await condominiumService.editCondominium(condominiumId, cleanedData);
 
     if (result?.error || !result) {
       toast.error(result?.error || 'Erro ao editar condomínio.');
-      setIsLoading(false);
+      setIsLoadingUpdate(false);
       return;
     }
 
-    toast.success('Condomínio atualizado com sucesso!');
-    setIsLoading(false);
-    navigate(`/condominium/${condominiumId}`);
+    setCondominium(result.condominium);
+    toast.success(result.message || 'Condomínio atualizado com sucesso!');
+    setIsLoadingUpdate(false);
+    navigate(-1);
   };
 
   const handleDeleteConfirmed = async () => {
-    setIsLoading(true);
+    setIsLoadingDelete(true);
     const result = await condominiumService.deleteCondominium(condominiumId);
 
     if (result?.error || !result) {
       toast.error(result?.error || 'Erro ao eliminar condomínio.');
-      setIsLoading(false);
+      setIsLoadingDelete(false);
       return;
     }
 
     toast.success('Condomínio eliminado com sucesso!');
-    setIsLoading(false);
+    setIsLoadingDelete(false);
     navigate('/condominium');
   };
 
-  if (!condominium) return <p className="p-8 text-gray-500">A carregar dados...</p>;
-
   return (
-    <div className="p-10">
+    <form className="p-10" onSubmit={handleSave}>
       <h1 className="text-3xl font-bold text-[#3e94bf] mb-8">Definições do Condomínio</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <input
+        <InputWithIcon
+          icon={Building}
           type="text"
           name="name"
-          value={formData.name}
-          onChange={handleChange}
           placeholder="Nome do Condomínio"
-          className="border p-3 rounded-md"
+          value={formData.name}
+          onChange={(e) => handleFormDataChange(e, setFormData)}
+          required
         />
-        <input
+
+        <InputWithIcon
+          icon={Mail}
           type="email"
           name="email"
-          value={formData.email}
-          onChange={handleChange}
           placeholder="Email do Condomínio"
-          className="border p-3 rounded-md"
+          value={formData.email}
+          onChange={(e) => handleFormDataChange(e, setFormData)}
+          required
         />
-        <input
-          type="text"
+
+        <InputWithIcon
+          icon={Phone}
           name="phoneNumber"
+          type="tel"
+          placeholder="Numero de telefone do Condomínio"
           value={formData.phoneNumber}
-          onChange={handleChange}
-          placeholder="Número de Telefone"
-          className="border p-3 rounded-md"
+          onChange={(e) => handleFormDataChange(e, setFormData)}
+          maxLength={9}
+          required
         />
-        <input
-          type="number"
+
+        <InputWithIcon
+          icon={Euro}
           name="monthlyQuota"
+          type="number"
+          placeholder="Cota mensal"
           value={formData.monthlyQuota}
-          onChange={handleChange}
-          placeholder="Quota Mensal (€)"
-          className="border p-3 rounded-md"
+          onChange={(e) => handleFormDataChange(e, setFormData)}
+          maxLength={6}
+          required
         />
       </div>
 
       <div className="flex flex-col md:flex-row gap-4 justify-center mt-8">
-        <button
-          onClick={handleSave}
-          disabled={isLoading}
-          className="flex items-center justify-center px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md disabled:opacity-50"
-        >
-          {isLoading ? 'A guardar...' : 'Salvar Edições'}
-        </button>
+        <Button type="submit" isLoading={isLoadingUpdate}>
+          Salvar Edições
+        </Button>
 
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="flex items-center justify-center px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md"
-        >
+        <Button onClick={() => setIsModalOpen(true)} variant="danger">
           Eliminar Condomínio
-        </button>
+        </Button>
 
-        <button
-          onClick={handleResetFields}
-          className="flex items-center justify-center px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-md"
-        >
+        <Button onClick={handleResetFields} variant="secondary">
           Limpar Tudo
-        </button>
+        </Button>
       </div>
 
       {isModalOpen && (
@@ -167,25 +175,18 @@ const SettingsCondominiumForm = () => {
             </p>
 
             <div className="flex justify-center gap-4">
-              <button
-                type="button"
-                onClick={() => setIsModalOpen(false)}
-                className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
-              >
+              <Button variant="secondary" onClick={() => setIsModalOpen(false)}>
                 Cancelar
-              </button>
-              <button
-                type="button"
-                onClick={handleDeleteConfirmed}
-                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-              >
+              </Button>
+
+              <Button variant="danger" onClick={handleDeleteConfirmed} isLoading={isLoadingDelete}>
                 Eliminar
-              </button>
+              </Button>
             </div>
           </div>
         </Popup>
       )}
-    </div>
+    </form>
   );
 };
 

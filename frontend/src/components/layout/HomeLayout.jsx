@@ -40,7 +40,7 @@ const HomeLayout = () => {
                 <div >
                     <SideBarHomePage currentUser={currentUser} condominium={condominium} logout={logout}/>
                     <main className="ml-68 p-6 h-full overflow-auto">
-                        <Outlet context={{ currentUser, condominium, isAdmin }}/>
+                        <Outlet context={{ currentUser, condominium, isAdmin, setCondominium }}/>
                     </main>
                 </div>
             )}
