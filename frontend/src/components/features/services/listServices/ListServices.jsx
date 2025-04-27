@@ -9,6 +9,9 @@ import CheckBox from '@common/CheckBox';
 import Button from '@common/Button';
 import ListServiceFiltersCard from './ListServiceFiltersCard';
 import servicesService from '@services/servicesService';
+import Loading from '@common/Loading';
+import ErrorBar from '@common/ErrorBar';
+import ScrollableList from '@common/ScrollableList';
 
 const ListServices = () => {
   const { condominium } = useOutletContext();
@@ -25,23 +28,43 @@ const ListServices = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
+  // Validar os filtros
+  function checkFilterValidation() {
+    if (minReviews < 0 || minReviews > 5) {
+      setFilterError('A nota mínima deve ser entre 0 e 5');
+      return false;
+    }
+
+    if (maxReviews < 0 || maxReviews > 5) {
+      setFilterError('A nota máxima deve ser entre 0 e 5');
+      return false;
+    }
+
+    if (minReviews > maxReviews) {
+      setFilterError('A nota mínima não pode ser maior que a máxima');
+      return false;
+    }
+
+    return true;
+  }
+
   // Função para obter os serviços
   async function getServices() {
-    setIsLoading(true);
+    if (!checkFilterValidation()) return;
 
-    const queryString = {
+    setIsLoading(true);
+    const result = await servicesService.getServices(condominium.id, {
       pageNumber,
       pageSize: 3,
       minReviews,
       maxReviews,
       myServices,
-    };
-
-    const result = await servicesService.getServices(condominium.id, queryString);
+    });
     setIsLoading(false);
 
     if (!result || result.error) {
-      if (services.length === 0) {
+      if (services.length === 0 || pageNumber === 1) {
+        setServices([]);
         setFetchError(result?.error || 'Não foi possível obter serviços com os filtros aplicados');
       }
       return;
@@ -49,39 +72,25 @@ const ListServices = () => {
 
     setFetchError('');
 
-    setServices((prev) => [...prev, ...result.data]);
+    if (pageNumber === 1) setServices(result.data);
+    else setServices((prev) => [...prev, ...result.data]);
     setHasMore(result.actualPage < result.pages);
+  }
 
-    console.log(services);
+  function onServiceAdded() {
+    setServices([]);
+    if (pageNumber !== 1) setPageNumber(1);
+    else getServices();
   }
 
   // Obter os serviços quando a página carregar ou quando o número da página mudar
   useEffect(() => {
     getServices();
-  }, [condominium.id, pageNumber]);
+  }, [pageNumber, myServices, minReviews, maxReviews]);
 
-  // Validar filtros e caso sejám validos, resetar serviços e página
+  // Sempre que alterar os filtros colocar a página 1
   useEffect(() => {
-    if (minReviews < 0 || minReviews > 5) {
-      setFilterError('A nota mínima deve ser entre 0 e 5');
-      return;
-    }
-
-    if (maxReviews < 0 || maxReviews > 5) {
-      setFilterError('A nota máxima deve ser entre 0 e 5');
-      return;
-    }
-
-    if (minReviews > maxReviews) {
-      setFilterError('A nota mínima não pode ser maior que a máxima');
-      return;
-    }
-
-    setFilterError('');
-    setServices([]);
-    setHasMore(true);
     if (pageNumber !== 1) setPageNumber(1);
-    else getServices();
   }, [myServices, minReviews, maxReviews]);
 
   return (
@@ -94,7 +103,7 @@ const ListServices = () => {
       )}
 
       {/* Popup para criar o serviço */}
-      <CreateServicePopup openPopup={openPopup} setOpenPopup={setOpenPopup} />
+      <CreateServicePopup openPopup={openPopup} setOpenPopup={setOpenPopup} onServiceAdded={onServiceAdded} />
 
       {/* Filtros */}
       <ListServiceFiltersCard
@@ -108,6 +117,18 @@ const ListServices = () => {
       />
 
       {/* Lista com os serviços */}
+      {isLoading ? (
+        <Loading />
+      ) : fetchError ? (
+        <ErrorBar error={fetchError} />
+      ) : (
+        <ScrollableList
+          items={services}
+          hasMore={hasMore}
+          setPageNumber={setPageNumber}
+          renderItem={(item) => <p>{item.name}</p>}
+        />
+      )}
     </>
   );
 };

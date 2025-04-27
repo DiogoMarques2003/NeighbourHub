@@ -1,4 +1,4 @@
-import { Eye, EyeOff, Star } from 'lucide-react';
+import { ChevronsDown, ChevronsUp, Star } from 'lucide-react';
 import InputWithIcon from '@common/InputWithIcon';
 import CheckBox from '@common/CheckBox';
 import { useState } from 'react';
@@ -24,7 +24,7 @@ const ListServiceFiltersCard = ({
           type="button"
           onClick={() => setShowFilters((prev) => !prev)}
         >
-          {showFilters ? <EyeOff /> : <Eye />}
+          {showFilters ? <ChevronsUp /> : <ChevronsDown />}
         </button>
         <ErrorBar error={filterError} />
       </div>
