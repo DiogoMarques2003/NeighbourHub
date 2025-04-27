@@ -1,9 +1,9 @@
 import ICondominiumsRepository from "@repositories/ICondominiumsRepository";
 import IServiceRequestsRepository from "@repositories/IServiceRequestsRepository";
-import ServiceRequests from "@entities/ServiceRequests";
 import AppError from "@errors/AppError";
 import IAddressesRepository from "@repositories/IAddressesRepository";
 import IServiceRequestsReceivedGetDTO from "./IServiceRequestsReceivedGetDTO";
+import ServiceRequestsWithUserData from "src/@types/ServiceRequestsWithUserData";
 
 export default class ServiceRequestsReceivedGetCase {
     constructor(
@@ -12,7 +12,7 @@ export default class ServiceRequestsReceivedGetCase {
         private condominiumRepository: ICondominiumsRepository
     ) {}
 
-    async execute(data: IServiceRequestsReceivedGetDTO): Promise<DataPagination<ServiceRequests[]>> {
+    async execute(data: IServiceRequestsReceivedGetDTO): Promise<DataPagination<ServiceRequestsWithUserData[]>> {
         const { userID, condominiumID, pageNumber, pageSize } = data;
 
         const condDb = await this.condominiumRepository.findById(condominiumID);
