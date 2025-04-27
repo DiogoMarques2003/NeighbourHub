@@ -10,6 +10,7 @@ const InputWithIcon = ({
   required = false,
   maxLength,
   min = null,
+  max = null,
   className,
 }) => {
   return (
@@ -25,6 +26,7 @@ const InputWithIcon = ({
         required={required}
         maxLength={maxLength}
         min={min}
+        max={max}
       />
     </div>
   );
