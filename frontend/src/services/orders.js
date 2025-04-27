@@ -18,6 +18,14 @@ const ordersService = {
       return { error: error?.response?.data?.message };
     }
   },
+  getOrderById: async (condominiumId, orderId) => {
+    try {
+      const response = await apiClient.get(`/condominium/${condominiumId}/orders/${orderId}`);
+      return response?.data;
+    } catch (error) {
+      return { error: error?.response?.data?.message };
+    }
+  },
 };
 
 export default ordersService;
