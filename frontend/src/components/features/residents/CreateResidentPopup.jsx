@@ -37,7 +37,7 @@ const CreateResidentPopup = ({ openPopup, setPopup }) => {
     });
 
     const isValidForm = () => {
-        if(1 === 2) {
+        if(1 === 2) { //corrigir @Ludgero
             setError("Por favor preencha todos os campos!");
             return false;
         }

@@ -24,7 +24,7 @@ const SideBarHomePage = ({ currentUser, condominium, logout }) => {
   ];
 
   return (
-    <div className="fixed top-0 left-0 h-full w-68 bg-white flex flex-col">
+    <div className="fixed top-0 left-0 h-full w-68 bg-white flex flex-col border-r-1 border-gray-200">
       <div className="flex items-center p-4">
         <CircleLogo src={logo} size="em" />
         <span className="ml-2 text-2xl font-semibold truncate whitespace-nowrap">
@@ -56,9 +56,9 @@ const SideBarHomePage = ({ currentUser, condominium, logout }) => {
 
       <Link to={'/settings'} className="flex items-center p-4">
         <CircleLogo src={currentUser?.foto || defaultUserPhoto} size="em" />
-        <div className="ml-2">
-          <p className="text-sm font-medium">{currentUser.name}</p>
-          <p className="text-xs text-gray-500">{currentUser.email}</p>
+        <div className="ml-2 truncate">
+          <p className="text-sm font-medium truncate">{currentUser.name}</p>
+          <p className="text-xs text-gray-500 truncate">{currentUser.email}</p>
         </div>
       </Link>
     </div>
