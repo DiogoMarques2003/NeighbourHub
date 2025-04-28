@@ -4,9 +4,9 @@ import commonAreaService from '../../../services/commonAreaService';
 import { toast } from 'react-toastify';
 import Loading from '../../common/Loading';
 import InputWithIcon from '../../common/InputWithIcon';
-import { Banknote, BookOpen, MapPin, Users } from 'lucide-react';
+import { Banknote, BookOpen, Circle, MapPin, Users } from 'lucide-react';
 import DropDown from '../../common/DropDown';
-import { COMMON_AREA_TYPES } from '../../../utils/constants';
+import { COMMON_AREA_TYPES, COMMON_AREA_STATUS } from '../../../utils/constants';
 import TextAreaWithIcon from '../../common/TextAreaWithIcon';
 import EditPhoto from '../../common/Edithoto';
 import Button from '../../common/Button';
@@ -19,6 +19,7 @@ const EditCommonAreaForm = () => {
   const [commonAreaData, setCommonAreaData] = useState(null);
 
   const [name, setName] = useState('');
+  const [status, setStatus] = useState('');
   const [startSchedule, setStartSchedule] = useState('');
   const [endSchedule, setEndSchedule] = useState('');
   const [cost, setCost] = useState(0);
@@ -49,6 +50,7 @@ const EditCommonAreaForm = () => {
 
     setCommonAreaData(result);
     setName(result.name);
+    setStatus(result.status);
     setStartSchedule(result.startSchedule);
     setEndSchedule(result.endSchedule);
     setCost(result.cost);
@@ -72,6 +74,11 @@ const EditCommonAreaForm = () => {
   const validateForm = () => {
     if (!name.trim()) {
       toast.error('Nome é obrigatório');
+      return false;
+    }
+
+    if (!status.trim()) {
+      toast.error('Status é obrigatório');
       return false;
     }
 
@@ -117,6 +124,7 @@ const EditCommonAreaForm = () => {
 
     const formData = new FormData();
     if (name !== commonAreaData.name) formData.append('name', name);
+    if (status !== commonAreaData.status) formData.append('status', status);
     if (startSchedule !== commonAreaData.startSchedule) formData.append('startSchedule', startSchedule);
     if (endSchedule !== commonAreaData.endSchedule) formData.append('endSchedule', endSchedule);
     if (cost !== commonAreaData.cost) formData.append('cost', cost);
@@ -172,6 +180,14 @@ const EditCommonAreaForm = () => {
                 choice={type}
                 dropBoxPlaceHolder="Tipo de espaço"
                 icon={MapPin}
+              />
+
+              <DropDown
+                listOptions={COMMON_AREA_STATUS}
+                setChoice={(e) => setStatus(e)}
+                choice={status}
+                dropBoxPlaceHolder="Estado do espaço"
+                icon={Circle}
               />
 
               <InputWithIcon

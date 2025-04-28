@@ -54,7 +54,7 @@ const ChooseCondominiumForm = () => {
         <>
           {condData.map((cond) => (
             <Card
-              key={cond.id}
+              key={cond.condominiumId}
               className="border border-gray-200 hover:bg-gray-100 mb-5 cursor-pointer"
               onClick={() => navigate(`/condominium/${cond.condominiumId}`)}
             >
