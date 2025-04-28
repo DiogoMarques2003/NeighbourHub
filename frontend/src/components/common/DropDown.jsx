@@ -27,7 +27,7 @@ const DropDown = ({ listOptions, setChoice, choice, dropBoxPlaceHolder, icon: Ic
       >
 
         {choice
-          ? dropdownOptions.find((option) => option.code === choice)?.description || dropBoxPlaceHolder
+          ? dropdownOptions.find((option) => option.code == choice)?.description || dropBoxPlaceHolder
           : dropBoxPlaceHolder
         }
 

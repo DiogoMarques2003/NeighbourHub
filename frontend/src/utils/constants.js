@@ -10,6 +10,12 @@ const COMMON_AREA_TYPES = {
   2: 'Fitness',
 };
 
+const COMMON_AREA_STATUS = {
+  READY: 'Disponível',
+  MANUT: 'Em Manutenção',
+  UNAVAIL: 'Inativo',
+};
+
 const ORDER_URGENCY_TYPES = {
   LOW: 'Baixa',
   MEDIUM: 'Média',
@@ -24,4 +30,4 @@ const HOUSE_TYPE_TYPES = {
   5: 'Prédio',
 };
 
-export { API_URL, CHOOSE_COND_ROLE, COMMON_AREA_TYPES, HOUSE_TYPE_TYPES, ORDER_URGENCY_TYPES };
+export { API_URL, CHOOSE_COND_ROLE, COMMON_AREA_TYPES, HOUSE_TYPE_TYPES, ORDER_URGENCY_TYPES, COMMON_AREA_STATUS };
