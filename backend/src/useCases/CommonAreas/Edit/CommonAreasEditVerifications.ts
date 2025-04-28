@@ -23,7 +23,7 @@ export default class CommonAreasEditVerifications {
 
     if (!id || typeof id !== 'string' || !isValidUUID(id)) throw new AppError('ID inválido', 400);
 
-    if (status && (typeof name !== 'string' || !STATUS.includes(status))) throw new AppError('Status Inválido', 400);
+    if (status && (typeof status !== 'string' || !STATUS.includes(status))) throw new AppError('Status Inválido', 400);
 
     if (name && typeof name !== 'string') throw new AppError('Nome inválido', 400);
 
