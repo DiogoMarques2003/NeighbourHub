@@ -6,6 +6,6 @@ export default interface ServiceRequestsWithUserData {
         name: string;
         email: string;
         phoneNumber: string;
-        foto: String;
+        foto: string;
     }
 }
