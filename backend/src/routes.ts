@@ -240,7 +240,7 @@ router.get('/condominium/:condominiumID/services-requests', verifyJWT, (req, res
   serviceRequestsGetController.handle(req, res);
 });
 
-router.get('/condominium/:condominiumID/services/:serviceId/received-requests', verifyJWT, (req, res) => {
+router.get('/condominium/:condominiumID/services/:serviceID/received-requests', verifyJWT, (req, res) => {
   serviceRequestsReceivedGetController.handle(req, res);
 });
 
