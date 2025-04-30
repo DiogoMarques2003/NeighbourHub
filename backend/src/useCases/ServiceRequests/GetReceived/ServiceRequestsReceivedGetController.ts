@@ -19,6 +19,8 @@ export default class ServiceRequestsReceivedGetController {
                 pageNumber: Number(req.query.pageNumber),
                 pageSize: Number(req.query.pageSize),
             };
+            
+            console.log('Request.query: ', req.query)
 
             console.log('requestData: ', requestData)
 
