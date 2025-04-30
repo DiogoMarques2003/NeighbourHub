@@ -53,7 +53,7 @@ const MyServiceRequestPopUp = ({ openPopup, setPopup }) => {
             </thead>
             <tbody>
             {requestData.map((item) => (
-              <tr className="border-b border-gray-200 cursor-pointer hover:bg-gray-100" onClick={() => navigate(`/request/${item.id}`)}>
+              <tr className="border-b border-gray-200 cursor-pointer hover:bg-gray-100" onClick={() => navigate(`request/${item.id}`)}>
                 <td className="truncate md:truncate px-6 py-4">{dateFormat(new Date(item.requestDate), true)}</td>
                 <td className="px-6 py-4">{item.status}</td>
                 <td className="px-6 py-4">{item.user.name}</td>
