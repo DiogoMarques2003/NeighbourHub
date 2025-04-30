@@ -25,6 +25,7 @@ module.exports = {
           '@shared': './src/shared',
           '@constants': './src/constants',
           '@prismaClient': './src/prisma-client',
+          '@app': './src/app',
         },
       },
     ],
