@@ -4,17 +4,20 @@ import ErrorBar from '@common/ErrorBar.jsx';
 import { useNavigate, useParams } from 'react-router-dom';
 import requestService from '@services/requestService.js';
 import { dateFormat } from '@utils/helperFunctions.js';
+import Pagination from '@common/Pagination';
 
 const MyServiceRequestPopUp = ({ openPopup, setPopup }) => {
   const { condominiumId, serviceId } = useParams();
   const [requestData, setRequestData] = useState([]);
   const navigate = useNavigate();
+  const [pageNumber, setPageNumber] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
     const getDataServices = async () => {
-      const result = await requestService.getServiceRequests(condominiumId, serviceId);
+      const result = await requestService.getServiceRequests(condominiumId, serviceId, {pageNumber, pagesize: 5});
       console.log('result: ', result.data);
 
       if (result?.error || !result) {
@@ -25,6 +28,7 @@ const MyServiceRequestPopUp = ({ openPopup, setPopup }) => {
       }
 
       setRequestData(result.data);
+      setTotalPage(result.pages);
       setIsLoading(false);
     };
 
@@ -64,6 +68,14 @@ const MyServiceRequestPopUp = ({ openPopup, setPopup }) => {
             </tbody>
           </table>
         </div>
+
+        <Pagination
+            className={'justify-center'}
+            currentPage={pageNumber}
+            maxPage={totalPage}
+            setCurrentPage={setPageNumber}
+          />
+
       </Popup>
     </>
   );
