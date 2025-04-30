@@ -20,14 +20,7 @@ export default class ServiceRequestsReceivedGetController {
                 pageSize: Number(req.query.pageSize),
             };
             
-            console.log('Request.query: ', req.query)
-
-            console.log('requestData: ', requestData)
-
             this.serviceRequestsReceivedGetVerifications.execute(requestData);
-            
-            console.log('requestData after verifications: ', requestData)
-
             const serviceRequests = await this.serviceRequestsReceivedGetCase.execute(requestData);
 
             res.status(200).json(serviceRequests);
