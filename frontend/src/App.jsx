@@ -25,6 +25,7 @@ import CreateOrderPage from './pages/CreateOrderPage';
 import OrderDetailsPage from './pages/orderDetailsPage';
 import OrderVotePage from './pages/OrderVotePage';
 import HomePageForm from '@features/homepage/HomePageForm';
+import AreaReservationsList from '@features/commonAreas/CommonAreaReservations';
 
 const App = () => {
   return (
@@ -55,6 +56,10 @@ const App = () => {
                 <Route
                   path={'/condominium/:condominiumId/commonarea/:commonAreaId/edit'}
                   element={<EditCommonAreaPage />}
+                />
+                <Route
+                  path="/condominium/:condominiumId/commonarea/reservations"
+                  element={<AreaReservationsList />} 
                 />
                 <Route path={'/condominium/:condominiumId/commonarea/create'} element={<CreateCommonAreasPage />} />
                 <Route path={'/condominium/:condominiumId/services'} element={<ServicesPage />} />
