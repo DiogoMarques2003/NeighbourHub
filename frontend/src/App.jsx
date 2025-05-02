@@ -24,7 +24,6 @@ import ServiceRequestDetailsPage from './pages/ServiceRequestDetailsPage';
 import CreateOrderPage from './pages/CreateOrderPage';
 import OrderDetailsPage from './pages/orderDetailsPage';
 import OrderVotePage from './pages/OrderVotePage';
-import HomePageForm from '@features/homepage/HomePageForm';
 
 const App = () => {
   return (
@@ -46,7 +45,7 @@ const App = () => {
 
               {/* Protected routes with fixed side bar */}
               <Route element={<HomeLayout />}>
-                <Route path={'/condominium/:condominiumId'} element={<HomePageForm />} />
+                <Route path={'/condominium/:condominiumId'} element={<HomePage />} />
                 <Route path={'/condominium/:condominiumId/commonarea'} element={<CommonAreasPage />} />
                 <Route
                   path={'/condominium/:condominiumId/commonarea/:commonAreaId'}
