@@ -159,12 +159,12 @@ router.delete('/condominium/:condominiumId/commonarea/:areaId/reservation/:reser
   areaReservationsDeleteController.handle(req, res);
 });
 
-router.get('/condominium/:condominiumId/commonarea/:areaId/reservation/:reservationId', verifyJWT, (req, res) => {
-  areaReservationsGetByIdController.handle(req, res);
-});
-
 router.get('/condominium/:condominiumID/commonarea/reservations', verifyJWT, (req, res) => {
   areaReservationsGetController.handle(req, res);
+});
+
+router.get('/condominium/:condominiumId/commonarea/:areaId/reservation/:reservationId', verifyJWT, (req, res) => {
+  areaReservationsGetByIdController.handle(req, res);
 });
 
 //--Fine
