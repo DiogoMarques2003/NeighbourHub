@@ -164,6 +164,15 @@ export default class PrismaAreaReservationsRepository implements IAreaReservatio
               type: true,
             },
           },
+          user: {
+            select: {
+              id: true,
+              email: true,
+              name: true,
+              phoneNumber: true,
+              foto: true
+            }
+          }
         },
         orderBy: { startDate: 'asc' },
       }),

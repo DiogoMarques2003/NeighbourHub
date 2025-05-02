@@ -8,18 +8,29 @@ import IAreaReservationsGetDTO from "./IAreaReservationsGetDTO";
 export default class AreaReservationsGetCase {
     constructor(
         private condominiumsRepository: ICondominiumsRepository,
+        private addressesRepository: IAddressesRepository,
         private areaReservationsRepository: IAreaReservationsRepository
     ) {}
 
     async execute(data: IAreaReservationsGetDTO) {
-        const { userID, condID, status, pageSize, pageNumber } = data;
+        const { userID, condID, status, bGetCondominiumReservations, pageSize, pageNumber } = data;
+
+        let areaReservationsDB: { data: AreaReservationsWithAreaData[], nRecords: number };
 
         const condominiumDB = await this.condominiumsRepository.findById(condID);
         if(!condominiumDB) throw new AppError("Condomínio não existe", 404);
 
-        if(condominiumDB.adminId !== userID) throw new AppError("Não podes ver todas as reservas do condomínio porque não és admin", 403);
+        if(condominiumDB.adminId !== userID && bGetCondominiumReservations) throw new AppError("Não podes ver todas as reservas do condomínio porque não és admin", 403);
 
-        const areaReservationsDB = await this.areaReservationsRepository.getAll(condID, pageSize, pageNumber, status);
+        const addressesDB = await this.addressesRepository.getByUserAndCond(userID, condID);
+        if(!addressesDB && condominiumDB.adminId !== userID) throw new AppError("Não tens acesso a este condomínio.", 400);
+
+        if(bGetCondominiumReservations) {
+            areaReservationsDB = await this.areaReservationsRepository.getAll(condID, pageSize, pageNumber, status);
+        } else {
+            areaReservationsDB = await this.areaReservationsRepository.getByUser(condID, userID, pageSize, pageNumber, status);
+        }
+        
         if (!areaReservationsDB.nRecords) return { data: [], pages: 0, actualPage: pageNumber, nRecords: areaReservationsDB.nRecords };
 
         const pages = Math.ceil(areaReservationsDB.nRecords / pageSize);

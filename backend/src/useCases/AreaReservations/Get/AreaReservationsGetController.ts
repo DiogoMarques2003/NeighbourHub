@@ -16,6 +16,7 @@ export default class AreaReservationsGetController {
         userID: req.userID,
         condID: req.params.condominiumID,
         status: req.query.status as string,
+        bGetCondominiumReservations: req.query.bGetCondominiumReservations === "true",
         pageSize: Number(req.query.pageSize),
         pageNumber: Number(req.query.pageNumber)
       };
