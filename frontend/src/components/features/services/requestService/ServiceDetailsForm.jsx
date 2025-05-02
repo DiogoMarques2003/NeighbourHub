@@ -207,7 +207,7 @@ const ServiceDetailsForm = () => {
       <EditServicePopup
         openPopup={editPopupOpen}
         setOpenPopup={setEditPopupOpen}
-        service={{ ...selectedService, condominiumId }}
+        service={selectedService}
         onServiceUpdated={() => window.location.reload()} 
       />
     </>
