@@ -4,10 +4,9 @@ import React, { useEffect, useState } from 'react';
 const HomePage = () => {
   return (
     <>
-    <HomePageForm/>
+      <HomePageForm />
     </>
-
-  )
-}
+  );
+};
 
 export default HomePage;

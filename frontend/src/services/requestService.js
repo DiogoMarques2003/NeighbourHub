@@ -1,7 +1,7 @@
+import { encodeQueryData } from '@utils/helperFunctions';
 import apiClient from './apiClient';
 
 const requestService = {
-
   postRequestService: async (condominiumId, serviceId) => {
     try {
       const response = await apiClient.post(`/condominium/${condominiumId}/services/${serviceId}/request`);
@@ -24,9 +24,11 @@ const requestService = {
       return { error: error?.response?.data?.message || 'Erro ao atualizar status.' };
     }
   },
-  getServiceRequests: async (condominiumId, serviceId) => {
+  getServiceRequests: async (condominiumId, serviceId, queryStringObj) => {
     try {
-      const response = await apiClient.get(`/condominium/${condominiumId}/services/${serviceId}/received-requests`);
+      const response = await apiClient.get(
+        `/condominium/${condominiumId}/services/${serviceId}/received-requests${encodeQueryData(queryStringObj)}`
+      );
       return response?.data;
     } catch (error) {
       return { error: error?.response?.data?.message || 'Erro ao obter serviços requisitados' };

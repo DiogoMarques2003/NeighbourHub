@@ -15,6 +15,7 @@ import ErrorBar from '@common/ErrorBar.jsx';
 import Loading from '@common/Loading.jsx';
 import MyServiceRequestPopUp from '@features/services/viewMyServiceRequests/MyServiceRequestPopUp.jsx';
 import EditServicePopup from '../editService/EditServicePopup';
+import Pagination from '@common/Pagination';
 
 const ServiceDetailsForm = () => {
   const { condominiumId, serviceId } = useParams();
@@ -102,9 +103,7 @@ const ServiceDetailsForm = () => {
         {service.owner.id === currentUser.id && (
           <div className="flex gap-4">
             <Button onClick={() => setPopup(true)}>Ver Requisições</Button>
-            <Button onClick={() => setEditPopupOpen(true)}>
-              Editar Serviço
-            </Button>
+            <Button onClick={() => setEditPopupOpen(true)}>Editar Serviço</Button>
           </div>
         )}
       </div>
@@ -142,9 +141,16 @@ const ServiceDetailsForm = () => {
             {service.cost || '0,00 '} <Euro className="ml-1" size={15} />
           </p>
         </div>
-      </div>
 
-      <RatingStars rating={service.avgReview} />
+        <div>
+          <h3 className="text-lg font-medium mb-1" style={{ color: '#3e94bf' }}>
+            Avaliação
+          </h3>
+          <p className="text-gray-700 items-center flex">
+            <RatingStars rating={service.avgReview} />
+          </p>
+        </div>
+      </div>
 
       {/* Reviews */}
       <div className="mt-6">
@@ -172,25 +178,12 @@ const ServiceDetailsForm = () => {
                 </div>
               ))}
             </div>
-            <div className="flex justify-center items-center gap-4">
-              <button
-                onClick={() => setPage((p) => Math.max(p - 1, 1))}
-                disabled={page === 1}
-                className="text-sm text-[#3E94BF] disabled:opacity-30"
-              >
-                ⬅ Anterior
-              </button>
-              <span className="text-sm text-gray-500">
-                Página {page} de {totalPages}
-              </span>
-              <button
-                onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
-                disabled={page === totalPages}
-                className="text-sm text-[#3E94BF] disabled:opacity-30"
-              >
-                Seguinte ➡
-              </button>
-            </div>
+            <Pagination
+              className={'justify-center mt-5'}
+              currentPage={page}
+              maxPage={totalPages}
+              setCurrentPage={setPage}
+            />
           </>
         )}
       </div>
@@ -208,7 +201,7 @@ const ServiceDetailsForm = () => {
         openPopup={editPopupOpen}
         setOpenPopup={setEditPopupOpen}
         service={selectedService}
-        onServiceUpdated={() => window.location.reload()} 
+        onServiceUpdated={() => window.location.reload()}
       />
     </>
   );

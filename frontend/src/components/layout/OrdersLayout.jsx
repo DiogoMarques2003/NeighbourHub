@@ -44,14 +44,14 @@ const OrdersLayout = () => {
   });
 
   function onAddClick() {
-    navigate('./create');
+    navigate('create');
   }
 
   useEffect(() => {
     async function fetchOrders() {
       setLoading(true);
 
-      const data = await ordersService.getOrders(condominium.id, { pageNumber, pageSize: 3 });
+      const data = await ordersService.getOrders(condominium.id, { pageNumber, pageSize: 5 });
       setLoading(false);
 
       if (!data || data?.error) {
@@ -66,8 +66,8 @@ const OrdersLayout = () => {
   }, [condominium.id, pageNumber]);
 
   return (
-    <div className="p-4">
-      {loading ? (
+    <>
+      {loading && orders.length === 0 ? (
         <Loading className="flex justify-center" />
       ) : (
         <div>
@@ -97,7 +97,7 @@ const OrdersLayout = () => {
           />
         </div>
       )}
-    </div>
+    </>
   );
 };
 
