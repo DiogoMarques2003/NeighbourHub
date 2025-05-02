@@ -9,9 +9,7 @@ import defaultAvatar from '@public/images/defaultUserAvatar.jpg';
 import RatingStars from '@common/RatingStars';
 import requestService from '@services/requestService';
 import reviewsService from '@services/reviewsService';
-
-
-
+import GoBack from '@common/GoBack';
 
 const ServiceRequestDetailsForm = () => {
   const { condominiumId, serviceId, serviceRequestId } = useParams();
@@ -143,7 +141,8 @@ const ServiceRequestDetailsForm = () => {
   const isOwner = currentUser?.id === service?.owner?.id;
 
   return (
-    <div className="p-10">
+    <div className="">
+      <GoBack/>
       <h1 className="text-3xl font-bold text-[#3e94bf] mb-8">Serviço: {service?.name}</h1>
 
       <div className="mb-6">

@@ -18,7 +18,7 @@ const DropDown = ({ listOptions, setChoice, choice, dropBoxPlaceHolder, icon: Ic
   }
 
   return (
-    <div className="relative">
+    <div className="relative z-10">
       <Icon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none" size={20} />
       <button
         onClick={() => setOpen(!open)}
