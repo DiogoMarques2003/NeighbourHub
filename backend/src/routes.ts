@@ -59,6 +59,7 @@ import { getByIdServiceRequestsController } from '@useCases/ServiceRequests/GetB
 import { deleteServiceRequestController } from '@useCases/ServiceRequests/Delete';
 import { serviceRequestsGetController } from '@useCases/ServiceRequests/Get';
 import { serviceRequestsReceivedGetController } from '@useCases/ServiceRequests/GetReceived';
+import { ordersEditController } from '@useCases/Orders/Edit';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -285,6 +286,10 @@ router.get('/condominium/:condominiumId/orders', verifyJWT, (req, res) => {
 
 router.get('/condominium/:condominiumId/orders/:orderId', verifyJWT, (req, res) => {
   ordersGetByIdController.handle(req, res);
+});
+
+router.put('/condominium/:condominiumId/orders/:orderId', verifyJWT, (req, res) => {
+  ordersEditController.handle(req, res);
 });
 
 //--ORDERS WORKS
