@@ -45,7 +45,7 @@ const EditOrderPopup = ({ openPopup, setOpenPopup, order, onOrderUpdated, isAdmi
 
     const updatedOrder = isAdmin ? { status } : isOwner ? { description, urgency } : {};
 
-    const result = await ordersService.updateOrder(order.condominiumId, order.orderId, updatedOrder);
+    const result = await ordersService.updateOrder(order.condominiumId, order.id, updatedOrder);
 
     if (result?.error) {
       setError(result.error);
