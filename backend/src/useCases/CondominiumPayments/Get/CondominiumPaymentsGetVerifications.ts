@@ -30,7 +30,7 @@ export default class CondominiumPaymentsGetVerifications {
     if (addressId && (typeof addressId !== 'string' || !isValidUUID(addressId)))
       throw new AppError('Id do endereço inválido', 400);
 
-    if (!pageSize || typeof pageNumber !== 'number') data.pageNumber = 1;
+    if (!pageNumber || typeof pageNumber !== 'number') data.pageNumber = 1;
     if (!pageSize || typeof pageSize !== 'number') data.pageSize = 25;
 
     if (endDate) {
