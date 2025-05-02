@@ -142,6 +142,11 @@ router.get('/condominium/:condId/commonarea', verifyJWT, (req, res) => {
   commonAreasGetController.handle(req, res);
 });
 
+// Reservas tem de estar aqui
+router.get('/condominium/:condominiumID/commonarea/reservations', verifyJWT, (req, res) => {
+  areaReservationsGetController.handle(req, res);
+});
+
 router.get('/condominium/:condominiumId/commonarea/:commonAreaId', verifyJWT, (req, res) => {
   commonAreasGetByIdController.handle(req, res);
 });
@@ -157,10 +162,6 @@ router.put('/condominium/:condominiumId/commonarea/:areaId/reservation/:reservat
 
 router.delete('/condominium/:condominiumId/commonarea/:areaId/reservation/:reservationId', verifyJWT, (req, res) => {
   areaReservationsDeleteController.handle(req, res);
-});
-
-router.get('/condominium/:condominiumID/commonareas/reservations', verifyJWT, (req, res) => {
-  areaReservationsGetController.handle(req, res);
 });
 
 router.get('/condominium/:condominiumId/commonarea/:areaId/reservation/:reservationId', verifyJWT, (req, res) => {
