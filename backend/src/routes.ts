@@ -59,6 +59,8 @@ import { getByIdServiceRequestsController } from '@useCases/ServiceRequests/GetB
 import { deleteServiceRequestController } from '@useCases/ServiceRequests/Delete';
 import { serviceRequestsGetController } from '@useCases/ServiceRequests/Get';
 import { serviceRequestsReceivedGetController } from '@useCases/ServiceRequests/GetReceived';
+import { areaReservationsGetController } from '@useCases/AreaReservations/Get';
+import { ordersEditController } from '@useCases/Orders/Edit';
 
 const router = Router();
 const upload = multer({ dest: os.tmpdir() });
@@ -161,6 +163,10 @@ router.get('/condominium/:condominiumId/commonarea/:areaId/reservation/:reservat
   areaReservationsGetByIdController.handle(req, res);
 });
 
+router.get('/condominium/:condominiumID/commonarea/reservations', verifyJWT, (req, res) => {
+  areaReservationsGetController.handle(req, res);
+});
+
 //--Fine
 router.post(
   '/condominium/:condominiumId/commonarea/:commonAreaId/reservation/:areaReservationId/fine',
@@ -215,7 +221,7 @@ router.delete('/condominium/:condominiumId/services/:serviceId', verifyJWT, (req
   servicesDeleteController.handle(req, res);
 });
 
-router.post('/condominium/:condId/services/:serviceId', verifyJWT, (req, res) => {
+router.put('/condominium/:condId/services/:serviceId', verifyJWT, (req, res) => {
   serviceEditController.handle(req, res);
 });
 
@@ -240,7 +246,7 @@ router.get('/condominium/:condominiumID/services-requests', verifyJWT, (req, res
   serviceRequestsGetController.handle(req, res);
 });
 
-router.get('/condominium/:condominiumID/services/:serviceId/received-requests', verifyJWT, (req, res) => {
+router.get('/condominium/:condominiumID/services/:serviceID/received-requests', verifyJWT, (req, res) => {
   serviceRequestsReceivedGetController.handle(req, res);
 });
 
@@ -285,6 +291,10 @@ router.get('/condominium/:condominiumId/orders', verifyJWT, (req, res) => {
 
 router.get('/condominium/:condominiumId/orders/:orderId', verifyJWT, (req, res) => {
   ordersGetByIdController.handle(req, res);
+});
+
+router.put('/condominium/:condominiumId/orders/:orderId', verifyJWT, (req, res) => {
+  ordersEditController.handle(req, res);
 });
 
 //--ORDERS WORKS

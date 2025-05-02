@@ -19,7 +19,7 @@ export default class ServiceRequestsReceivedGetController {
                 pageNumber: Number(req.query.pageNumber),
                 pageSize: Number(req.query.pageSize),
             };
-
+            
             this.serviceRequestsReceivedGetVerifications.execute(requestData);
             const serviceRequests = await this.serviceRequestsReceivedGetCase.execute(requestData);
 

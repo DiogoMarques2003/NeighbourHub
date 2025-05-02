@@ -4,6 +4,7 @@ import AppError from "@errors/AppError";
 import IAddressesRepository from "@repositories/IAddressesRepository";
 import IServiceRequestsReceivedGetDTO from "./IServiceRequestsReceivedGetDTO";
 import ServiceRequestsWithUserData from "src/@types/ServiceRequestsWithUserData";
+import generatePathToFile from '@shared/generatePathToFile';
 
 export default class ServiceRequestsReceivedGetCase {
     constructor(
@@ -28,6 +29,9 @@ export default class ServiceRequestsReceivedGetCase {
         if (pageNumber > pages) throw new AppError('Página inválida!', 404);
 
         const serviceRequests = await this.servicesRequestsRepository.getReceivedWithPagination(userID, condominiumID, serviceID, pageSize, pageNumber);
+
+        // Alterar as imagens para ter o url de acesso
+        serviceRequests.map((req) => req.user.foto = req.user.foto ? generatePathToFile(req.user.foto) : req.user.foto = null );
 
         return { data: serviceRequests, pages, actualPage: pageNumber, nRecords: count }
     }

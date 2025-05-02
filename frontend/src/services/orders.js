@@ -26,6 +26,24 @@ const ordersService = {
       return { error: error?.response?.data?.message };
     }
   },
+  createOrderVote: async (condominiumId, orderId, voteData) => {
+    try {
+      const response = await apiClient.post(`/condominium/${condominiumId}/orders/${orderId}/voting`, voteData);
+      return response?.data;
+    } catch (error) {
+      return { error: error?.response?.data?.message };
+    }
+  },
+  updateOrder: async (condominiumId, orderId, orderData) => {
+    try {
+      const response = await apiClient.put(`/condominium/${condominiumId}/orders/${orderId}`, orderData);
+      return response?.data;
+    } catch (error) {
+      return {
+        error: error?.response?.data?.message || 'Erro ao atualizar pedido',
+      };
+    }
+  },
 };
 
 export default ordersService;

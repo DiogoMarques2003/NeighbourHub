@@ -14,6 +14,178 @@ export default class PrismaAreaReservationsRepository implements IAreaReservatio
     return this.prisma.areaReservations.findUnique({ where: { id } });
   }
 
+  /* getAll(condominiumID: string, pageSize: number, pageNumber: number, status?: string): Promise<AreaReservationsWithAreaData[]> {
+    return this.prisma.areaReservations.findMany({
+      skip: (pageNumber - 1) * pageSize,
+      take: pageSize,
+      where: {
+         area:{ condominiumId : condominiumID },
+         status
+      },
+      select: {
+        id: true,
+        startDate: true,
+        endDate: true,
+        status: true,
+        user: {
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            phoneNumber: true,
+            foto: true
+          }
+        },
+        area : {
+          select : {
+            id: true,
+            name: true,
+            cost: true,
+            startSchedule: true,
+            endSchedule: true,
+            images: true,
+            type: true
+          }
+        }
+      },
+      orderBy: { startDate: 'asc'}
+    })
+  } */
+
+  async getAll(condominiumID: string, pageSize: number, pageNumber: number, status?: string): Promise<{ data: AreaReservationsWithAreaData[], nRecords: number }> {
+    const where = {
+      area: { condominiumId: condominiumID },
+      ...(status && { status })
+    };
+  
+    const [data, total] = await this.prisma.$transaction([
+      this.prisma.areaReservations.findMany({
+        skip: (pageNumber - 1) * pageSize,
+        take: pageSize,
+        where,
+        select: {
+          id: true,
+          startDate: true,
+          endDate: true,
+          status: true,
+          user: {
+            select: {
+              id: true,
+              email: true,
+              name: true,
+              phoneNumber: true,
+              foto: true
+            }
+          },
+          area : {
+            select : {
+              id: true,
+              name: true,
+              cost: true,
+              startSchedule: true,
+              endSchedule: true,
+              images: true,
+              type: true
+            }
+          }
+        },
+        orderBy: { startDate: 'asc' },
+      }),
+      this.prisma.areaReservations.count({ where }),
+    ]);
+  
+    return {
+      data,
+      nRecords: total
+    };
+  }
+
+  /* getByUser(condominiumID: string, userID: string, pageSize: number, pageNumber: number, status?: string): Promise<AreaReservationsWithAreaData[]> {
+    return this.prisma.areaReservations.findMany({
+      skip: (pageNumber - 1) * pageSize,
+      take: pageSize,
+      where: {
+         area:{ condominiumId : condominiumID },
+         status
+      },
+      select: {
+        id: true,
+        startDate: true,
+        endDate: true,
+        status: true,
+        area : {
+          select : {
+            id: true,
+            name: true,
+            cost: true,
+            startSchedule: true,
+            endSchedule: true,
+            images: true,
+            type: true
+          }
+        }
+      },
+      orderBy: { startDate: 'asc'}
+    })
+  } */
+
+  
+  async getByUser(
+    condominiumID: string,
+    userID: string,
+    pageSize: number,
+    pageNumber: number,
+    status?: string
+  ): Promise<{ data: AreaReservationsWithAreaData[], nRecords: number }> {
+    const where = {
+      userId: userID,
+      area: { condominiumId: condominiumID },
+      ...(status && { status }),
+    };
+  
+    const [data, total] = await this.prisma.$transaction([
+      this.prisma.areaReservations.findMany({
+        skip: (pageNumber - 1) * pageSize,
+        take: pageSize,
+        where,
+        select: {
+          id: true,
+          startDate: true,
+          endDate: true,
+          status: true,
+          area: {
+            select: {
+              id: true,
+              name: true,
+              cost: true,
+              startSchedule: true,
+              endSchedule: true,
+              images: true,
+              type: true,
+            },
+          },
+          user: {
+            select: {
+              id: true,
+              email: true,
+              name: true,
+              phoneNumber: true,
+              foto: true
+            }
+          }
+        },
+        orderBy: { startDate: 'asc' },
+      }),
+      this.prisma.areaReservations.count({ where }),
+    ]);
+  
+    return {
+      data,
+      nRecords: total
+    };
+  }
+
+
   create(areaReservation: AreaReservations): Promise<AreaReservations> {
     return this.prisma.areaReservations.create({ data: areaReservation });
   }
