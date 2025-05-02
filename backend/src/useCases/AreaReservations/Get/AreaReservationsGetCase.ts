@@ -1,6 +1,5 @@
 import IAddressesRepository from "@repositories/IAddressesRepository";
 import ICondominiumsRepository from "@repositories/ICondominiumsRepository";
-import ICommonAreasRepository from "@repositories/ICommonAreasRepository";
 import IAreaReservationsRepository from "@repositories/IAreaReservationsRepository";
 import AppError from "@errors/AppError";
 import IAreaReservationsGetDTO from "./IAreaReservationsGetDTO";
