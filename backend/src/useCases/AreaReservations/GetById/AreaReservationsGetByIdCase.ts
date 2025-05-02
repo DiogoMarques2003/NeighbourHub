@@ -3,7 +3,7 @@ import ICommonAreasRepository from '@repositories/ICommonAreasRepository';
 import IAddressesRepository from '@repositories/IAddressesRepository';
 import IAreaReservationsRepository from '@repositories/IAreaReservationsRepository';
 import AppError from '@errors/AppError';
-import IAreaReservationsEditDTO from '../Edit/IAreaReservationsEditDTO';
+import IAreaReservationsGetByIdDTO from './IAreaReservationsGetByIdDTO';
 
 export default class AreaReservationsGetByIdCase {
   constructor(
@@ -13,7 +13,7 @@ export default class AreaReservationsGetByIdCase {
     private areaReservationsRepository: IAreaReservationsRepository
   ) {}
 
-  async execute(data: IAreaReservationsEditDTO) {
+  async execute(data: IAreaReservationsGetByIdDTO) {
     const { areaId, condominiumId, reservationId, userId } = data;
 
     const condominium = await this.condominiumsRepository.findById(condominiumId);

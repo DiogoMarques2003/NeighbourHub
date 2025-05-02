@@ -14,6 +14,7 @@ import GoBack from '@common/GoBack.jsx';
 import ErrorBar from '@common/ErrorBar.jsx';
 import Loading from '@common/Loading.jsx';
 import MyServiceRequestPopUp from '@features/services/viewMyServiceRequests/MyServiceRequestPopUp.jsx';
+import EditServicePopup from '../editService/EditServicePopup';
 
 const ServiceDetailsForm = () => {
   const { condominiumId, serviceId } = useParams();
@@ -25,8 +26,10 @@ const ServiceDetailsForm = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [openPopup, setPopup] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // <- novo estado para loading
-  const navigate = useNavigate(); // <- para fazer redirect depois
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const [editPopupOpen, setEditPopupOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState(null);
 
   const handleRequestService = async () => {
     setIsLoading(true);
@@ -52,6 +55,7 @@ const ServiceDetailsForm = () => {
         setError(result.error);
       } else {
         setService(result);
+        setSelectedService(result);
       }
 
       setLoading(false);
@@ -81,21 +85,28 @@ const ServiceDetailsForm = () => {
     fetchReviews();
   }, [condominiumId, serviceId, page]);
 
-  if (loading) return <Loading/>;
+  if (loading) return <Loading />;
   if (error) return <ErrorBar error={error}></ErrorBar>;
   if (!service) return null;
 
   return (
     <>
-      {openPopup && (<> <MyServiceRequestPopUp openPopup={openPopup} setPopup={setPopup} class /> </>  )}
+      {openPopup && (
+        <>
+          {' '}
+          <MyServiceRequestPopUp openPopup={openPopup} setPopup={setPopup} class />{' '}
+        </>
+      )}
       <div className="flex justify-between">
         <GoBack></GoBack>
         {service.owner.id === currentUser.id && (
-          <Button
-            onClick={ () => setPopup(true)}
-          >
-            Ver Requesições
-          </Button>)}
+          <div className="flex gap-4">
+            <Button onClick={() => setPopup(true)}>Ver Requisições</Button>
+            <Button onClick={() => setEditPopupOpen(true)}>
+              Editar Serviço
+            </Button>
+          </div>
+        )}
       </div>
       <h1 className="text-3xl font-bold text-gray-800 mb-8" style={{ color: '#3e94bf' }}>
         Detalhes do Serviço
@@ -140,8 +151,10 @@ const ServiceDetailsForm = () => {
         <h3 className="text-lg font-medium mb-4" style={{ color: '#3e94bf' }}>
           Comentários
         </h3>
-        {!reviews.length ? <p className="pb-4">Ainda não existem comentários.</p> :
-          (<>
+        {!reviews.length ? (
+          <p className="pb-4">Ainda não existem comentários.</p>
+        ) : (
+          <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
               {reviews.map((review) => (
                 <div key={review.id} className="p-4 border border-gray-200 rounded-md shadow-sm bg-white">
@@ -168,8 +181,8 @@ const ServiceDetailsForm = () => {
                 ⬅ Anterior
               </button>
               <span className="text-sm text-gray-500">
-            Página {page} de {totalPages}
-          </span>
+                Página {page} de {totalPages}
+              </span>
               <button
                 onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
                 disabled={page === totalPages}
@@ -178,15 +191,25 @@ const ServiceDetailsForm = () => {
                 Seguinte ➡
               </button>
             </div>
-          </>)}
+          </>
+        )}
       </div>
 
-      {service.owner.id !== currentUser.id && condominium.isResident &&
+      {service.owner.id !== currentUser.id && condominium.isResident && (
         <Button
           label={isLoading ? 'A requisitar...' : 'Requisitar Serviço'}
           disabled={isLoading}
           onClick={handleRequestService}
-        >Requesitar Serviço</Button>}
+        >
+          Requesitar Serviço
+        </Button>
+      )}
+      <EditServicePopup
+        openPopup={editPopupOpen}
+        setOpenPopup={setEditPopupOpen}
+        service={selectedService}
+        onServiceUpdated={() => window.location.reload()} 
+      />
     </>
   );
 };

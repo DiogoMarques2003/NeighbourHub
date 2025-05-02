@@ -220,7 +220,7 @@ router.delete('/condominium/:condominiumId/services/:serviceId', verifyJWT, (req
   servicesDeleteController.handle(req, res);
 });
 
-router.post('/condominium/:condId/services/:serviceId', verifyJWT, (req, res) => {
+router.put('/condominium/:condId/services/:serviceId', verifyJWT, (req, res) => {
   serviceEditController.handle(req, res);
 });
 

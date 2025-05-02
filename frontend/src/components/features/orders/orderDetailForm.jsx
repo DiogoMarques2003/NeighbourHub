@@ -5,14 +5,16 @@ import { dateFormat } from '@utils/helperFunctions';
 import defaultAvatar from '@public/images/defaultUserAvatar.jpg';
 import { Plus } from 'lucide-react';
 import { getStatusText, getUrgencyColor, getUrgencyText, getStatusColor } from './orderConsts';
+import EditOrderPopup from './createOrderPopup';
 
 const OrderDetailsForm = () => {
   const navigate = useNavigate();
-  const { isAdmin } = useOutletContext();
+  const { isAdmin, currentUser } = useOutletContext();
   const { condominiumId, orderId } = useParams();
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState(null);
   const [error, setError] = useState(null);
+  const [editPopupOpen, setEditPopupOpen] = useState(false);
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -37,10 +39,19 @@ const OrderDetailsForm = () => {
 
   return (
     <div className="p-10">
-      <h1 className="text-3xl font-bold text-gray-800 mb-8" style={{ color: '#3e94bf' }}>
-        Detalhes do Pedido
-      </h1>
-
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold text-gray-800" style={{ color: '#3e94bf' }}>
+          Detalhes do Pedido
+        </h1>
+        {(isAdmin || currentUser.id === order.user.id) && (
+          <button
+            onClick={() => setEditPopupOpen(true)}
+            className="bg-[#3e94bf] hover:bg-[#31789c] text-white px-4 py-2 rounded text-sm"
+          >
+            Editar Pedido
+          </button>
+        )}
+      </div>
       <div className="flex gap-10">
         {/* Caixa da Esquerda */}
         <div className="w-1/2 p-6">
@@ -109,6 +120,14 @@ const OrderDetailsForm = () => {
           )}
         </div>
       </div>
+      <EditOrderPopup
+        openPopup={editPopupOpen}
+        setOpenPopup={setEditPopupOpen}
+        order={{ ...order, condominiumId }}
+        currentUser={currentUser}
+        isAdmin={isAdmin}
+        onOrderUpdated={() => window.location.reload()}
+      />
     </div>
   );
 };

@@ -1,38 +1,33 @@
 {
-    "compilerOptions": {
-      "target": "es2017",                          
-      "module": "commonjs",                     
-      "lib": ["es6"],                             
-      "allowJs": true,                     
-      "outDir": "./build",                        
-      "rootDir": "./src",                       
-      "removeComments": true,                
-      "typeRoots": [
-        "./node_modules/@types",
-        "./src/@types"
-      ],                          
-      "esModuleInterop": true,                  
-      "resolveJsonModule": true,
-      "experimentalDecorators": true,        
-      "emitDecoratorMetadata": true,         
-      "skipLibCheck": true,                     
-      "forceConsistentCasingInFileNames": true,
-      "baseUrl": ".",
-      "paths": {
-        "@handlers/*": ["./src/handlers/*"],
-        "@middlewares/*": ["./src/middlewares/*"],
-        "@errors/*": ["./src/errors/*"],
-        "@entities/*": ["./src/entities/*"],
-        "@providers/*": ["./src/providers/*"],
-        "@repositories/*": ["./src/repositories/*"],
-        "@useCases/*": ["./src/useCases/*"],
-        "@shared/*": ["./src/shared/*"],
-        "@constants/*": ["./src/constants/*"],
-        "@prismaClient/*": ["./src/prisma-client/*"],
-      }
-    },
-    "include": [
-      "src/**/*",
-      "src/@types/*.d.ts"
-    ]
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "lib": ["es6"],
+    "allowJs": true,
+    "outDir": "./build",
+    "rootDir": "./src",
+    "removeComments": true,
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@handlers/*": ["./src/handlers/*"],
+      "@middlewares/*": ["./src/middlewares/*"],
+      "@errors/*": ["./src/errors/*"],
+      "@entities/*": ["./src/entities/*"],
+      "@providers/*": ["./src/providers/*"],
+      "@repositories/*": ["./src/repositories/*"],
+      "@useCases/*": ["./src/useCases/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@constants/*": ["./src/constants/*"],
+      "@prismaClient/*": ["./src/prisma-client/*"],
+      "@app": ["./src/app"]
+    }
+  },
+  "include": ["src/**/*", "src/@types/*.d.ts"]
 }
