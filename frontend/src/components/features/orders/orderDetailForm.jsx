@@ -5,14 +5,16 @@ import { dateFormat } from '@utils/helperFunctions';
 import defaultAvatar from '@public/images/defaultUserAvatar.jpg';
 import { Plus } from 'lucide-react';
 import { getStatusText, getUrgencyColor, getUrgencyText, getStatusColor } from './orderConsts';
+import EditOrderPopup from './createOrderPopup';
 
 const OrderDetailsForm = () => {
   const navigate = useNavigate();
-  const { isAdmin } = useOutletContext();
+  const { isAdmin, currentUser } = useOutletContext();
   const { condominiumId, orderId } = useParams();
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState(null);
   const [error, setError] = useState(null);
+  const [editPopupOpen, setEditPopupOpen] = useState(false);
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -90,6 +92,15 @@ const OrderDetailsForm = () => {
           <h2 className="text-xl font-semibold mb-4" style={{ color: '#3e94bf' }}>
             Data do Pedido
           </h2>
+          {(isAdmin || currentUser.id === order.user.id) && (
+            <button
+              onClick={() => setEditPopupOpen(true)}
+              className="mt-4 bg-[#3e94bf] hover:bg-[#31789c] text-white px-4 py-2 rounded text-sm"
+            >
+              Editar Pedido
+            </button>
+          )}
+
           <div className="text-gray-700 mb-2">{order.createdAt ? dateFormat(new Date(order.createdAt)) : 'N/A'}</div>
 
           {order.status === 'PENDING' && isAdmin && (
@@ -109,6 +120,14 @@ const OrderDetailsForm = () => {
           )}
         </div>
       </div>
+      <EditOrderPopup
+        openPopup={editPopupOpen}
+        setOpenPopup={setEditPopupOpen}
+        order={{ ...order, condominiumId }}
+        currentUser={currentUser}
+        isAdmin={isAdmin}
+        onOrderUpdated={() => window.location.reload()}
+      />
     </div>
   );
 };

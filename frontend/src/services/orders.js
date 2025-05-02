@@ -34,6 +34,16 @@ const ordersService = {
       return { error: error?.response?.data?.message };
     }
   },
+  updateOrder: async (condominiumId, orderId, orderData) => {
+    try {
+      const response = await apiClient.put(`/condominium/${condominiumId}/orders/${orderId}`, orderData);
+      return response?.data;
+    } catch (error) {
+      return {
+        error: error?.response?.data?.message || 'Erro ao atualizar pedido',
+      };
+    }
+  },
 };
 
 export default ordersService;
