@@ -22,6 +22,10 @@ const urgencyOptions = {
   HIGH: 'Alta',
 };
 
+const getFilteredStatusOptions = (currentStatus) => {
+  return Object.fromEntries(Object.entries(statusOptions).filter(([key]) => key === currentStatus || key !== 'VOTING'));
+};
+
 const EditOrderPopup = ({ openPopup, setOpenPopup, order, onOrderUpdated, isAdmin, currentUser }) => {
   const [description, setDescription] = useState('');
   const [urgency, setUrgency] = useState('');
@@ -89,7 +93,13 @@ const EditOrderPopup = ({ openPopup, setOpenPopup, order, onOrderUpdated, isAdmi
       )}
 
       {isAdmin && (
-        <DropDown listOptions={statusOptions} setChoice={setStatus} choice={status} dropBoxPlaceHolder="Status" icon={Tags} />
+        <DropDown
+          listOptions={getFilteredStatusOptions(status)}
+          setChoice={setStatus}
+          choice={status}
+          dropBoxPlaceHolder="Status"
+          icon={Tags}
+        />
       )}
 
       <Button type="submit" isLoading={isLoading} fullWidth>
