@@ -9,7 +9,7 @@ export default class AreaReservationsGetVerifications {
         
         if (!condID || typeof condID !== 'string' || !isValidUUID(condID)) throw new AppError('Condomínio inválido', 400);
 
-        if (status && ( typeof status !== 'string' || STATUS_RESERV.includes(status))) throw new AppError('Status inválido', 400);
+        if (status && ( typeof status !== 'string' || !STATUS_RESERV.includes(status))) throw new AppError('Status inválido', 400);
 
         if(bGetCondominiumReservations && (typeof bGetCondominiumReservations !== "boolean")) throw new AppError("Campo bGetCondominiumReservations tem que ser booleano", 400);
 

@@ -163,7 +163,7 @@ router.get('/condominium/:condominiumId/commonarea/:areaId/reservation/:reservat
   areaReservationsGetByIdController.handle(req, res);
 });
 
-router.get('/condominium/:condominiumId/commonarea/reservations', verifyJWT, (req, res) => {
+router.get('/condominium/:condominiumID/commonarea/reservations', verifyJWT, (req, res) => {
   areaReservationsGetController.handle(req, res);
 });
 
