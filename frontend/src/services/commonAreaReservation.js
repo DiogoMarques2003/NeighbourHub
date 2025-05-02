@@ -14,6 +14,14 @@ const commonAreaReservation = {
       return { error: error?.response?.data?.message };
     }
   },
+  getReservations: async (condID, query) => {
+    try {
+      const response = await apiClient.get(`/condominium/${condID}/commonarea/reservations`, { params: query });
+      return response.data;
+    } catch (error) {
+      return { error: error?.response?.data?.message || 'Erro ao buscar reservas' };
+    }
+  },
 };
 
 export default commonAreaReservation;
