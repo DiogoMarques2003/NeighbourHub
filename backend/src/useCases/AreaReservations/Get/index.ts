@@ -9,7 +9,7 @@ const condominiumRepository = new PrismaCondominiumsRepository();
 const addressesRepository = new PrismaAddressesRepository();
 const areaReservationsRepository = new PrismaAreaReservationsRepository();
 
-const areaReservationsGetVerifications = new AreaReservationsGetVerifications;
+const areaReservationsGetVerifications = new AreaReservationsGetVerifications();
 const areaReservationsGetCase = new AreaReservationsGetCase(condominiumRepository, addressesRepository, areaReservationsRepository);
 
 const areaReservationsGetController = new AreaReservationsGetController(areaReservationsGetVerifications, areaReservationsGetCase);
