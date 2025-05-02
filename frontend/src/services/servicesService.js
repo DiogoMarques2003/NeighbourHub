@@ -26,9 +26,9 @@ const servicesService = {
       return { error: error?.response?.data?.message };
     }
   },
-  updateService: async (condominiumId, serviceId, serviceData) => {
+  updateService: async (condId, serviceId, serviceData) => {
     try {
-      const response = await apiClient.put(`/condominium/${condominiumId}/services/${serviceId}`, serviceData);
+      const response = await apiClient.put(`/condominium/${condId}/services/${serviceId}`, serviceData);
       return response?.data;
     } catch (error) {
       return { error: error?.response?.data?.message || 'Erro ao atualizar serviço' };

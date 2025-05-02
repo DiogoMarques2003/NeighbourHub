@@ -53,7 +53,7 @@ const EditServicePopup = ({ openPopup, setOpenPopup, service, onServiceUpdated }
       cost: servicePrice ? Number(servicePrice) : 0,
     };
 
-    const result = await servicesService.updateService(service.condominiumId, service.id, updatedService);
+    const result = await servicesService.updateService(service.condId, service.id, updatedService);
 
     if (result?.error || !result) {
       setError(result?.error || 'Erro ao atualizar serviço');
