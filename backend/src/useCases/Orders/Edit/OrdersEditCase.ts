@@ -29,7 +29,7 @@ export default class OrdersEditCase {
 
     if (condominium.adminId === userId && order.userId !== userId && (description || urgency))
       throw new AppError('So podes editar o estado deste pedido', 403);
-    if (order.userId === userId && status) throw new AppError('Não podes editar o estado deste pedido', 403);
+    if (order.userId === userId && condominium.adminId !== userId &&  status) throw new AppError('Não podes editar o estado deste pedido', 403);
 
     if (status) {
       if (status === STATUS_ORDER_VOTING) throw new AppError('Não podes editar o estado para votação', 400);
