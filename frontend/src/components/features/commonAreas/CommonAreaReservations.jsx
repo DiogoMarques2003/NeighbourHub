@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import commonAreaReservation from '@services/commonAreaReservation';
 import { useOutletContext } from 'react-router-dom';
-import ScrollableList from '@common/ScrollableList';
+import List from '@common/List';
 import Loading from '@common/Loading';
 
 const AreaReservationsList = () => {
-  const { currentUser, condominium } = useOutletContext();
+  const { currentUser, condominium, isAdmin } = useOutletContext();
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pageNumber, setPageNumber] = useState(1);
@@ -14,14 +14,17 @@ const AreaReservationsList = () => {
   useEffect(() => {
     const fetchReservations = async () => {
       setLoading(true);
-      const data = await commonAreaReservation.getReservations(condominium.id, {
-        // status: ,
-        bGetCondominiumReservations: false,
+
+      const query = {
+        status: '',
+        bGetCondominiumReservations: isAdmin,
         pageSize: 5,
         pageNumber,
-      });
+      };
 
+      const data = await commonAreaReservation.getReservations(condominium.id, query);
       setLoading(false);
+
       if (!data || data.error) return;
 
       setReservations((prev) => [...prev, ...data.data]);
@@ -29,34 +32,56 @@ const AreaReservationsList = () => {
     };
 
     fetchReservations();
-  }, [pageNumber, currentUser.id, condominium.id]);
+  }, [pageNumber, condominium.id, isAdmin]);
+
+  const headers = [
+    { label: 'Espaço', key: 'areaName' },
+    { label: 'Status', key: 'statusFormatted' },
+    { label: 'Início', key: 'startDate' },
+    { label: 'Fim', key: 'endDate' },
+    ...(isAdmin ? [{ label: 'Utilizador', key: 'userInfo' }] : []),
+  ];
+
+  const formattedRows = reservations.map((res) => {
+    const status = res.status;
+    let statusColor = 'text-gray-600';
+    let statusIcon = '⏳';
+
+    if (status === 'PENDING') {
+      statusColor = 'text-yellow-600 font-medium';
+      statusIcon = '⏳';
+    } else if (status === 'APPROVED') {
+      statusColor = 'text-green-600 font-medium';
+      statusIcon = '✅';
+    } else if (status === 'REJECTED') {
+      statusColor = 'text-red-600 font-medium';
+      statusIcon = '❌';
+    }
+
+    return {
+      ...res,
+      areaName: res.area?.name || 'Espaço',
+      startDate: res.startDate ? new Date(res.startDate).toLocaleString() : 'N/A',
+      endDate: res.endDate ? new Date(res.endDate).toLocaleString() : 'N/A',
+      statusFormatted: (
+        <span className={statusColor}>
+          {statusIcon} {status}
+        </span>
+      ),
+      userInfo: isAdmin && res.user ? `${res.user.name} (${res.user.email})` : '',
+    };
+  });
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold text-[#3e94bf] mb-6">Minhas Reservas de Espaço</h1>
+      <h1 className="text-2xl font-bold text-[#3e94bf] mb-6">
+        {isAdmin ? 'Reservas do Condomínio' : 'Minhas Reservas de Espaço'}
+      </h1>
 
       {loading && !reservations.length ? (
         <Loading />
-      ) : reservations.length === 0 ? (
-        <p className="text-gray-500">Ainda não tens reservas registadas.</p>
       ) : (
-        <ScrollableList
-          items={reservations}
-          renderItem={(res) => (
-            <div key={res.id} className="bg-white rounded-xl shadow-sm p-4 border hover:shadow-md transition">
-              <h2 className="text-lg font-semibold text-[#3e94bf] mb-1">{res.areaName}</h2>
-              <p className="text-sm text-gray-600 mb-1">
-                <strong>Status:</strong> {res.status}
-              </p>
-              <p className="text-sm text-gray-600">
-                <strong>Data:</strong> {res.date ? new Date(res.date).toLocaleDateString() : 'N/A'} às{' '}
-                {res.time || 'N/A'}
-              </p>
-            </div>
-          )}
-          setPageNumber={setPageNumber}
-          hasMore={hasMore}
-        />
+        <List headers={headers} rows={formattedRows} className="max-h-[600px]" />
       )}
     </div>
   );
