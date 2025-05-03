@@ -2,7 +2,7 @@ const List = ({ headers, rows, renderRow, className = '' }) => {
   if (!rows || rows.length === 0) return <p className="text-gray-500">Nenhum dado disponível.</p>;
 
   return (
-    <div className={`overflow-x-auto rounded-xl shadow-md ${className}`}>
+    <div className={`relative z-0 overflow-x-auto rounded-xl shadow-md ${className}`}>
       <table className="min-w-full text-sm text-left text-gray-600 bg-white rounded-xl overflow-hidden">
         <thead className="sticky top-0 bg-gradient-to-r from-[#3e94bf] to-[#72bcd4] text-white text-sm uppercase tracking-wide shadow-sm z-10">
           <tr>

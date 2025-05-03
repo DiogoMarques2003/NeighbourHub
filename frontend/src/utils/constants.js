@@ -16,6 +16,14 @@ const COMMON_AREA_STATUS = {
   UNAVAIL: 'Inativo',
 };
 
+const COMMON_AREA_RESERVATION_STATUS = {
+  PENDING: 'Pendente',
+  APPROVED: 'Aprovado',
+  REJECTED: 'Rejeitado',
+  CANCELLED: 'Cancelado',
+  COMPLETED: 'Concluído',
+};
+
 const ORDER_URGENCY_TYPES = {
   LOW: 'Baixa',
   MEDIUM: 'Média',
