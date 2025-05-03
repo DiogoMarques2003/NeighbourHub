@@ -8,7 +8,8 @@ module.exports = {
   roots: ['<rootDir>/src'],
   testMatch: ['**/useCases/**/*.test.ts'],
   moduleFileExtensions: ['ts', 'js', 'json', 'node'],
-  setupFiles: ['<rootDir>/jest.setup.ts'],
+  setupFiles: ['<rootDir>/jest.env.ts'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
     prefix: '<rootDir>/',
   }),
