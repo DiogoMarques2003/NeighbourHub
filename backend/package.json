@@ -8,7 +8,7 @@
     "build": "babel src --extensions \".js,.ts\" --ignore \"**/*.d.ts\",\"**/*.test.ts\" --out-dir build --copy-files --no-copy-ignored",
     "start": "node build/server.js",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
-    "test": "jest --coverage",
+    "test": "jest --coverage --runInBand",
     "prepare": "yarn prisma generate"
   },
   "devDependencies": {

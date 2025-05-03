@@ -13,5 +13,6 @@ Se tiverem a extenção `Prettier - Code formatter` instalada sempre que salvare
 # Testes:
 Para testar devemos fazer o seguinte:
 - Criar um arquivo `.env.test` identico ao `.env`, porem trocamos o nome `neighbouthub` para `neighbouthubTEST`.
+- Sempre que for necessario adicionar dados nas tabelas antes dos testes fazer o mesmo no arquivo [jest.setup.ts](jest.setup.ts)
 - Criar um arquivo `*.test.ts` que contenha os testes daquela rota, igual ao [LoginAccount.test.ts](./src/useCases/User/LoginAccount/LoginAccount.test.ts)
 - Executar o comando `yarn test` para executar os testes
