@@ -27,15 +27,16 @@ export default class AreaReservationsEditCase {
     const address = await this.addressesRepository.getByUserAndCond(userId, condominiumId);
     if (!address && condominium.adminId !== userId) throw new AppError('Não podes alterar esta reserva', 403);
 
-    if (address && status) throw new AppError('Não tens permissão para alterar o estado da reserva', 403);
-    if (condominium.adminId === userId && (endDate || startDate))
-      throw new AppError('Não tens permissão para alterar a data da reserva', 403);
-
     const reservation = await this.areaReservationsRepository.findById(reservationId);
     if (!reservation) throw new AppError('Reserva não encontrada', 404);
     if (reservation.areaId !== areaId) throw new AppError('Reserva não pertence à área comum', 404);
-    if (address && reservation.userId !== userId)
+    if (address && reservation.userId !== userId && condominium.adminId !== userId)
       throw new AppError('Não tens permissão para editar esta reserva', 403);
+
+    if (condominium.adminId !== userId && status)
+      throw new AppError('Não tens permissão para alterar o estado da reserva', 403);
+    if (reservation.userId !== userId && (endDate || startDate))
+      throw new AppError('Não tens permissão para alterar a data da reserva', 403);
 
     if (status) reservation.status = status;
 

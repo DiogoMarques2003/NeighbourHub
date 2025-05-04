@@ -34,7 +34,7 @@ export default class GetVotingDetailsCase {
     const countVotes = await this.votinsgsRepository.countByOrder(orderId, condominiumId);
     const budgets = await this.budgetsRepositoryy.getBudgetsByOrderIdWithVotes(orderId, condominiumId);
 
-    if (condDb.adminId !== userId) {
+    if (condDb.adminId !== userId || userAddress) {
       const userVoteDb = await this.votinsgsRepository.findByOrderAndUser(orderId, userId);
       if (userVoteDb) {
         userVote = {
