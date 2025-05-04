@@ -19,10 +19,10 @@ export default class ServicesCreateController {
       };
 
       this.servicesVerifications.execute(requestData);
-      const areaReserv = await this.servicesCase.execute(requestData);
-      if (!areaReserv) throw new AppError('Erro ao criar novo serviço', 500);
+      const service = await this.servicesCase.execute(requestData);
+      if (!service) throw new AppError('Erro ao criar novo serviço', 500);
 
-      res.status(201).json({ areaReserv, message: 'Serviço criado com sucesso' });
+      res.status(201).json({ service, message: 'Serviço criado com sucesso' });
     } catch (err) {
       errorHandler(err, res);
     }

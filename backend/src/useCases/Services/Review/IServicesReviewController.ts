@@ -25,7 +25,7 @@ export default class ServicesReviewController {
       this.servicesReviewVerification.execute(requestData);
       const servRev = await this.servicesReviewCase.execute(requestData);
 
-      res.status(200).json({ servRev, message: 'Avaliação feita com sucessoo' });
+      res.status(201).json({ servRev, message: 'Avaliação feita com sucessoo' });
     } catch (err) {
       errorHandler(err, res);
     }

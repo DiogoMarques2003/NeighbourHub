@@ -21,7 +21,7 @@ export default class ServicesReviewCase {
     const { condId, serviceId, userId, comment, rating, requestId } = data;
 
     const check = await this.serviceReviewRepo.findByReq(requestId);
-    if (check) throw new AppError('Só pode fazer 1 avaliação por serviço', 403);
+    if (check) throw new AppError('Só pode fazer 1 avaliação por serviço', 400);
 
     const condDb = await this.condominiumsRepository.findById(condId);
     if (!condDb) throw new AppError('Condominio inexistente', 404);
@@ -36,8 +36,8 @@ export default class ServicesReviewCase {
     if (serviceConDb.ownerId === userId) throw new AppError('Este serviço é seu', 403);
 
     const reqConDb = await this.serviceReqRepo.findById(requestId);
-    if (!reqConDb) throw new AppError('Serviço não encontrado', 403);
-    if (reqConDb.status !== STATUS_REQ_COMPLETED) throw new AppError('Serviço não terminado', 403);
+    if (!reqConDb) throw new AppError('Serviço não encontrado', 404);
+    if (reqConDb.status !== STATUS_REQ_COMPLETED) throw new AppError('Serviço não terminado', 400);
 
     if (userId !== reqConDb.userId) throw new AppError('Não foste tu a requisitar o serviço', 403);
 
