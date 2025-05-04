@@ -6,6 +6,8 @@ import defaultAvatar from '@public/images/defaultUserAvatar.jpg';
 import { Plus } from 'lucide-react';
 import { getStatusText, getUrgencyColor, getUrgencyText, getStatusColor } from './orderConsts';
 import EditOrderPopup from './createOrderPopup';
+import VoteCard from '@features/vote/voteCard';
+import votesService from '@services/votes';
 
 const OrderDetailsForm = () => {
   const navigate = useNavigate();
@@ -16,9 +18,24 @@ const OrderDetailsForm = () => {
   const [error, setError] = useState(null);
   const [editPopupOpen, setEditPopupOpen] = useState(false);
 
+  const [voteData, setVoteData] = useState({
+    id: '',
+    deadline: '',
+    upVote: '',
+    downVote: '',
+  });
+
   useEffect(() => {
     const fetchOrder = async () => {
       const result = await ordersService.getOrderById(condominiumId, orderId);
+      const vote = await votesService.getVote(condominiumId, orderId);
+
+      setVoteData({
+        id: vote.id,
+        deadline: vote.votingDeadline,
+        upVote: vote.upVotes,
+        downVote: vote.downVotes,
+      });
 
       if (result?.error) {
         setError(result.error);
@@ -116,6 +133,17 @@ const OrderDetailsForm = () => {
               >
                 <Plus size={30} />
               </button>
+            </div>
+          )}
+
+          {order.votingDeadline && (
+            <div className="mb-4">
+              <h2 className="text-xl font-semibold mb-4" style={{ color: '#3e94bf' }}>
+                Votar
+              </h2>
+              <div className="max-w-xs w-full">
+                <VoteCard vote={voteData} />
+              </div>
             </div>
           )}
         </div>

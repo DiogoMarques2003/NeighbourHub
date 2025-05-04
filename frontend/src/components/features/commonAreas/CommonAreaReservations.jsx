@@ -5,13 +5,14 @@ import List from '@common/List';
 import Loading from '@common/Loading';
 import ToggleSwitch from '@common/ToggleSwitch';
 import DropDown from '@common/DropDown';
+import Popup from '@common/Popup';
 import { Tags } from 'lucide-react';
 import { COMMON_AREA_RESERVATION_STATUS } from '@utils/constants';
 
 const statusOptions = {
   '': 'Todos',
   ...COMMON_AREA_RESERVATION_STATUS,
-};;
+};
 
 const AreaReservationsList = () => {
   const { condominium, isAdmin } = useOutletContext();
@@ -22,11 +23,17 @@ const AreaReservationsList = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
-  // Filtros
+  const [selectedReservation, setSelectedReservation] = useState(null);
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [newStatus, setNewStatus] = useState('');
+
+  const [showFineFields, setShowFineFields] = useState(false);
+  const [fineReason, setFineReason] = useState('');
+  const [fineAmount, setFineAmount] = useState('');
+
   const [showOnlyMine, setShowOnlyMine] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState('');
 
-  // Fetch principal
   const getReservations = async () => {
     setLoading(true);
     setFetchError('');
@@ -52,17 +59,14 @@ const AreaReservationsList = () => {
     setHasMore(data.actualPage < data.pages);
   };
 
-  // Trigger fetch quando filtros ou página mudam
   useEffect(() => {
     getReservations();
   }, [pageNumber, selectedStatus, showOnlyMine]);
 
-  // Reset página ao mudar filtros
   useEffect(() => {
     if (pageNumber !== 1) setPageNumber(1);
   }, [selectedStatus, showOnlyMine]);
 
-  // Headers da tabela
   const headers = [
     { label: 'Espaço', key: 'areaName' },
     { label: 'Status', key: 'statusFormatted' },
@@ -79,12 +83,15 @@ const AreaReservationsList = () => {
     if (status === 'PENDING') {
       statusColor = 'text-yellow-600 font-medium';
       statusIcon = '⏳';
+    } else if (status === 'CANCELED') {
+      statusColor = 'text-red-600 font-medium';
+      statusIcon = '❌';
+    } else if (status === 'COMPLETED') {
+      statusColor = 'text-green-600 font-medium';
+      statusIcon = '✅';
     } else if (status === 'APPROVED') {
       statusColor = 'text-green-600 font-medium';
       statusIcon = '✅';
-    } else if (status === 'REJECTED') {
-      statusColor = 'text-red-600 font-medium';
-      statusIcon = '❌';
     }
 
     return {
@@ -100,6 +107,61 @@ const AreaReservationsList = () => {
       userInfo: isAdmin && res.user ? `${res.user.name} (${res.user.email})` : '',
     };
   });
+
+  const handleRowClick = (rowIdx) => {
+    const selected = reservations[rowIdx];
+    if (isAdmin && selected) {
+      setSelectedReservation(selected);
+      setPopupOpen(true);
+      setNewStatus(selected.status);
+      setShowFineFields(false);
+      setFineReason('');
+      setFineAmount('');
+    }
+  };
+
+  const handleCreateFine = async () => {
+    const parsedAmount = parseFloat(fineAmount);
+    if (isNaN(parsedAmount) || parsedAmount <= 0 || !fineReason.trim()) {
+      alert('Preencha um valor válido e um motivo para a multa.');
+      return;
+    }
+
+    const response = await commonAreaReservation.createFine({
+      amount: parseFloat(fineAmount),
+      reason: fineReason,
+      userId: selectedReservation.user.id,
+      areaReservationId: selectedReservation.id,
+      commonAreaId: selectedReservation.area.id,
+      condominiumId: condominium.id,
+    });
+
+    if (response?.error) {
+      alert(response.error);
+    } else {
+      alert('Multa criada com sucesso');
+      setPopupOpen(false);
+    }
+  };
+
+  const handleChangeStatus = async () => {
+    if (!selectedReservation || !newStatus) return;
+
+    const response = await commonAreaReservation.updateReservationStatus({
+      condominiumId: condominium.id,
+      commonAreaId: selectedReservation.area.id,
+      reservationId: selectedReservation.id,
+      status: newStatus,
+    });
+
+    if (response?.error) {
+      alert(response.error);
+    } else {
+      alert('Status atualizado com sucesso');
+      setPopupOpen(false);
+      getReservations();
+    }
+  };
 
   return (
     <div className="p-6 space-y-4">
@@ -131,7 +193,94 @@ const AreaReservationsList = () => {
       ) : fetchError ? (
         <p className="text-red-500">{fetchError}</p>
       ) : (
-        <List headers={headers} rows={formattedRows} className="max-h-[600px]" />
+        <List
+          headers={headers}
+          rows={formattedRows}
+          className="max-h-[600px]"
+          renderRow={(row, rowIdx) => (
+            <tr
+              key={rowIdx}
+              className="hover:bg-blue-100 transition cursor-pointer even:bg-blue-50 odd:bg-white"
+              onClick={() => handleRowClick(rowIdx)}
+            >
+              {headers.map((header, colIdx) => {
+                const key = typeof header === 'string' ? header : header.key;
+                return (
+                  <td key={colIdx} className="p-3">
+                    {row[key]}
+                  </td>
+                );
+              })}
+            </tr>
+          )}
+        />
+      )}
+
+      {/* Popup admin */}
+      {isAdmin && selectedReservation && (
+        <Popup
+          openPopUp={popupOpen}
+          closePopUp={() => {
+            setPopupOpen(false);
+            setShowFineFields(false);
+            setFineAmount('');
+            setFineReason('');
+          }}
+          popupTitle={`Opções para reserva de ${selectedReservation.area?.name || 'Espaço'}`}
+          popupHandleSubmit={(e) => e.preventDefault()}
+        >
+          <div className="space-y-4">
+            <DropDown
+              listOptions={COMMON_AREA_RESERVATION_STATUS}
+              setChoice={setNewStatus}
+              choice={newStatus}
+              dropBoxPlaceHolder="Seleciona novo status"
+              icon={Tags}
+            />
+
+            <button
+              type="button"
+              className="w-full px-4 py-2 bg-[#3e94bf] text-white rounded hover:bg-[#337da3] transition"
+              onClick={handleChangeStatus}
+            >
+              Confirmar alteração de status
+            </button>
+
+            {!showFineFields ? (
+              <button
+                type="button"
+                className="w-full px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
+                onClick={() => setShowFineFields(true)}
+              >
+                Emitir multa
+              </button>
+            ) : (
+              <div className="space-y-3">
+                <input
+                  type="number"
+                  placeholder="Valor da multa (€)"
+                  className="w-full border rounded px-3 py-2 text-sm"
+                  value={fineAmount}
+                  onChange={(e) => setFineAmount(e.target.value)}
+                />
+                <textarea
+                  placeholder="Motivo da multa"
+                  className="w-full border rounded px-3 py-2 text-sm"
+                  rows={3}
+                  value={fineReason}
+                  onChange={(e) => setFineReason(e.target.value)}
+                />
+                <button
+                  type="button"
+                  className="w-full px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+                  onClick={handleCreateFine}
+                >
+                  Salvar multa
+                </button>
+              </div>
+            )}
+          </div>
+        </Popup>
       )}
     </div>
   );

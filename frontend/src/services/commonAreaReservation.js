@@ -1,5 +1,4 @@
 import apiClient from './apiClient';
-import { encodeQueryData } from '@utils/helperFunctions';
 import { data } from 'react-router-dom';
 
 const commonAreaReservation = {
@@ -20,6 +19,35 @@ const commonAreaReservation = {
       return response.data;
     } catch (error) {
       return { error: error?.response?.data?.message || 'Erro ao buscar reservas' };
+    }
+  },
+  createFine: async ({ amount, reason, userId, areaReservationId, commonAreaId, condominiumId }) => {
+    try {
+      const response = await apiClient.post(
+        `/condominium/${condominiumId}/commonarea/${commonAreaId}/reservation/${areaReservationId}/fine`,
+        {
+          amount,
+          reason,
+          userId,
+          areaReservationId,
+          commonAreaId,
+          condominiumId,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return { error: error?.response?.data?.message || 'Erro ao criar multa' };
+    }
+  },
+  updateReservationStatus: async ({ condominiumId, commonAreaId, reservationId, status }) => {
+    try {
+      const res = await apiClient.put(
+        `/condominium/${condominiumId}/commonarea/${commonAreaId}/reservation/${reservationId}`,
+        { status }
+      );
+      return res.data;
+    } catch (error) {
+      return { error: error?.response?.data?.message || 'Erro ao atualizar status' };
     }
   },
 };
