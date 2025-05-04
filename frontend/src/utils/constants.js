@@ -19,8 +19,7 @@ const COMMON_AREA_STATUS = {
 const COMMON_AREA_RESERVATION_STATUS = {
   PENDING: 'Pendente',
   APPROVED: 'Aprovado',
-  REJECTED: 'Rejeitado',
-  CANCELLED: 'Cancelado',
+  CANCELED: 'Cancelado',
   COMPLETED: 'Concluído',
 };
 
