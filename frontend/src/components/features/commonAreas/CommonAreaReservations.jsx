@@ -14,7 +14,7 @@ const statusOptions = {
 };;
 
 const AreaReservationsList = () => {
-  const { currentUser, condominium, isAdmin } = useOutletContext();
+  const { condominium, isAdmin } = useOutletContext();
 
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
