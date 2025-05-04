@@ -1,9 +1,10 @@
 import { ChevronDown } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const DropDown = ({ listOptions, setChoice, choice, dropBoxPlaceHolder, icon: Icon }) => {
   const [open, setOpen] = useState(false);
   let dropdownOptions = listOptions;
+  const dropdownRef = useRef(null);
 
   const handleSelect = (code) => {
     setChoice(code);
@@ -17,8 +18,22 @@ const DropDown = ({ listOptions, setChoice, choice, dropBoxPlaceHolder, icon: Ic
     }));
   }
 
+  // fecha o dropdown ao clique exterior
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+    
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="relative z-10">
+    <div className="relative z-10" ref={dropdownRef}>
       <Icon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none" size={20} />
       <button
         onClick={() => setOpen(!open)}
