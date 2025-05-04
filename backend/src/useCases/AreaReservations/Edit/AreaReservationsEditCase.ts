@@ -30,7 +30,7 @@ export default class AreaReservationsEditCase {
     const reservation = await this.areaReservationsRepository.findById(reservationId);
     if (!reservation) throw new AppError('Reserva não encontrada', 404);
     if (reservation.areaId !== areaId) throw new AppError('Reserva não pertence à área comum', 404);
-    if (address && reservation.userId !== userId)
+    if (address && reservation.userId !== userId && condominium.adminId !== userId)
       throw new AppError('Não tens permissão para editar esta reserva', 403);
 
     if (condominium.adminId !== userId && status)
