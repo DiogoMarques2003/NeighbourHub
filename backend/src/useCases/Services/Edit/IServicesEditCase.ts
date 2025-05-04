@@ -17,9 +17,9 @@ export default class ServicesEditCase {
     if (!condDB) throw new AppError('Condominio inexistente', 404);
 
     const service = await this.servicesRepository.findById(id);
-    if (!service) throw new AppError('Este serviço não existe', 400);
+    if (!service) throw new AppError('Este serviço não existe', 404);
 
-    if (ownerId !== service.ownerId) throw new AppError('Não podes editar este serviço', 400);
+    if (ownerId !== service.ownerId) throw new AppError('Não podes editar este serviço', 403);
 
     if (condId !== condDB.id) throw new AppError('Este serviço não pertence a este condomínio', 400);
 

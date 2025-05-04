@@ -22,7 +22,7 @@ export default class ServicesRequestController {
       this.servicesVerification.execute(requestData);
       const servReq = await this.servicesReqCase.execute(requestData);
 
-      res.status(200).json({ servReq, message: 'Request feito com sucesso' });
+      res.status(201).json({ servReq, message: 'Request feito com sucesso' });
     } catch (err) {
       errorHandler(err, res);
     }
