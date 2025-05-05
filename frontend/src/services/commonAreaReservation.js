@@ -50,6 +50,27 @@ const commonAreaReservation = {
       return { error: error?.response?.data?.message || 'Erro ao atualizar status' };
     }
   },
+  updateReservationData: async ({ condominiumId, commonAreaId, reservationId, body }) => {
+    try {
+      const response = await apiClient.put(
+        `/condominium/${condominiumId}/commonarea/${commonAreaId}/reservation/${reservationId}`,
+        body
+      );
+      return response.data;
+    } catch (error) {
+      return { error: error?.response?.data?.message || 'Erro ao atualizar reserva' };
+    }
+  },
+  getFineFromReservation: async ({ condominiumId, commonAreaId, reservationId }) => {
+    try {
+      const res = await apiClient.get(
+        `/condominium/${condominiumId}/commonarea/${commonAreaId}/reservation/${reservationId}/fine`
+      );
+      return res.data;
+    } catch (error) {
+      return { error: error?.response?.data?.message || 'Erro ao buscar multa associada' };
+    }
+  },
 };
 
 export default commonAreaReservation;
