@@ -8,6 +8,8 @@ import { getStatusText, getUrgencyColor, getUrgencyText, getStatusColor } from '
 import EditOrderPopup from './createOrderPopup';
 import VoteCard from '@features/vote/voteCard';
 import votesService from '@services/votes';
+import GoBack from '@common/GoBack';
+import Button from '@common/Button';
 
 const OrderDetailsForm = () => {
   const navigate = useNavigate();
@@ -55,7 +57,13 @@ const OrderDetailsForm = () => {
   if (!order) return null;
 
   return (
-    <div className="p-10">
+    <>
+      <div className="flex justify-between">
+        <GoBack></GoBack>
+        <div className="flex gap-4">
+          <Button onClick={() => setPopup(true)}>Progresso</Button>
+        </div>
+      </div>
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-gray-800" style={{ color: '#3e94bf' }}>
           Detalhes do Pedido
@@ -71,7 +79,7 @@ const OrderDetailsForm = () => {
       </div>
       <div className="flex gap-10">
         {/* Caixa da Esquerda */}
-        <div className="w-1/2 p-6">
+        <div className="w-1/2">
           <h2 className="text-xl font-semibold mb-4" style={{ color: '#3e94bf' }}>
             Descrição
           </h2>
@@ -109,7 +117,7 @@ const OrderDetailsForm = () => {
         </div>
 
         {/* Caixa da Direita */}
-        <div className="w-1/2 p-6">
+        <div className="w-1/2">
           <h2 className="text-xl font-semibold mb-4" style={{ color: '#3e94bf' }}>
             Status
           </h2>
@@ -156,7 +164,7 @@ const OrderDetailsForm = () => {
         isAdmin={isAdmin}
         onOrderUpdated={() => window.location.reload()}
       />
-    </div>
+    </>
   );
 };
 

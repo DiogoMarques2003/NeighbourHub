@@ -115,7 +115,7 @@ const ListServices = () => {
       />
 
       {/* Lista com os serviços */}
-      {isLoading ? (
+      {isLoading && services.length === 0 ? (
         <Loading />
       ) : fetchError ? (
         <ErrorBar error={fetchError} />
