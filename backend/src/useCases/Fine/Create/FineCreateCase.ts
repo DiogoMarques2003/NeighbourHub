@@ -68,7 +68,7 @@ export default class FineCreateCase {
         endDate: dateFormat(areaReservation.endDate),
         fineReason: reason,
         fineAmount: amount,
-        userPanelUrl: `https://neighbourhub.diogomarques.dev/condominiums/${condominiumId}/commonarea/${commonAreaId}/reservation/${areaReservationId}/fine`,
+        userPanelUrl: `https://neighbourhub.diogomarques.dev/condominium/${condominiumId}/commonarea/${commonAreaId}/reservations/${areaReservationId}/fine`,
       }
     );
 

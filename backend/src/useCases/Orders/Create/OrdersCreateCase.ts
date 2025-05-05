@@ -53,7 +53,7 @@ export default class OrdersCreateCase {
         condominiumName: condominium.name,
         userName: user.name,
         orderDescription: description,
-        adminPanelUrl: `https://neighbourhub.diogomarques.dev/condominiums/${condominiumId}/order/${orderClass.id}`,
+        adminPanelUrl: `https://neighbourhub.diogomarques.dev/condominium/${condominiumId}/orders/${orderClass.id}`,
       }
     );
 

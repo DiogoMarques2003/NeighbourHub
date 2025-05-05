@@ -84,7 +84,7 @@ export default class AreaReservationsCreateCase {
         startDate: dateFormat(startDate),
         endDate: dateFormat(endDate),
         commonArea: areaDb.name,
-        adminPanelUrl: `https://neighbourhub.diogomarques.dev/condominiums/${condId}/commonarea/${areaId}/reservation/${areaReservationsClass.id}`,
+        adminPanelUrl: `https://neighbourhub.diogomarques.dev/condominium/${condId}/commonarea/${areaId}/reservation/${areaReservationsClass.id}`,
       }
     );
 

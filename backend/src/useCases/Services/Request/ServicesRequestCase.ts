@@ -60,7 +60,7 @@ export default class ServicesRequestCase {
         requesterName: user.name,
         serviceDescription: serviceConDb.name,
         condominiumName: condDb.name,
-        providerPanelUrl: `https://neighbourhub.diogomarques.dev/condominiums/${condId}/services/${serviceId}/request/${service.id}`,
+        providerPanelUrl: `https://neighbourhub.diogomarques.dev/condominium/${condId}/services/${serviceId}/request/${service.id}`,
       }
     );
 
