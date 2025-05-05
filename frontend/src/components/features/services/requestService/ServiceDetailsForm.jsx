@@ -92,12 +92,7 @@ const ServiceDetailsForm = () => {
 
   return (
     <>
-      {openPopup && (
-        <>
-          {' '}
-          <MyServiceRequestPopUp openPopup={openPopup} setPopup={setPopup} class />{' '}
-        </>
-      )}
+      <MyServiceRequestPopUp openPopup={openPopup} setPopup={setPopup} class />
       <div className="flex justify-between">
         <GoBack></GoBack>
         {service.owner.id === currentUser.id && (
