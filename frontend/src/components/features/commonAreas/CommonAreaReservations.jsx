@@ -16,23 +16,23 @@ const statusOptions = {
 
 const AreaReservationsList = () => {
   const { condominium, isAdmin } = useOutletContext();
-
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [fetchError, setFetchError] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-
   const [selectedReservation, setSelectedReservation] = useState(null);
   const [popupOpen, setPopupOpen] = useState(false);
   const [newStatus, setNewStatus] = useState('');
-
   const [showFineFields, setShowFineFields] = useState(false);
   const [fineReason, setFineReason] = useState('');
   const [fineAmount, setFineAmount] = useState('');
-
   const [showOnlyMine, setShowOnlyMine] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState('');
+  const [newStartDate, setNewStartDate] = useState('');
+  const [newEndDate, setNewEndDate] = useState('');
+
+  const toISOStringFromLocal = (datetimeStr) => new Date(datetimeStr).toISOString();
 
   const getReservations = async () => {
     setLoading(true);
@@ -86,10 +86,7 @@ const AreaReservationsList = () => {
     } else if (status === 'CANCELED') {
       statusColor = 'text-red-600 font-medium';
       statusIcon = '❌';
-    } else if (status === 'COMPLETED') {
-      statusColor = 'text-green-600 font-medium';
-      statusIcon = '✅';
-    } else if (status === 'APPROVED') {
+    } else if (status === 'COMPLETED' || status === 'APPROVED') {
       statusColor = 'text-green-600 font-medium';
       statusIcon = '✅';
     }
@@ -117,6 +114,8 @@ const AreaReservationsList = () => {
       setShowFineFields(false);
       setFineReason('');
       setFineAmount('');
+      setNewStartDate(selected.startDate?.slice(0, 16) || '');
+      setNewEndDate(selected.endDate?.slice(0, 16) || '');
     }
   };
 
@@ -128,7 +127,7 @@ const AreaReservationsList = () => {
     }
 
     const response = await commonAreaReservation.createFine({
-      amount: parseFloat(fineAmount),
+      amount: parsedAmount,
       reason: fineReason,
       userId: selectedReservation.user.id,
       areaReservationId: selectedReservation.id,
@@ -163,13 +162,62 @@ const AreaReservationsList = () => {
     }
   };
 
+  const handleEmitFineClick = async () => {
+    if (!selectedReservation) return;
+
+    setShowFineFields(true);
+
+    const response = await commonAreaReservation.getFineFromReservation({
+      condominiumId: condominium.id,
+      commonAreaId: selectedReservation.area.id,
+      reservationId: selectedReservation.id,
+    });
+
+    if (response?.error) {
+      setFineAmount('');
+      setFineReason('');
+    } else {
+      setFineAmount(response.amount?.toString() || '');
+      setFineReason(response.reason || '');
+    }
+  };
+
+  const toISOStringFromDatetimeLocal = (datetimeLocalStr) => {
+    const date = new Date(datetimeLocalStr);
+    return date.toISOString();
+  };
+
+  const handleUpdateDates = async () => {
+    if (!newStartDate || !newEndDate) {
+      alert('Preencha ambas as datas.');
+      return;
+    }
+
+    const response = await commonAreaReservation.updateReservationData({
+      condominiumId: condominium.id,
+      commonAreaId: selectedReservation.area.id,
+      reservationId: selectedReservation.id,
+      body: {
+        startDate: toISOStringFromDatetimeLocal(newStartDate),
+        endDate: toISOStringFromDatetimeLocal(newEndDate),
+      },
+    });
+
+    if (response?.error) {
+      alert(response.error);
+    } else {
+      alert('Datas atualizadas com sucesso');
+      setPopupOpen(false);
+      getReservations();
+    }
+  };
+
   return (
     <div className="p-6 space-y-4">
       <h1 className="text-2xl font-bold text-[#3e94bf]">
         {isAdmin ? 'Reservas do Condomínio' : 'Minhas Reservas de Espaço'}
       </h1>
 
-      {/* Filtros */}
       <div className="flex flex-col md:flex-row md:items-center gap-4">
         <DropDown
           listOptions={statusOptions}
@@ -187,7 +235,6 @@ const AreaReservationsList = () => {
         )}
       </div>
 
-      {/* Lista */}
       {loading && !reservations.length ? (
         <Loading />
       ) : fetchError ? (
@@ -203,20 +250,16 @@ const AreaReservationsList = () => {
               className="hover:bg-blue-100 transition cursor-pointer even:bg-blue-50 odd:bg-white"
               onClick={() => handleRowClick(rowIdx)}
             >
-              {headers.map((header, colIdx) => {
-                const key = typeof header === 'string' ? header : header.key;
-                return (
-                  <td key={colIdx} className="p-3">
-                    {row[key]}
-                  </td>
-                );
-              })}
+              {headers.map((header, colIdx) => (
+                <td key={colIdx} className="p-3">
+                  {row[header.key]}
+                </td>
+              ))}
             </tr>
           )}
         />
       )}
 
-      {/* Popup admin */}
       {isAdmin && selectedReservation && (
         <Popup
           openPopUp={popupOpen}
@@ -229,6 +272,31 @@ const AreaReservationsList = () => {
           popupTitle={`Opções para reserva de ${selectedReservation.area?.name || 'Espaço'}`}
           popupHandleSubmit={(e) => e.preventDefault()}
         >
+          <div className="space-y-2">
+            <label className="text-sm text-gray-700 block">Início da reserva:</label>
+            <input
+              type="datetime-local"
+              className="w-full border rounded px-3 py-2 text-sm"
+              value={newStartDate}
+              onChange={(e) => setNewStartDate(e.target.value)}
+            />
+
+            <label className="text-sm text-gray-700 block">Fim da reserva:</label>
+            <input
+              type="datetime-local"
+              className="w-full border rounded px-3 py-2 text-sm"
+              value={newEndDate}
+              onChange={(e) => setNewEndDate(e.target.value)}
+            />
+            <button
+              type="button"
+              className="w-full px-4 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 transition"
+              onClick={handleUpdateDates}
+            >
+              Salvar alterações de data
+            </button>
+          </div>
+
           <div className="space-y-4">
             <DropDown
               listOptions={COMMON_AREA_RESERVATION_STATUS}
@@ -250,7 +318,7 @@ const AreaReservationsList = () => {
               <button
                 type="button"
                 className="w-full px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
-                onClick={() => setShowFineFields(true)}
+                onClick={handleEmitFineClick}
               >
                 Emitir multa
               </button>
