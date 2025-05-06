@@ -8,6 +8,7 @@ import DropDown from '@common/DropDown';
 import Popup from '@common/Popup';
 import { Tags } from 'lucide-react';
 import { COMMON_AREA_RESERVATION_STATUS } from '@utils/constants';
+import { formatDateToDateTimeLocalInput } from '@utils/helperFunctions';
 
 const statusOptions = {
   '': 'Todos',
@@ -114,8 +115,8 @@ const AreaReservationsList = () => {
       setShowFineFields(false);
       setFineReason('');
       setFineAmount('');
-      setNewStartDate(selected.startDate?.slice(0, 16) || '');
-      setNewEndDate(selected.endDate?.slice(0, 16) || '');
+      setNewStartDate(formatDateToDateTimeLocalInput(new Date(selected.startDate)));
+      setNewEndDate(formatDateToDateTimeLocalInput(new Date(selected.endDate)));
     }
   };
 
@@ -182,11 +183,6 @@ const AreaReservationsList = () => {
     }
   };
 
-  const toISOStringFromDatetimeLocal = (datetimeLocalStr) => {
-    const date = new Date(datetimeLocalStr);
-    return date.toISOString();
-  };
-
   const handleUpdateDates = async () => {
     if (!newStartDate || !newEndDate) {
       alert('Preencha ambas as datas.');
@@ -198,8 +194,8 @@ const AreaReservationsList = () => {
       commonAreaId: selectedReservation.area.id,
       reservationId: selectedReservation.id,
       body: {
-        startDate: toISOStringFromDatetimeLocal(newStartDate),
-        endDate: toISOStringFromDatetimeLocal(newEndDate),
+        startDate: newStartDate,
+        endDate: newEndDate,
       },
     });
 
