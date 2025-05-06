@@ -31,7 +31,8 @@ export default class FineGetFromReservationCase {
 
     const areaReservation = await this.areaReservationRepository.findById(areaReservationId);
     if (!areaReservation) throw new AppError('Reserva não encontrada', 404);
-    if (address && areaReservation.userId !== userId) throw new AppError('Não pode acessar a multa', 403);
+    if (address && areaReservation.userId !== userId && address.userId !== userId)
+      throw new AppError('Não pode acessar a multa', 403);
 
     return this.fineRepository.findByAreaReservationId(areaReservationId);
   }
