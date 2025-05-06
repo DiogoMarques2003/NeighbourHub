@@ -23,6 +23,7 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: a23000@alunos.ipca.pt
       PGADMIN_DEFAULT_PASSWORD: Pn7fdfcOka
+      PG_TZ: Europe/Lisbon
       TZ: Europe/Lisbon
     ports:
       - "3000:80"
