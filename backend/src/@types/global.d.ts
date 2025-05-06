@@ -16,5 +16,6 @@ declare global {
   var service: Services;
   var serviceReqCompleted: Services;
   var serviceReqPending: Services;
+  var serviceReqPending2: Services;
   var prisma: PrismaClient;
 }

@@ -120,7 +120,14 @@ beforeAll(async () => {
     userId: resident2User.id,
   });
   global.serviceReqPending = serviceReqPending;
-  await prisma.serviceRequests.createMany({ data: [serviceReqCompleted, serviceReqPending] });
+
+  const serviceReqPending2 = new ServiceRequests({
+    serviceId: service.id,
+    status: STATUS_REQ_PENDING,
+    userId: resident2User.id,
+  });
+  global.serviceReqPending2 = serviceReqPending2;
+  await prisma.serviceRequests.createMany({ data: [serviceReqCompleted, serviceReqPending, serviceReqPending2] });
 
   const address = new Addresses({
     userId: residentUser.id,
