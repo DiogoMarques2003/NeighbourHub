@@ -61,7 +61,7 @@ const OrderDetailsForm = () => {
       <div className="flex justify-between">
         <GoBack></GoBack>
         <div className="flex gap-4">
-          <Button onClick={() => setPopup(true)}>Progresso</Button>
+          <Button onClick={() => navigate('work')}>Ver Progresso</Button>
         </div>
       </div>
       <div className="flex justify-between items-center mb-8">
