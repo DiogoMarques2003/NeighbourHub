@@ -9,6 +9,8 @@ import Popup from '@common/Popup';
 import { Tags } from 'lucide-react';
 import { COMMON_AREA_RESERVATION_STATUS } from '@utils/constants';
 import { formatDateToDateTimeLocalInput } from '@utils/helperFunctions';
+import Input from '@common/Input';
+import Button from '@common/Button';
 
 const statusOptions = {
   '': 'Todos',
@@ -108,16 +110,15 @@ const AreaReservationsList = () => {
 
   const handleRowClick = (rowIdx) => {
     const selected = reservations[rowIdx];
-    if (isAdmin && selected) {
-      setSelectedReservation(selected);
-      setPopupOpen(true);
-      setNewStatus(selected.status);
-      setShowFineFields(false);
-      setFineReason('');
-      setFineAmount('');
-      setNewStartDate(formatDateToDateTimeLocalInput(new Date(selected.startDate)));
-      setNewEndDate(formatDateToDateTimeLocalInput(new Date(selected.endDate)));
-    }
+    if (!selected) return;
+    setSelectedReservation(selected);
+    setPopupOpen(true);
+    setNewStatus(selected.status);
+    setShowFineFields(false);
+    setFineReason('');
+    setFineAmount('');
+    setNewStartDate(formatDateToDateTimeLocalInput(new Date(selected.startDate)));
+    setNewEndDate(formatDateToDateTimeLocalInput(new Date(selected.endDate)));
   };
 
   const handleCreateFine = async () => {
@@ -256,7 +257,7 @@ const AreaReservationsList = () => {
         />
       )}
 
-      {isAdmin && selectedReservation && (
+      {selectedReservation && (
         <Popup
           openPopUp={popupOpen}
           closePopUp={() => {
@@ -268,82 +269,70 @@ const AreaReservationsList = () => {
           popupTitle={`Opções para reserva de ${selectedReservation.area?.name || 'Espaço'}`}
           popupHandleSubmit={(e) => e.preventDefault()}
         >
-          <div className="space-y-2">
-            <label className="text-sm text-gray-700 block">Início da reserva:</label>
-            <input
-              type="datetime-local"
-              className="w-full border rounded px-3 py-2 text-sm"
-              value={newStartDate}
-              onChange={(e) => setNewStartDate(e.target.value)}
-            />
+          {!isAdmin && (
+            <div className="space-y-2">
+              <label className="text-sm text-gray-700 block">Início da reserva:</label>
+              <Input
+                type="datetime-local"
+                className="w-full border rounded px-3 py-2 text-sm"
+                value={newStartDate}
+                onChange={(e) => setNewStartDate(e.target.value)}
+              />
 
-            <label className="text-sm text-gray-700 block">Fim da reserva:</label>
-            <input
-              type="datetime-local"
-              className="w-full border rounded px-3 py-2 text-sm"
-              value={newEndDate}
-              onChange={(e) => setNewEndDate(e.target.value)}
-            />
-            <button
-              type="button"
-              className="w-full px-4 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 transition"
-              onClick={handleUpdateDates}
-            >
-              Salvar alterações de data
-            </button>
-          </div>
+              <label className="text-sm text-gray-700 block">Fim da reserva:</label>
+              <Input
+                type="datetime-local"
+                className="w-full border rounded px-3 py-2 text-sm"
+                value={newEndDate}
+                onChange={(e) => setNewEndDate(e.target.value)}
+              />
+              <Button onClick={handleUpdateDates} fullWidth variant="primary">
+                Salvar alterações de data
+              </Button>
+            </div>
+          )}
 
-          <div className="space-y-4">
-            <DropDown
-              listOptions={COMMON_AREA_RESERVATION_STATUS}
-              setChoice={setNewStatus}
-              choice={newStatus}
-              dropBoxPlaceHolder="Seleciona novo status"
-              icon={Tags}
-            />
+          {isAdmin && (
+            <div className="space-y-4">
+              <DropDown
+                listOptions={COMMON_AREA_RESERVATION_STATUS}
+                setChoice={setNewStatus}
+                choice={newStatus}
+                dropBoxPlaceHolder="Seleciona novo status"
+                icon={Tags}
+              />
 
-            <button
-              type="button"
-              className="w-full px-4 py-2 bg-[#3e94bf] text-white rounded hover:bg-[#337da3] transition"
-              onClick={handleChangeStatus}
-            >
-              Confirmar alteração de status
-            </button>
+              <Button onClick={handleChangeStatus} fullWidth variant="primary">
+                Confirmar alteração de status
+              </Button>
 
-            {!showFineFields ? (
-              <button
-                type="button"
-                className="w-full px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
-                onClick={handleEmitFineClick}
-              >
-                Emitir multa
-              </button>
-            ) : (
-              <div className="space-y-3">
-                <input
-                  type="number"
-                  placeholder="Valor da multa (€)"
-                  className="w-full border rounded px-3 py-2 text-sm"
-                  value={fineAmount}
-                  onChange={(e) => setFineAmount(e.target.value)}
-                />
-                <textarea
-                  placeholder="Motivo da multa"
-                  className="w-full border rounded px-3 py-2 text-sm"
-                  rows={3}
-                  value={fineReason}
-                  onChange={(e) => setFineReason(e.target.value)}
-                />
-                <button
-                  type="button"
-                  className="w-full px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
-                  onClick={handleCreateFine}
-                >
-                  Salvar multa
-                </button>
-              </div>
-            )}
-          </div>
+              {!showFineFields ? (
+                <Button onClick={handleEmitFineClick} fullWidth variant="danger">
+                  Emitir multa
+                </Button>
+              ) : (
+                <div className="space-y-3">
+                  <Input
+                    type="number"
+                    placeholder="Valor da multa (€)"
+                    className="w-full border rounded px-3 py-2 text-sm"
+                    value={fineAmount}
+                    onChange={(e) => setFineAmount(e.target.value)}
+                  />
+                  <textarea
+                    placeholder="Motivo da multa"
+                    className="w-full border rounded px-3 py-2 text-sm"
+                    rows={3}
+                    value={fineReason}
+                    onChange={(e) => setFineReason(e.target.value)}
+                  />
+                  <Button onClick={handleCreateFine} fullWidth variant="danger">
+                    Salvar multa
+                  </Button>
+                </div>
+              )}
+            </div>
+          )}
         </Popup>
       )}
     </div>
