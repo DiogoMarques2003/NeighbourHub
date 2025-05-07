@@ -1,3 +1,4 @@
+import AreaReservations from '@entities/AreaReservations';
 import CommonAreas from '@entities/CommonAreas';
 
 export {};
@@ -13,6 +14,7 @@ declare global {
   var condominiumId: string;
   var commonAreaId: string;
   var commonArea: CommonAreas;
+  var reservation: AreaReservations;
   var service: Services;
   var serviceReqCompleted: Services;
   var serviceReqPending: Services;
