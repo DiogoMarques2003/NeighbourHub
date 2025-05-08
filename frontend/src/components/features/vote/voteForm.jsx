@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import BudgetCard from './budgetCard';
 import Button from '../../common/Button.jsx';
 import { ThumbsUp, ThumbsDown } from 'lucide-react';
+import GoBack from '@common/GoBack';
 
 const CreateVoteForm = () => {
   const { condominiumId, orderId } = useParams();
@@ -132,7 +133,7 @@ const CreateVoteForm = () => {
           </p>
         </div>
       </div>
-      <div className="w-1/2 p-6">
+      <div className="w-full">
         <h2 className="text-xl font-semibold mb-4" style={{ color: '#3e94bf' }}>
           Motivo da votação
         </h2>
