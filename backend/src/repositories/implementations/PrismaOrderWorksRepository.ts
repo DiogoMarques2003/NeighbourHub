@@ -50,7 +50,7 @@ export default class PrismaOrderWorksRepository implements IOrderWorksRepository
       },
       take: pageSize,
       skip: pageSize * (pageNumber - 1),
-      orderBy: { postedAt: 'desc' },
+      orderBy: { postedAt: 'asc' },
     });
   }
 
