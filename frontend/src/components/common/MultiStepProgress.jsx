@@ -1,7 +1,7 @@
 import { ORDER_WORK_STATUS } from '@utils/constants';
 import { dateFormat } from '@utils/helperFunctions';
 import { STATUS_ORDER_ICONS } from '@utils/htmlConstants';
-import { ExternalLink } from "lucide-react";
+import { ExternalLink } from 'lucide-react';
 
 const MultiStepProgress = ({ updates }) => {
   return (
@@ -26,7 +26,7 @@ const MultiStepProgress = ({ updates }) => {
                   rel="noopener noreferrer"
                 >
                   Ver arquivo
-                  <ExternalLink className='ml-1' size={17}></ExternalLink>
+                  <ExternalLink className="ml-1" size={17}></ExternalLink>
                 </a>
               )}
               <p class="text-gray-400 text-sm">{dateFormat(new Date(item.postedAt))}</p>

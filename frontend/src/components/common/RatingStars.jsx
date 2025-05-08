@@ -5,8 +5,8 @@ const RatingStars = ({ rating }) => {
   return (
     <div className="flex gap-1 text-xl">
       {[...Array(5)].map((_, index) => {
-        const full = index + 1 <= rating;
-        const half = !full && index + 0.5 === rating;
+        const full = index + 1 <= Math.floor(rating);
+        const half = !full && index < rating && index + 1 > rating;
 
         return (
           <span key={index} className="relative inline-block w-6 h-6">

@@ -1,9 +1,10 @@
 import apiClient from '@services/apiClient.js';
+import { encodeQueryData } from '@utils/helperFunctions';
 
 const orderWorkService = {
-  getOrderWork: async (condominiumId, orderId) => {
+  getOrderWork: async (condominiumId, orderId, queryStringObj) => {
     try {
-      const response = await apiClient.get(`/condominium/${condominiumId}/orders/${orderId}/work`);
+      const response = await apiClient.get(`/condominium/${condominiumId}/orders/${orderId}/work${encodeQueryData(queryStringObj)}`);
       return response?.data;
     } catch (error) {
       return { error: error?.response?.data?.message };
