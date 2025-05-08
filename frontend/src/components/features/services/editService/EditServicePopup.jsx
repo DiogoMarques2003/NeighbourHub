@@ -15,12 +15,12 @@ const EditServicePopup = ({ openPopup, setOpenPopup, service, onServiceUpdated }
   const [servicePrice, setServicePrice] = useState('');
 
   useEffect(() => {
-    if (service) {
+    if (openPopup && service) {
       setServiceName(service.name || '');
       setServiceDesc(service.description || '');
       setServicePrice(service.cost?.toString() || '');
     }
-  }, [service]);
+  }, [openPopup, service]);
 
   const handleClose = () => {
     setServiceName('');

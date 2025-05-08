@@ -8,6 +8,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: yy293Hk76o
+      TZ: Europe/Lisbon
     ports:
       - "5432:5432"
     volumes:
@@ -22,6 +23,8 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: a23000@alunos.ipca.pt
       PGADMIN_DEFAULT_PASSWORD: Pn7fdfcOka
+      PG_TZ: Europe/Lisbon
+      TZ: Europe/Lisbon
     ports:
       - "3000:80"
     volumes:
@@ -39,6 +42,7 @@ services:
     volumes:
       - api_website:/app/backend/files
     environment:
+      TZ: Europe/Lisbon
       NODE_ENV: production
       DATABASE_URL: ${DATABASE_URL}
       JWT_SECRET: ${JWT_SECRET}

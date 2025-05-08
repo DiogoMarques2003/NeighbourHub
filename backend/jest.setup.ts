@@ -5,6 +5,7 @@ import Users from './src/entities/Users';
 import Condominiums from './src/entities/Condominiums';
 import Addresses from './src/entities/Addresses';
 import CommonAreas from './src/entities/CommonAreas';
+import AreaReservations from './src/entities/AreaReservations';
 import request from 'supertest';
 import { app } from './src/app';
 import {
@@ -13,6 +14,7 @@ import {
   STATUS_REQ_CANCELED,
   STATUS_REQ_COMPLETED,
   STATUS_REQ_PENDING,
+  STATUS_RESERV_APPROVED,
 } from './src/constants/status';
 import Services from './src/entities/Services';
 import ServiceRequests from './src/entities/ServiceRequests';
@@ -120,7 +122,14 @@ beforeAll(async () => {
     userId: resident2User.id,
   });
   global.serviceReqPending = serviceReqPending;
-  await prisma.serviceRequests.createMany({ data: [serviceReqCompleted, serviceReqPending] });
+
+  const serviceReqPending2 = new ServiceRequests({
+    serviceId: service.id,
+    status: STATUS_REQ_PENDING,
+    userId: resident2User.id,
+  });
+  global.serviceReqPending2 = serviceReqPending2;
+  await prisma.serviceRequests.createMany({ data: [serviceReqCompleted, serviceReqPending, serviceReqPending2] });
 
   const address = new Addresses({
     userId: residentUser.id,
@@ -160,7 +169,22 @@ beforeAll(async () => {
   });
   await prisma.commonAreas.create({ data: global.commonArea });
   global.commonAreaId = commonArea.id;
+
+  const reservation = new AreaReservations({
+    userId: residentUser.id,
+    areaId: global.commonAreaId,
+    startDate: new Date('2026-01-01T10:00:00'),
+    endDate: new Date('2026-01-01T12:00:00'),
+    status: STATUS_RESERV_APPROVED,
+  });
+  
+  await prisma.areaReservations.create({ data: reservation });
+  global.reservation = reservation;
+
 });
+
+
+
 
 afterAll(async () => {
   await prisma.commonAreas.deleteMany();
@@ -170,5 +194,6 @@ afterAll(async () => {
   await prisma.services.deleteMany();
   await prisma.serviceRequests.deleteMany();
   await prisma.serviceReviews.deleteMany();
+  await prisma.areaReservations.deleteMany();
   await prisma.$disconnect();
 });

@@ -47,7 +47,16 @@ const EditOrderPopup = ({ openPopup, setOpenPopup, order, onOrderUpdated, isAdmi
     e.preventDefault();
     setIsLoading(true);
 
-    const updatedOrder = isAdmin ? { status } : isOwner ? { description, urgency } : {};
+    const updatedOrder = {};
+
+    if (isOwner) {
+      updatedOrder.description = description;
+      updatedOrder.urgency = urgency;
+    }
+
+    if (isAdmin) {
+      updatedOrder.status = status;
+    }
 
     const result = await ordersService.updateOrder(order.condominiumId, order.id, updatedOrder);
 
