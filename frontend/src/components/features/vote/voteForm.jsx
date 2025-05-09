@@ -153,7 +153,13 @@ const CreateVoteForm = () => {
                 <div
                   key={budget.id}
                   className={`w-50 flex-shrink-0 transition-opacity duration-200 cursor-pointer
-                    ${!decision || isVotingClosed ? 'pointer-events-none opacity-50' : !isSelected && budgetID ? 'opacity-50' : 'opacity-100' }
+                    ${
+                      !decision || isVotingClosed
+                        ? 'pointer-events-none opacity-50'
+                        : !isSelected && budgetID
+                        ? 'opacity-50'
+                        : 'opacity-100'
+                    }
                   `}
                   onClick={() => {
                     if (!isVotingClosed && decision) setSelectedBudgetId(budget.id);

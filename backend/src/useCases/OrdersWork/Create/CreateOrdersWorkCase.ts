@@ -28,7 +28,7 @@ export default class CreateOrdersWorkCase {
     const order = await this.ordersRepository.findById(orderId);
     if (!order) throw new AppError('Pedido não encontrado', 404);
     if (order.condominiumId !== condominiumId) throw new AppError('Pedido não pertence ao condomínio', 403);
-    if (order.status !== STATUS_ORDER_IN_PROGRESS) throw new AppError('Pedido não está em andamento', 403);
+    if (order.status !== STATUS_ORDER_IN_PROGRESS) throw new AppError('Pedido não está em andamento', 400);
 
     const orderWorkClass = new OrderWorks({
       status,

@@ -15,9 +15,13 @@ import {
   STATUS_REQ_COMPLETED,
   STATUS_REQ_PENDING,
   STATUS_RESERV_APPROVED,
+  STATUS_ORDER_IN_PROGRESS,
+  STATUS_ORDER_PENDING,
 } from './src/constants/status';
 import Services from './src/entities/Services';
 import ServiceRequests from './src/entities/ServiceRequests';
+import Order from './src/entities/Orders';
+import OrderWorks from './src/entities/OrderWorks';
 
 const prisma = new PrismaClient();
 
@@ -177,14 +181,46 @@ beforeAll(async () => {
     endDate: new Date('2026-01-01T12:00:00'),
     status: STATUS_RESERV_APPROVED,
   });
-  
+
   await prisma.areaReservations.create({ data: reservation });
   global.reservation = reservation;
 
+  const order = new Order({
+    condominiumId: global.condominiumId,
+    description: 'TESTE',
+    status: STATUS_ORDER_IN_PROGRESS,
+    urgency: 'LOW',
+    userId: residentId,
+    startDate: new Date('2026-01-01T10:00:00'),
+    endDate: new Date('2026-01-01T10:00:00'),
+    votingDeadline: new Date('2026-01-01T12:00:00'),
+  });
+
+  const pendingOrder = new Order({
+    condominiumId: global.condominiumId,
+    description: 'TESTE',
+    status: STATUS_ORDER_PENDING,
+    urgency: 'LOW',
+    userId: residentId,
+    startDate: new Date('2026-01-01T10:00:00'),
+    endDate: new Date('2026-01-01T10:00:00'),
+    votingDeadline: new Date('2026-01-01T12:00:00'),
+  });
+
+  await prisma.orders.createMany({ data: [order, pendingOrder] });
+  global.orderId = order.id;
+  global.pendingOrderId = pendingOrder.id;
+
+  const workOrder = new OrderWorks({
+    description: 'TESTE',
+    orderId: global.orderId,
+    status: STATUS_ORDER_PENDING,
+    reportFile: '',
+  });
+
+  await prisma.orderWorks.create({ data: workOrder });
+  global.orderWorkId = workOrder.id;
 });
-
-
-
 
 afterAll(async () => {
   await prisma.commonAreas.deleteMany();
@@ -195,5 +231,7 @@ afterAll(async () => {
   await prisma.serviceRequests.deleteMany();
   await prisma.serviceReviews.deleteMany();
   await prisma.areaReservations.deleteMany();
+  await prisma.orders.deleteMany();
+  await prisma.orderWorks.deleteMany();
   await prisma.$disconnect();
 });
