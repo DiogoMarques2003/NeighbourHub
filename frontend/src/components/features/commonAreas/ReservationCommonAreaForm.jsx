@@ -164,7 +164,7 @@ const ReservationCommonAreaFrom = () => {
                 </div>
               </div>
 
-              {areaData.status == 'READY' && condominium.isResident && (
+              {areaData.status === 'READY' && condominium.isResident && (
                 <>
                   <h1 className="text-gray-600 sm:text-md font-medium">Reservar:</h1>
                   <div className="flex justify-start pt-2 pb-2 items-center">

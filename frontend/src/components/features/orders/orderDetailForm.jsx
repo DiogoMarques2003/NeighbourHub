@@ -3,7 +3,7 @@ import { useOutletContext, useParams, useNavigate } from 'react-router-dom';
 import ordersService from '@services/orders';
 import { dateFormat } from '@utils/helperFunctions';
 import defaultAvatar from '@public/images/defaultUserAvatar.jpg';
-import { Plus } from 'lucide-react';
+import { AlarmClock, Plus, Tags } from 'lucide-react';
 import { getStatusText, getUrgencyColor, getUrgencyText, getStatusColor } from './orderConsts';
 import EditOrderPopup from './createOrderPopup';
 import VoteCard from '@features/vote/voteCard';
@@ -13,13 +13,17 @@ import Button from '@common/Button';
 import OrderProgressForm from './orderProgressForm';
 import Loading from '@common/Loading';
 import ErrorBar from '@common/ErrorBar';
+import { ORDER_STATUS, ORDER_WORK_STATUS } from '@utils/constants';
+import DropDown from '@common/DropDown.jsx';
+import CheckBox from '@common/CheckBox.jsx';
 
 const OrderDetailsForm = () => {
   const navigate = useNavigate();
   const { isAdmin, currentUser } = useOutletContext();
   const { condominiumId, orderId } = useParams();
-  const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState(null);
+
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [editPopupOpen, setEditPopupOpen] = useState(false);
   const [updatePopUp, setUpdatePopUp] = useState(false);
@@ -152,17 +156,25 @@ const OrderDetailsForm = () => {
         </div>
       </div>
       {/* Atualizações */}
-      <div className="flex items-center mb-4">
-        <h2 className="text-xl font-semibold mr-2" style={{ color: '#3e94bf' }}>
-          Atualizações
-        </h2>
-        <button className="cursor-pointer font-app-color" type="button" onClick={() => setUpdatePopUp(true)}>
-          <Plus />
-        </button>
-      </div>
-      <div className="my-7">
-        <OrderProgressForm openPopup={updatePopUp} setOpenPopup={setUpdatePopUp} />
-      </div>
+      {(order.status !== ORDER_STATUS.PENDING && order.status !== ORDER_STATUS.VOTING) && (
+        <>
+          <div className="flex items-center">
+            <h2 className="text-xl font-semibold mr-2" style={{ color: '#3e94bf' }}>
+              Atualizações
+            </h2>
+            {isAdmin && (
+              <button className="cursor-pointer font-app-color" type="button" onClick={() => setUpdatePopUp(true)}>
+                <Plus />
+                <span className="sr-only">Add</span>
+              </button>
+            )}
+          </div>
+
+          <div className="mt-3">
+            <OrderProgressForm openPopup={updatePopUp} setOpenPopup={setUpdatePopUp} />
+          </div>
+        </>
+      )}
       <EditOrderPopup
         openPopup={editPopupOpen}
         setOpenPopup={setEditPopupOpen}

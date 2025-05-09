@@ -1,7 +1,6 @@
 import Popup from '@common/Popup.jsx';
-import InputWithIcon from '@common/InputWithIcon.jsx';
 import { Hammer, Circle, BookOpen } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import UploadFile from '@common/UploadFile.jsx';
 import Button from '@common/Button.jsx';
 import TextAreaWithIcon from '@common/TextAreaWithIcon';
@@ -12,7 +11,7 @@ import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 import ErrorBar from '@common/ErrorBar';
 
-const OrderWorkPopup = ({ openPopup, setOpenPopup }) => {
+const OrderWorkPopup = ({ openPopup, setOpenPopup, updateMode, orderClick, setOrderClick }) => {
   const [workDescription, setWorkDescription] = useState('');
   const [workStatus, setWorkStatus] = useState('');
   const [workFile, setWorkFile] = useState(null);
@@ -23,11 +22,19 @@ const OrderWorkPopup = ({ openPopup, setOpenPopup }) => {
 
   const HandleRemovePopUp = () => {
     setWorkDescription('');
+    setOrderClick('');
     setWorkStatus('');
     setWorkFile(null);
     setError('');
     setOpenPopup(false);
   };
+
+  useEffect(() => {
+    console.log(orderClick);
+    setWorkStatus(orderClick?.status || '');
+    setWorkDescription(orderClick?.description || '');
+    setWorkFile(orderClick?.reportFile || '');
+  }, [orderClick]);
 
   const validateForm = () => {
     if (!workDescription.trim()) {
@@ -51,10 +58,14 @@ const OrderWorkPopup = ({ openPopup, setOpenPopup }) => {
     const orderData = new FormData();
     orderData.append('description', workDescription);
     orderData.append('status', workStatus);
-    if (workFile) orderData.append('reportFile', workFile);
+    if (workFile && typeof workFile === 'object') {
+      orderData.append('reportFile', workFile);
+    } else if (!workFile && updateMode && orderClick.reportFile) {
+      orderData.append('deleteReportFile', true);
+    }
 
-    const result = await orderWorkService.createOrderWork(condominiumId, orderId, orderData);
-    console.log(result);
+    const result = await (!updateMode ? orderWorkService.createOrderWork(condominiumId, orderId, orderData) : orderWorkService.updateOrderWork(condominiumId, orderId, orderClick.id, orderData));
+
     if (!result || result.error) {
       toast.error(result?.error || 'Erro ao adicionar atualização ao pedido');
       setIsLoading(false);
@@ -64,6 +75,19 @@ const OrderWorkPopup = ({ openPopup, setOpenPopup }) => {
     setIsLoading(false);
     HandleRemovePopUp();
     toast.success(result.message || 'Pedido atualizado com sucesso!');
+  };
+
+  const handleClickRemove = async () => {
+    const result = await orderWorkService.deleteOrderWork(condominiumId, orderId, orderClick.id);
+    if (!result || result.error) {
+      toast.error(result?.error || 'Erro ao eliminar pedido');
+      setIsLoading(false);
+      return;
+    }
+
+    setIsLoading(false);
+    HandleRemovePopUp();
+    toast.success(result.message || 'Pedido eliminado com sucesso!');
   };
 
   return (
@@ -90,6 +114,10 @@ const OrderWorkPopup = ({ openPopup, setOpenPopup }) => {
         <Button onClick={handleClick} isLoading={isLoading} fullWidth>
           Atualizar pedido
         </Button>
+        {orderClick &&
+          <Button variant="danger" onClick={handleClickRemove} isLoading={isLoading} fullWidth>
+            Apagar pedido
+          </Button>}
       </Popup>
     </>
   );

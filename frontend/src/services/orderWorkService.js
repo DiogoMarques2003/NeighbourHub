@@ -18,6 +18,22 @@ const orderWorkService = {
       return { error: error?.response?.data?.message };
     }
   },
+  updateOrderWork: async (condominiumId, orderId, orderWorkId, workData) => {
+    try {
+      const response = await apiClient.put(`/condominium/${condominiumId}/orders/${orderId}/work/${orderWorkId}`, workData);
+      return response?.data;
+    } catch (error) {
+      return { error: error?.response?.data?.message };
+    }
+  },
+  deleteOrderWork: async (condominiumId, orderId, orderWorkId) => {
+    try {
+      const response = await apiClient.delete(`/condominium/${condominiumId}/orders/${orderId}/work/${orderWorkId}`);
+      return response?.data;
+    } catch (error) {
+      return { error: error?.response?.data?.message };
+    }
+  },
 };
 
 export default orderWorkService;
