@@ -50,7 +50,7 @@ describe('Obter reserva de área comum por ID', () => {
   it('Morador não deve conseguir acessar reserva de outro morador', async () => {
     const response = await request(app)
       .get(`/api/condominium/${global.condominiumId}/commonarea/${global.commonAreaId}/reservation/${reservationId}`)
-      .set('Authorization', `Bearer ${global.nonResidentToken}`); 
+      .set('Authorization', `Bearer ${global.resident2Token}`);
 
     expect(response.status).toBe(403);
     expect(response.body).toHaveProperty('message');

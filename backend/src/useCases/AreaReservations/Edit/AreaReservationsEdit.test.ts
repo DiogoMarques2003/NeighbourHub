@@ -46,7 +46,7 @@ describe('Edição de uma reserva de área comum', () => {
   it('Não deve permitir que outro usuário edite a reserva', async () => {
     const response = await request(app)
       .put(`/api/condominium/${global.condominiumId}/commonarea/${global.commonAreaId}/reservation/${reservationId}`)
-      .set('Authorization', `Bearer ${global.nonResidentToken}`)
+      .set('Authorization', `Bearer ${global.resident2Token}`)
       .send({
         startDate: new Date('2026-04-01T17:00:00'),
         endDate: new Date('2026-04-01T19:00:00'),
@@ -67,5 +67,4 @@ describe('Edição de uma reserva de área comum', () => {
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('message');
   });
-
 });
