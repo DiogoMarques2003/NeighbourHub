@@ -17,10 +17,15 @@ const UploadFile = ({ description, title, filesAcceptance, setFile, file }) => {
     }
   };
 
+  const extractFilename = (url) => {
+    const urlParts = url.split('/');
+    return urlParts.pop();
+  };
+
   return (
     <>
       {!file ? (
-        <div className="rounded-md w-full max-w-md">
+        <div className="rounded-md w-full">
           <label
             onClick={handleClick}
             className=" py-3 px-4 cursor-pointer shadow-md bg-gradient-to-r font-medium from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 hover:shadow-lg hover:-translate-y-1 focus:ring-blue-300 px-4 py-2 rounded-md block text-center transition"
@@ -39,12 +44,15 @@ const UploadFile = ({ description, title, filesAcceptance, setFile, file }) => {
       ) : (
         <div className="w-full rounded-md bg-gray-100 p-3 flex items-center">
           <FileUp size={32} color="#858585" className="mr-2" />
-          <span className="text-gray-600 font-medium">{file?.name}</span>
+          <span
+            className="text-gray-600 font-medium">{file && (typeof file === 'string' ? extractFilename(file) : file?.name)}</span>
           <div className="flex-1 text-right">
             <button
               type="button"
               className="text-gray-500 hover:bg-gray-200 focus:outline-none font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center cursor-pointer  "
-              onClick={() => {setFile(null)}}
+              onClick={() => {
+                setFile(null);
+              }}
             >
               <X></X>
               <span className="sr-only">Close</span>
