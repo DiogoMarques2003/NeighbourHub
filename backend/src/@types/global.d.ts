@@ -1,5 +1,6 @@
 import AreaReservations from '@entities/AreaReservations';
 import CommonAreas from '@entities/CommonAreas';
+import { OrderWorks } from '@prismaClient/index';
 
 export {};
 
@@ -13,9 +14,13 @@ declare global {
   var resident2Id: string;
   var condominiumId: string;
   var commonAreaId: string;
+  var orderId: string;
+  var pendingOrderId: string;
+  var orderWorkId: string;
   var commonArea: CommonAreas;
   var reservation: AreaReservations;
   var service: Services;
+  var orderWorks: OrderWorks;
   var serviceReqCompleted: Services;
   var serviceReqPending: Services;
   var serviceReqPending2: Services;
