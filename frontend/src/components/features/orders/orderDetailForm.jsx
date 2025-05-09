@@ -13,6 +13,7 @@ import Button from '@common/Button';
 import OrderProgressForm from './orderProgressForm';
 import Loading from '@common/Loading';
 import ErrorBar from '@common/ErrorBar';
+import { ORDER_STATUS, ORDER_WORK_STATUS } from '@utils/constants';
 
 const OrderDetailsForm = () => {
   const navigate = useNavigate();
@@ -152,17 +153,22 @@ const OrderDetailsForm = () => {
         </div>
       </div>
       {/* Atualizações */}
-      <div className="flex items-center mb-4">
-        <h2 className="text-xl font-semibold mr-2" style={{ color: '#3e94bf' }}>
-          Atualizações
-        </h2>
-        <button className="cursor-pointer font-app-color" type="button" onClick={() => setUpdatePopUp(true)}>
-          <Plus />
-        </button>
-      </div>
-      <div className="my-7">
-        <OrderProgressForm openPopup={updatePopUp} setOpenPopup={setUpdatePopUp} />
-      </div>
+      {(order.status != ORDER_STATUS.PENDING && order.status != ORDER_STATUS.VOTING) && (
+        <>
+          <div className="flex items-center mb-4">
+            <h2 className="text-xl font-semibold mr-2" style={{ color: '#3e94bf' }}>
+              Atualizações
+            </h2>
+            <button className="cursor-pointer font-app-color" type="button" onClick={() => setUpdatePopUp(true)}>
+              <Plus />
+              <span className="sr-only">Add</span>
+            </button>
+          </div>
+          <div className="my-7">
+            <OrderProgressForm openPopup={updatePopUp} setOpenPopup={setUpdatePopUp} />
+          </div>
+        </>
+      )}
       <EditOrderPopup
         openPopup={editPopupOpen}
         setOpenPopup={setEditPopupOpen}

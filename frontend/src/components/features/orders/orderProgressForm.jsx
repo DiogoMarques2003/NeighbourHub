@@ -43,10 +43,9 @@ const OrderProgressForm = ({ openPopup, setOpenPopup }) => {
         <div class="items-center flex justify-center">
           <Loading />
         </div>
-      ) : error ? (
-        <ErrorBar error={error} />
       ) : (
         <>
+          <ErrorBar error={error} />
           <MultiStepProgress updates={orderWork}></MultiStepProgress>
           <OrderWorkPopup openPopup={openPopup} setOpenPopup={setOpenPopup} />
           <Pagination
