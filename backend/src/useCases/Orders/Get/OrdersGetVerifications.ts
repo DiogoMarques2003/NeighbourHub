@@ -20,10 +20,12 @@ export default class OrdersGetVerifications {
 
     if (
       urgency &&
-      typeof urgency !== 'string' &&
-      !URGENCY_LEVELS.includes(urgency)
+      (typeof urgency !== 'string' || !URGENCY_LEVELS.includes(urgency))
     )
       throw new AppError('Urgência inválida!', 400);
+
+    if(pageSize < 1 || pageNumber < 1)
+      throw new AppError('Paginação inválida!', 400);
 
     if (!pageSize || typeof pageSize !== 'number') data.pageSize = 25;
 

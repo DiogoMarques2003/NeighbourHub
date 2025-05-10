@@ -1,9 +1,9 @@
 import AppError from '@errors/AppError';
-import IVotingCreateDTO from './IVotingCreateDTO';
 import { isValidUUID } from '@shared/verifications';
+import IStartVotingProcessDTO from './IStartVotingProcessDTO';
 
-export default class VotingCreateVerifications {
-  execute(data: IVotingCreateDTO) {
+export default class StartVotingProcessVerifications {
+  execute(data: IStartVotingProcessDTO) {
     const { orderID, budgets, deadline, condominiumID } = data;
 
     if (!orderID || typeof orderID !== 'string' || !isValidUUID(orderID))

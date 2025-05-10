@@ -2,7 +2,6 @@ import IOrdersRepository from '@repositories/IOrdersRepository';
 import ICondominiumsRepository from '@repositories/ICondominiumsRepository';
 import IAddressesRepository from '@repositories/IAddressesRepository';
 import IBudgetsRepository from '@repositories/IBudgetsRepository';
-import IVotingCreateDTO from './IVotingCreateDTO';
 import IMailProvider from '@providers/IMailProvider';
 import AppError from '@errors/AppError';
 import Budgets from '@entities/Budgets';
@@ -11,8 +10,9 @@ import { resolve } from 'path';
 import { EMAILS_PATH } from '@constants/filesPaths';
 import dateFormat from '@shared/dateFormat';
 import Orders from '@entities/Orders';
+import IStartVotingProcessDTO from './IStartVotingProcessDTO';
 
-export default class VotingCreateCase {
+export default class StartVotingProcessCase {
   constructor(
     private ordersRepository: IOrdersRepository,
     private condominiumsRepository: ICondominiumsRepository,
@@ -20,7 +20,7 @@ export default class VotingCreateCase {
     private budgetsRepository: IBudgetsRepository,
     private mailProvider: IMailProvider
   ) {}
-  async execute(data: IVotingCreateDTO): Promise<Orders> {
+  async execute(data: IStartVotingProcessDTO): Promise<Orders> {
     const { orderID, userID, condominiumID, deadline, budgets } = data;
 
     const order = await this.ordersRepository.findById(orderID);
