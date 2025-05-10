@@ -8,6 +8,7 @@ import DropDown from '../common/DropDown';
 import { AlarmClock, Tags } from 'lucide-react';
 import Title from '@common/Title';
 import TitleWithAddButton from '@common/TitleWithAddButton';
+import Button from '@common/Button';
 
 const OrdersLayout = () => {
   const navigate = useNavigate();
@@ -72,6 +73,7 @@ const OrdersLayout = () => {
       ) : (
         <div>
           <TitleWithAddButton title="Pedidos" onAddClick={condominium.isResident && onAddClick} />
+
           <div className="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-4">
             <DropDown
               listOptions={statusOptions}
