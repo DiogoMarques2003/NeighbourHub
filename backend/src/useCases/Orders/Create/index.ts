@@ -1,4 +1,5 @@
 import ZohoMailProvider from '@providers/implementations/ZohoMailProvider';
+import MockMailProvider from '@providers/implementations/MockMailProvider';
 import PrismaAddressesRepository from '@repositories/implementations/PrismaAddressesRepository';
 import PrismaCondominiumsRepository from '@repositories/implementations/PrismaCondominiumsRepository';
 import PrismaOrdersRepository from '@repositories/implementations/PrismaOrdersRepository';
@@ -11,7 +12,11 @@ const ordersRepository = new PrismaOrdersRepository();
 const addressRepository = new PrismaAddressesRepository();
 const condominiumRepository = new PrismaCondominiumsRepository();
 const userRepository = new PrismaUsersRepository();
-const mailProvider = new ZohoMailProvider();
+
+// perante testes de integração não usar o email provider real
+const mailProvider = process.env.NODE_ENV === 'test' 
+  ? new MockMailProvider() 
+  : new ZohoMailProvider();
 
 const ordersCreateVerification = new OrdersCreateVerifications();
 const ordersCreateCase = new OrdersCreateCase(

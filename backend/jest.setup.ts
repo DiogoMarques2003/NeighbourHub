@@ -40,6 +40,7 @@ beforeAll(async () => {
     phoneNumber: '123456789',
   });
   global.adminId = adminUser.id;
+  global.admin = adminUser;
 
   const residentUser = new Users({
     email: 'morador@teste.pt',
@@ -102,6 +103,7 @@ beforeAll(async () => {
   });
   await prisma.condominiums.create({ data: condominium });
   global.condominiumId = condominium.id;
+  global.conddominium = condominium;
 
   const service = new Services({
     name: 'Limpeza',
