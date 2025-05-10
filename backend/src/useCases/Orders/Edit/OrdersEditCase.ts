@@ -24,14 +24,21 @@ export default class OrdersEditCase {
 
     const order = await this.ordersRepository.findById(orderId);
     if (!order) throw new AppError('Ordem não encontrada', 404);
+
+    // só admin ou dono do pedido podem editar, não permitindo outros morados do condomínio
     if (address && condominium.adminId !== userId && order.userId !== userId)
       throw new AppError('Não podes editar este pedido', 403);
 
     if (condominium.adminId === userId && order.userId !== userId && (description || urgency))
-      throw new AppError('So podes editar o estado deste pedido', 403);
-    if (order.userId === userId && condominium.adminId !== userId &&  status) throw new AppError('Não podes editar o estado deste pedido', 403);
+      throw new AppError('Como admin e não dono do pedido, não podes alterar a descrição nem a urgência', 403);
 
+    // como dono do pedido e não admin, a alteração do status não é permitida.
+    if (order.userId === userId && condominium.adminId !== userId && status)
+      throw new AppError('Não podes editar o estado deste pedido', 403);
+
+    // Para o update do pedido apenas são usados os campos status, description e urgency.
     if (status) {
+      // alteração para o estado de voting é feito através de outra rota
       if (status === STATUS_ORDER_VOTING) throw new AppError('Não podes editar o estado para votação', 400);
       order.status = status;
     }

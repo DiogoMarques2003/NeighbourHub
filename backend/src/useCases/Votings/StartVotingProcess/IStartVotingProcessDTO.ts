@@ -1,4 +1,4 @@
-export default interface IOrdersCreateDTO {
+export default interface IStartVotingProcessDTO {
   userID: string;
   orderID: string;
   condominiumID: string;

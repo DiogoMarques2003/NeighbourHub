@@ -3,9 +3,9 @@ import PrismaCondominiumsRepository from '@repositories/implementations/PrismaCo
 import PrismaAddressesRepository from '@repositories/implementations/PrismaAddressesRepository';
 import PrismaBudgetsRepository from '@repositories/implementations/PrismaBudgetsRepository';
 import MailProvider from '@providers/implementations/ZohoMailProvider';
-import VotingCreateVerifications from './VotingCreateVerifications';
-import VotingCreateCase from './VotingCreateCase';
-import VotingCreateController from './VotingCreateController';
+import VotingCreateVerifications from './StartVotingProcessVerifications';
+import VotingCreateCase from './StartVotingProcessCase';
+import VotingCreateController from './StartVotingProcessController';
 
 const ordersRepository = new PrismaOrdersRepository();
 const condominiumsRepository = new PrismaCondominiumsRepository();

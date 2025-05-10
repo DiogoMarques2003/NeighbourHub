@@ -1,18 +1,18 @@
 import { Request, Response } from 'express';
-import VotingCreateCase from './VotingCreateCase';
-import VotingCreateVerifications from './VotingCreateVerifications';
 import errorHandler from '@handlers/errorHandler';
-import IVotingCreateDTO from './IVotingCreateDTO';
+import StartVotingProcessCase from './StartVotingProcessCase';
+import StartVotingProcessVerifications from './StartVotingProcessVerifications';
+import IStartVotingProcessDTO from './IStartVotingProcessDTO';
 
-export default class VotingCreateController {
+export default class StartVotingProcessController {
   constructor(
-    private votingCreateVerifications: VotingCreateVerifications,
-    private votingCreateCase: VotingCreateCase
+    private votingCreateVerifications: StartVotingProcessVerifications,
+    private votingCreateCase: StartVotingProcessCase
   ) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const requestData: IVotingCreateDTO = {
+      const requestData: IStartVotingProcessDTO = {
         userID: req.userID,
         orderID: req.params.orderID,
         condominiumID: req.params.condominiumID,
