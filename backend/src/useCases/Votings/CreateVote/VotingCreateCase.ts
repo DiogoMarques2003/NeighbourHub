@@ -27,7 +27,7 @@ export default class VotingCreateCase {
     if (!adressesDb) throw new AppError('Não tem autorização para votar porque não faz parte do condomínio!', 403);
 
     const budgetsCount = await this.budgetsRepository.countByOrderID(orderID);
-    if (budgetsCount && decision && !budgetID) throw new AppError('Apenas é possível votar num orçamento!', 400);
+    if (budgetsCount && decision && !budgetID) throw new AppError('É necessário votar em pelo menos um orçamento!', 403);
 
     //Valida budget
     if (budgetID) {
@@ -38,7 +38,7 @@ export default class VotingCreateCase {
 
     // Valida se a votação já terminou
     if (orderDb.status != STATUS_ORDER_VOTING || orderDb.votingDeadline < new Date())
-      throw new AppError('Não é possível votar!', 400);
+      throw new AppError('Não é possível votar!', 403);
 
     const votingClass = new Votings({
       orderID,

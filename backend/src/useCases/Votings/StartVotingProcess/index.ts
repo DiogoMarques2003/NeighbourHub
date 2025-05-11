@@ -6,12 +6,17 @@ import MailProvider from '@providers/implementations/ZohoMailProvider';
 import VotingCreateVerifications from './StartVotingProcessVerifications';
 import VotingCreateCase from './StartVotingProcessCase';
 import VotingCreateController from './StartVotingProcessController';
+import MockMailProvider from '@providers/implementations/MockMailProvider';
 
 const ordersRepository = new PrismaOrdersRepository();
 const condominiumsRepository = new PrismaCondominiumsRepository();
 const addressesRepository = new PrismaAddressesRepository();
 const budgetsRepository = new PrismaBudgetsRepository();
-const mailProvider = new MailProvider();
+
+// perante testes de integração não usar o email provider real
+const mailProvider = process.env.NODE_ENV === 'test' 
+  ? new MockMailProvider() 
+  : new MailProvider();
 
 const votingCreateVerifications = new VotingCreateVerifications();
 

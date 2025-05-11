@@ -270,7 +270,7 @@ router.get('/condominium/:condominiumId/services/:serviceId/reviews', verifyJWT,
 
 //--VOTING
 router.post('/condominium/:condominiumID/orders/:orderID/voting', verifyJWT, (req, res) => {
-  votingCreateController.handle(req, res);
+  votingCreateController.handle(req, res); // start voting process
 });
 
 router.post('/condominium/:condominiumID/orders/:orderID/vote', verifyJWT, (req, res) => {

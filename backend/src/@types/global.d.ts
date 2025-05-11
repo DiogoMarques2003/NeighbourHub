@@ -13,6 +13,7 @@ declare global {
   var nonResidentToken: string;
   var admin: Users;
   var adminId: string;
+  var resident: Users
   var residentId: string;
   var resident2Id: string;
   var condominium: Condominiums;
@@ -20,6 +21,14 @@ declare global {
   var commonAreaId: string;
   var orderId: string;
   var pendingOrderId: string;
+  var pendingOrder2Id: string;
+  var inProgressOrderId: string;
+  var votingOrderWithBudgetsId: string;
+  var votingOrderWithoutBudgetsId: string;
+  var votingOrderDeadLineGoneId: string
+  var budget1Id: string;
+  var budget2Id: string;
+  var budget3Id: string;
   var orderWorkId: string;
   var commonArea: CommonAreas;
   var reservation: AreaReservations;
