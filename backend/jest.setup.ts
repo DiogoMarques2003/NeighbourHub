@@ -1,3 +1,4 @@
+import { URGENCY_LOW } from '@constants/urgency';
 /// <reference path="./src/@types/global.d.ts" />
 import { PrismaClient } from './src/prisma-client/client';
 import bcrypt from 'bcryptjs';
@@ -17,10 +18,12 @@ import {
   STATUS_RESERV_APPROVED,
   STATUS_ORDER_IN_PROGRESS,
   STATUS_ORDER_PENDING,
+  STATUS_ORDER_VOTING,
 } from './src/constants/status';
 import Services from './src/entities/Services';
 import ServiceRequests from './src/entities/ServiceRequests';
 import Order from './src/entities/Orders';
+import Budgets from './src/entities/Budgets';
 import OrderWorks from './src/entities/OrderWorks';
 
 const prisma = new PrismaClient();
@@ -50,6 +53,7 @@ beforeAll(async () => {
     phoneNumber: '987654321',
   });
   global.residentId = residentUser.id;
+  global.resident = residentUser;
 
   const resident2User = new Users({
     email: 'morador2@teste.pt',
@@ -103,7 +107,7 @@ beforeAll(async () => {
   });
   await prisma.condominiums.create({ data: condominium });
   global.condominiumId = condominium.id;
-  global.conddominium = condominium;
+  global.condominium = condominium;
 
   const service = new Services({
     name: 'Limpeza',
@@ -209,9 +213,83 @@ beforeAll(async () => {
     votingDeadline: new Date('2026-01-01T12:00:00'),
   });
 
-  await prisma.orders.createMany({ data: [order, pendingOrder] });
+  const pendingOrder2 = new Order({
+    condominiumId: global.condominiumId,
+    description: 'TESTE',
+    status: STATUS_ORDER_PENDING,
+    urgency: URGENCY_LOW,
+    userId: residentUser.id
+  });
+
+  const inProgressOrder = new Order({
+    condominiumId: global.condominiumId,
+    description: 'TESTE',
+    status: STATUS_ORDER_IN_PROGRESS,
+    urgency: URGENCY_LOW,
+    userId: residentUser.id,
+    startDate: new Date('2026-01-01T10:00:00'),
+    endDate: new Date('2026-01-01T10:00:00'),
+    votingDeadline: new Date('2026-01-01T12:00:00'),
+  });
+
+  const votingOrderWithBudgets = new Order({
+    condominiumId: global.condominiumId,
+    description: 'TESTE',
+    status: STATUS_ORDER_VOTING,
+    urgency: URGENCY_LOW,
+    userId: residentUser.id,
+    votingDeadline: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+  });
+
+  const votingOrderWithoutBudgets = new Order({
+    condominiumId: global.condominiumId,
+    description: 'TESTE',
+    status: STATUS_ORDER_VOTING,
+    urgency: URGENCY_LOW,
+    userId: residentUser.id,
+    votingDeadline: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 dias à frente
+  });
+
+  const votingOrderDeadLineGone = new Order({
+    condominiumId: global.condominiumId,
+    description: 'TESTE',
+    status: STATUS_ORDER_VOTING,
+    urgency: URGENCY_LOW,
+    userId: residentUser.id,
+    votingDeadline: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // 7 dias atrás
+  });
+
+  await prisma.orders.createMany({ data: [order, pendingOrder, pendingOrder2, inProgressOrder, votingOrderWithBudgets, votingOrderWithoutBudgets, votingOrderDeadLineGone] });
   global.orderId = order.id;
   global.pendingOrderId = pendingOrder.id;
+  global.pendingOrder2Id = pendingOrder2.id;
+  global.inProgressOrderId = inProgressOrder.id;
+  global.votingOrderWithBudgetsId = votingOrderWithBudgets.id;
+  global.votingOrderWithoutBudgetsId = votingOrderWithoutBudgets.id;
+  global.votingOrderDeadLineGoneId = votingOrderDeadLineGone.id
+
+  const budget1 = new Budgets({
+    description: "Budget 1",
+    amount: 30,
+    orderId: votingOrderWithBudgets.id
+  });
+
+  const budget2 = new Budgets({
+    description: "Budget 2",
+    amount: 10,
+    orderId: votingOrderWithBudgets.id
+  });
+
+  const budget3 = new Budgets({
+    description: "Teste 3 budget",
+    amount: 80,
+    orderId: votingOrderWithBudgets.id
+  });
+
+  await prisma.budgets.createMany({data: [budget1, budget2, budget3]});
+  global.budget1Id = budget1.id;
+  global.budget2Id = budget2.id;
+  global.budget3Id = budget3.id;
 
   const workOrder = new OrderWorks({
     description: 'TESTE',
@@ -235,5 +313,6 @@ afterAll(async () => {
   await prisma.areaReservations.deleteMany();
   await prisma.orders.deleteMany();
   await prisma.orderWorks.deleteMany();
+  await prisma.budgets.deleteMany();
   await prisma.$disconnect();
 });

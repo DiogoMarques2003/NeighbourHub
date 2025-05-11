@@ -5,24 +5,10 @@ import { STATUS_ORDER_PENDING, STATUS_ORDER_IN_PROGRESS, STATUS_ORDER_COMPLETED,
 import { randomUUID } from 'crypto';
 
 describe('Edição de Ordem', () => {
-  let orderId: string;
-
-  beforeAll(async () => {
-    // criar uma ordem primeiro para a usar nos testes
-    const orderResponse = await request(app)
-      .post(`/api/condominium/${global.condominiumId}/orders`)
-      .set('Authorization', `Bearer ${global.residentToken}`)
-      .send({
-        description: 'Ordem para edição',
-        urgency: URGENCY_MEDIUM,
-      });
-
-    orderId = orderResponse.body.id;
-  });
 
   it('Administrador deve editar o status da ordem', async () => {
     const response = await request(app)
-      .put(`/api/condominium/${global.condominiumId}/orders/${orderId}`)
+      .put(`/api/condominium/${global.condominiumId}/orders/${global.pendingOrderId}`)
       .set('Authorization', `Bearer ${global.adminToken}`)
       .send({
         status: STATUS_ORDER_IN_PROGRESS
@@ -30,15 +16,14 @@ describe('Edição de Ordem', () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('order');
-    expect(response.body.order.description).toBe('Ordem para edição');
-    expect(response.body.order.urgency).toBe(URGENCY_MEDIUM);
+    expect(response.body.order.urgency).toBe(URGENCY_LOW);
     expect(response.body.order.status).toBe(STATUS_ORDER_IN_PROGRESS);
     expect(response.body).toHaveProperty('message');
   });
 
   it('Dono da ordem deve poder editar a descrição e a urgência', async () => {
     const response = await request(app)
-      .put(`/api/condominium/${global.condominiumId}/orders/${orderId}`)
+      .put(`/api/condominium/${global.condominiumId}/orders/${global.pendingOrderId}`)
       .set('Authorization', `Bearer ${global.residentToken}`)
       .send({
         description: 'Ordem editada pelo dono da ordem e não admin',
@@ -55,7 +40,7 @@ describe('Edição de Ordem', () => {
 
   it('Morador não deve conseguir editar o status de uma ordem', async () => {
     const response = await request(app)
-      .put(`/api/condominium/${global.condominiumId}/orders/${orderId}`)
+      .put(`/api/condominium/${global.condominiumId}/orders/${global.pendingOrderId}`)
       .set('Authorization', `Bearer ${global.residentToken}`)
       .send({
         description: 'Tentativa de edição por morador',
@@ -68,7 +53,7 @@ describe('Edição de Ordem', () => {
 
   it('Morador que não seja o dono do pedido não deve conseguir editar a ordem', async () => {
     const response = await request(app)
-      .put(`/api/condominium/${global.condominiumId}/orders/${orderId}`)
+      .put(`/api/condominium/${global.condominiumId}/orders/${global.pendingOrderId}`)
       .set('Authorization', `Bearer ${global.resident2Token}`)
       .send({
         description: 'Tentativa de edição por morador'
@@ -92,7 +77,7 @@ describe('Edição de Ordem', () => {
 
   it('Deve dar erro por status inválido', async () => {
     const response = await request(app)
-      .put(`/api/condominium/${global.condominiumId}/orders/${orderId}`)
+      .put(`/api/condominium/${global.condominiumId}/orders/${global.pendingOrderId}`)
       .set('Authorization', `Bearer ${global.adminToken}`)
       .send({
         status: 'INVALID_STATUS',
@@ -104,7 +89,7 @@ describe('Edição de Ordem', () => {
 
   it('Deve dar erro por urgência inválida', async () => {
     const response = await request(app)
-      .put(`/api/condominium/${global.condominiumId}/orders/${orderId}`)
+      .put(`/api/condominium/${global.condominiumId}/orders/${global.pendingOrderId}`)
       .set('Authorization', `Bearer ${global.residentToken}`)
       .send({
         urgency: 'INVALID_URGENCY',
