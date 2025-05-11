@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const CreateResidentPopup = ({ openPopup, setPopup }) => {
+const CreateResidentPopup = ({ openPopup, setPopup, onResidentCreated }) => {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const { currentUser, condominium } = useOutletContext();
@@ -63,6 +63,7 @@ const CreateResidentPopup = ({ openPopup, setPopup }) => {
       return;
     }
 
+    onResidentCreated();
     handleRemovePopUp();
     toast.success(result?.message || 'Morador criado com sucesso!');
   };

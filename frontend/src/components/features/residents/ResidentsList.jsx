@@ -16,27 +16,31 @@ const ResidentsLists = () => {
     const [openPopup, setPopup] = useState(false);
 
     useEffect(() => {
-        async function fetchResidents() {
-            if(openPopup === true) return;
-
-            setIsLoading(true);
-    
-            const data = await addressesService.getAddressesByCondominium(condominium.id, {pageNumber, pageSize : 3});
-            setIsLoading(false);
-    
-            if(!data || data?.error) {
-                return;
-            }
-    
-            setResidents(prev => [...prev, ...data.data]);
-            setHasMore(data.actualPage < data.pages);        
-        }
-        
         fetchResidents();
-    }, [condominium.id, pageNumber, openPopup]);
+    }, [condominium.id, pageNumber]);
+
+    async function fetchResidents() {
+        setIsLoading(true);
+
+        const data = await addressesService.getAddressesByCondominium(condominium.id, {pageNumber, pageSize : 10});
+        setIsLoading(false);
+
+        if(!data || data?.error) {
+            return;
+        }
+
+        setResidents(prev => [...prev, ...data.data]);
+        setHasMore(data.actualPage < data.pages);        
+    }
 
     const onResidentAdd = () => {
         setPopup(true);
+    }
+
+    const onResidentCreated = () => {
+        setResidents([]);
+        if(pageNumber !== 1) setPageNumber(1);
+        else fetchResidents();
     }
 
     return (
@@ -45,7 +49,7 @@ const ResidentsLists = () => {
                 ? <Loading />
                 : <div>
                     <TitleWithAddButton onAddClick={ isAdmin ? onResidentAdd : null} />
-                    <CreateResidentPopup openPopup={openPopup} setPopup={setPopup}/>
+                    <CreateResidentPopup openPopup={openPopup} setPopup={setPopup} onResidentCreated={onResidentCreated}/>
                     
                     <ScrollableList
                         items={residents}
