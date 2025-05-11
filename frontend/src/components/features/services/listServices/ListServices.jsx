@@ -1,7 +1,7 @@
 import Title from '@common/Title';
 import TitleWithAddButton from '@common/TitleWithAddButton';
 import { useEffect, useState } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import CreateServicePopup from '../createService/CreateServicePopup';
 import ListServiceFiltersCard from './ListServiceFiltersCard';
 import servicesService from '@services/servicesService';
@@ -9,10 +9,11 @@ import Loading from '@common/Loading';
 import ErrorBar from '@common/ErrorBar';
 import ScrollableList from '@common/ScrollableList';
 import ServiceCard from './ServiceCard';
+import Button from '@common/Button';
 
 const ListServices = () => {
   const { condominium } = useOutletContext();
-
+  const navigate = useNavigate();
   const [openPopup, setOpenPopup] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [fetchError, setFetchError] = useState('');
@@ -99,6 +100,11 @@ const ListServices = () => {
   return (
     <>
       <TitleWithAddButton title="Serviços" onAddClick={condominium.isResident && onAddClick} />
+      <div className="flex justify-end mb-4">
+        <Button variant="outline" onClick={() => navigate(`/condominium/${condominium.id}/services/requests`)}>
+          Ver serviços requisitados
+        </Button>
+      </div>
 
       {/* Popup para criar o serviço */}
       <CreateServicePopup openPopup={openPopup} setOpenPopup={setOpenPopup} onServiceAdded={onServiceAdded} />

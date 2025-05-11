@@ -3,9 +3,9 @@ import RatingStars from '@common/RatingStars';
 import { truncateText } from '@utils/helperFunctions';
 import { Banknote } from 'lucide-react';
 
-const ServiceCard = ({ service }) => {
+const ServiceCard = ({ service, navigatePath }) => {
   return (
-    <ItemCard navigateTo={service.id}>
+    <ItemCard navigateTo={navigatePath ? navigatePath : service.id}>
       <div className="grid gap-2">
         <p className="text-xl font-semibold">{service.name}</p>
         <p>{truncateText(service.description, 30)}</p>
