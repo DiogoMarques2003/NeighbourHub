@@ -23,7 +23,6 @@ const ListRequestedServices = () => {
       pageNumber,
       pageSize: 5,
     });
-    console.log(result);
     setIsLoading(false);
 
     if (!result || result.error) {
@@ -55,7 +54,13 @@ const ListRequestedServices = () => {
           items={services}
           hasMore={hasMore}
           setPageNumber={setPageNumber}
-          renderItem={(service) => <ServiceCard key={service.id} service={service.service} />}
+          renderItem={(service) => (
+            <ServiceCard
+              key={service.id}
+              service={service.service}
+              navigatePath={`/condominium/${condominium.id}/services/${service.service.id}/request/${service.id}`}
+            />
+          )}
         />
       )}
     </>
