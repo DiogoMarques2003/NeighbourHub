@@ -1,4 +1,3 @@
-import { URGENCY_LOW } from '@constants/urgency';
 /// <reference path="./src/@types/global.d.ts" />
 import { PrismaClient } from './src/prisma-client/client';
 import bcrypt from 'bcryptjs';
@@ -20,6 +19,7 @@ import {
   STATUS_ORDER_PENDING,
   STATUS_ORDER_VOTING,
 } from './src/constants/status';
+import { URGENCY_LOW } from './src/constants/urgency';
 import Services from './src/entities/Services';
 import ServiceRequests from './src/entities/ServiceRequests';
 import Order from './src/entities/Orders';
