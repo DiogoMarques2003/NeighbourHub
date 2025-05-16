@@ -138,8 +138,9 @@ export default class PrismaServiceRequestsRepository implements IServiceRequests
   count(userId: string, condominiumId: string): Promise<number> {
     return this.prisma.serviceRequests.count({
       where: {
+        userId,
         service: {
-          ownerId: userId,
+          // ownerId: userId,
           condominium: {
             id: condominiumId
           }
