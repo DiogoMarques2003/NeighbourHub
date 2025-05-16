@@ -11,6 +11,7 @@ import { COMMON_AREA_RESERVATION_STATUS } from '@utils/constants';
 import { formatDateToDateTimeLocalInput } from '@utils/helperFunctions';
 import Input from '@common/Input';
 import Button from '@common/Button';
+import Pagination from '@common/Pagination';
 
 const statusOptions = {
   '': 'Todos',
@@ -23,7 +24,7 @@ const AreaReservationsList = () => {
   const [loading, setLoading] = useState(true);
   const [fetchError, setFetchError] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
+  const [maxPageNumber, setMaxPageNumber] = useState(1);
   const [selectedReservation, setSelectedReservation] = useState(null);
   const [popupOpen, setPopupOpen] = useState(false);
   const [newStatus, setNewStatus] = useState('');
@@ -44,7 +45,7 @@ const AreaReservationsList = () => {
     const query = {
       status: selectedStatus,
       bGetCondominiumReservations: isAdmin && !showOnlyMine,
-      pageSize: 5,
+      pageSize: 15,
       pageNumber,
     };
 
@@ -56,10 +57,10 @@ const AreaReservationsList = () => {
       return;
     }
 
-    if (pageNumber === 1) setReservations(data.data);
-    else setReservations((prev) => [...prev, ...data.data]);
+    setReservations(data.data);
 
-    setHasMore(data.actualPage < data.pages);
+    // setHasMore(data.actualPage < data.pages);
+    setMaxPageNumber(data.pages);
   };
 
   useEffect(() => {
@@ -237,24 +238,33 @@ const AreaReservationsList = () => {
       ) : fetchError ? (
         <p className="text-red-500">{fetchError}</p>
       ) : (
-        <List
-          headers={headers}
-          rows={formattedRows}
-          className="max-h-[600px]"
-          renderRow={(row, rowIdx) => (
-            <tr
-              key={rowIdx}
-              className="hover:bg-blue-100 transition cursor-pointer even:bg-blue-50 odd:bg-white"
-              onClick={() => handleRowClick(rowIdx)}
-            >
-              {headers.map((header, colIdx) => (
-                <td key={colIdx} className="p-3">
-                  {row[header.key]}
-                </td>
-              ))}
-            </tr>
-          )}
-        />
+        <>
+          <List
+            headers={headers}
+            rows={formattedRows}
+            className="max-h-[600px]"
+            renderRow={(row, rowIdx) => (
+              <tr
+                key={rowIdx}
+                className="hover:bg-blue-100 transition cursor-pointer even:bg-blue-50 odd:bg-white"
+                onClick={() => handleRowClick(rowIdx)}
+              >
+                {headers.map((header, colIdx) => (
+                  <td key={colIdx} className="p-3">
+                    {row[header.key]}
+                  </td>
+                ))}
+              </tr>
+            )}
+          />
+
+          <Pagination
+            currentPage={pageNumber}
+            maxPage={maxPageNumber}
+            setCurrentPage={setPageNumber}
+            className="w-full justify-center mt-5"
+          />
+        </>
       )}
 
       {selectedReservation && (
