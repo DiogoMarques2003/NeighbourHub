@@ -1,8 +1,5 @@
 import request from 'supertest';
 import { app } from '@app';
-import { PrismaClient } from '@prismaClient/client';
-
-const prisma = new PrismaClient();
 
 describe('Login do utilizador', () => {
   it('Deve fazer login com sucesso', async () => {
