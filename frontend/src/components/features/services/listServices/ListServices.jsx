@@ -100,11 +100,13 @@ const ListServices = () => {
   return (
     <>
       <TitleWithAddButton title="Serviços" onAddClick={condominium.isResident && onAddClick} />
-      <div className="flex justify-end mb-4">
-        <Button variant="outline" onClick={() => navigate(`/condominium/${condominium.id}/services/requests`)}>
-          Ver serviços requisitados
-        </Button>
-      </div>
+      {condominium.isResident && (
+        <div className="flex justify-end mb-4">
+          <Button variant="outline" onClick={() => navigate(`/condominium/${condominium.id}/services/requests`)}>
+            Ver serviços requisitados
+          </Button>
+        </div>
+      )}
 
       {/* Popup para criar o serviço */}
       <CreateServicePopup openPopup={openPopup} setOpenPopup={setOpenPopup} onServiceAdded={onServiceAdded} />
