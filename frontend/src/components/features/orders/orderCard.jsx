@@ -7,7 +7,7 @@ const OrderCard = ({ order }) => {
     <ItemCard navigateTo={order.id}>
       {/* Topo */}
       <div>
-        <p className="font-medium text-gray-800">Pedido</p>
+        <p className="font-medium text-gray-800">{order.title}</p>
         <p className="text-sm text-gray-600 mb-4">{truncateText(order.description, 60)}</p>
       </div>
 
