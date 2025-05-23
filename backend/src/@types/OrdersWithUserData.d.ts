@@ -1,5 +1,6 @@
 export default interface OrdersWithUserData {
   id: string;
+  title: string;
   description: string;
   createdAt: Date;
   urgency: string;

@@ -14,7 +14,7 @@ export default class OrdersEditCase {
   ) {}
 
   async execute(data: IOrdersEditDTO): Promise<Orders> {
-    const { condominiumId, orderId, userId, description, status, urgency } = data;
+    const { title, condominiumId, orderId, userId, description, status, urgency } = data;
 
     const condominium = await this.condominiumRepository.findById(condominiumId);
     if (!condominium) throw new AppError('Condomínio não encontrado', 404);
@@ -44,7 +44,7 @@ export default class OrdersEditCase {
     }
     if (description) order.description = description;
     if (urgency) order.urgency = urgency;
-
+    if (title) order.title = title;
     await this.ordersRepository.update(order);
 
     return order;

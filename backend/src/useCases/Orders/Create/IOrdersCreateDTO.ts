@@ -1,4 +1,5 @@
 export default interface IOrdersCreateDTO {
+  title: string;
   description: string;
   urgency: string;
   lastOrder?: string;

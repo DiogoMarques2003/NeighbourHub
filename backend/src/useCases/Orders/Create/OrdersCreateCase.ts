@@ -20,7 +20,7 @@ export default class OrdersCreateCase {
   ) {}
 
   async execute(data: IOrdersCreateDTO): Promise<Orders> {
-    const { description, urgency, lastOrder, userId, condominiumId } = data;
+    const { title, description, urgency, lastOrder, userId, condominiumId } = data;
 
     const user = await this.userRepository.findById(userId);
     if (!user) throw new AppError('Utilizador não encontrado', 403);
@@ -32,6 +32,7 @@ export default class OrdersCreateCase {
     if (!address && condominium.adminId !== userId) throw new AppError('Não fazes parte deste condomínio', 403);
 
     const orderClass = new Orders({
+      title,
       description,
       urgency,
       status: STATUS_ORDER_PENDING,

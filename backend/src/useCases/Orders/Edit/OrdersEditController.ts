@@ -13,6 +13,7 @@ export default class OrdersEditController {
         condominiumId: req.params.condominiumId,
         orderId: req.params.orderId,
         userId: req.userID,
+        title: req.body.title,
         description: req.body.description,
         urgency: req.body.urgency,
         status: req.body.status,

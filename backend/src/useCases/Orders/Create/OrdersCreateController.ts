@@ -14,6 +14,7 @@ export default class OrdersCreateController {
   async handle(req: Request, res: Response) {
     try {
       const requestData: IOrdersCreateDTO = {
+        title: req.body.title,
         description: req.body.description,
         urgency: req.body.urgency,
         lastOrder: req.body.lastOrder,

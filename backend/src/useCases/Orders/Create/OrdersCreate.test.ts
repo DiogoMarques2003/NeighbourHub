@@ -19,6 +19,7 @@ describe('Criação de Ordem', () => {
         .post(`/api/condominium/${global.condominiumId}/orders`)
         .set('Authorization', `Bearer ${global.adminToken}`)
         .send({
+          title: 'Ordem de teste',
           description: 'Ordem de teste',
           urgency: URGENCY_HIGH,
         });
@@ -40,6 +41,7 @@ describe('Criação de Ordem', () => {
         .post(`/api/condominium/${global.condominiumId}/orders`)
         .set('Authorization', `Bearer ${global.residentToken}`)
         .send({
+          title: 'Ordem de teste',
           description: 'Ordem de teste morador',
           urgency: URGENCY_MEDIUM,
         });
@@ -50,7 +52,7 @@ describe('Criação de Ordem', () => {
       expect(response.body).toHaveProperty('message');
     });
   });
-  
+
   it('Deve dar erro por falta de campos obrigatórios', async () => {
     const response = await request(app)
       .post(`/api/condominium/${global.condominiumId}/orders`)
@@ -69,6 +71,7 @@ describe('Criação de Ordem', () => {
       .post(`/api/condominium/${global.condominiumId}/orders`)
       .set('Authorization', `Bearer ${global.adminToken}`)
       .send({
+        title: 'Ordem de teste',
         description: 'Ordem de teste',
         urgency: 'INVALID_URGENCY',
       });
