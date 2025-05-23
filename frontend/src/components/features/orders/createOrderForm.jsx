@@ -4,14 +4,16 @@ import { toast } from 'react-toastify';
 import ErrorBar from '@common/ErrorBar';
 import { ORDER_URGENCY_TYPES } from '../../../utils/constants.js';
 import ordersService from '@services/orders';
-import { AlarmCheck, MapPin, MessageSquareText } from 'lucide-react';
+import { AlarmCheck, TypeOutline, MessageSquareText } from 'lucide-react';
 import DropDown from '@common/DropDown';
 import { handleFormDataChange } from '@utils/helperFunctions.js';
 import TextAreaWithIcon from '@common/TextAreaWithIcon';
 import Button from '../../common/Button.jsx';
+import InputWithIcon from '@common/InputWithIcon.jsx';
 
 const CreateOrderForm = () => {
   const [formData, setFormData] = useState({
+    title: '',
     description: '',
     urgency: '',
     lastOrder: '',
@@ -60,6 +62,15 @@ const CreateOrderForm = () => {
       <ErrorBar error={error} />
       <div className="flex flex-col md:flex-row gap-6">
         <div className="w-full md:w-1/2 space-y-4">
+          <InputWithIcon
+            icon={TypeOutline}
+            type="text"
+            name="title"
+            placeholder="Título"
+            value={formData.title}
+            onChange={(e) => handleFormDataChange(e, setFormData)}
+          />
+
           <TextAreaWithIcon
             icon={MessageSquareText}
             type="text"

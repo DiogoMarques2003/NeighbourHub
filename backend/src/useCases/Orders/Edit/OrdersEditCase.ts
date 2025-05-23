@@ -29,7 +29,7 @@ export default class OrdersEditCase {
     if (address && condominium.adminId !== userId && order.userId !== userId)
       throw new AppError('Não podes editar este pedido', 403);
 
-    if (condominium.adminId === userId && order.userId !== userId && (description || urgency))
+    if (condominium.adminId === userId && order.userId !== userId && (description || urgency || title))
       throw new AppError('Como admin e não dono do pedido, não podes alterar a descrição nem a urgência', 403);
 
     // como dono do pedido e não admin, a alteração do status não é permitida.

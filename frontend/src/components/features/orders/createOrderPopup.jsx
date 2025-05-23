@@ -2,7 +2,7 @@ import Popup from '@common/Popup';
 import Button from '@common/Button';
 import InputWithIcon from '@common/InputWithIcon';
 import ErrorBar from '@common/ErrorBar';
-import { AlarmCheck, Tags, Text } from 'lucide-react';
+import { AlarmCheck, Tags, Text, TypeOutline } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import ordersService from '@services/orders';
 import { toast } from 'react-toastify';
@@ -27,6 +27,7 @@ const getFilteredStatusOptions = (currentStatus) => {
 };
 
 const EditOrderPopup = ({ openPopup, setOpenPopup, order, onOrderUpdated, isAdmin, currentUser }) => {
+  const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [urgency, setUrgency] = useState('');
   const [status, setStatus] = useState('');
@@ -35,6 +36,7 @@ const EditOrderPopup = ({ openPopup, setOpenPopup, order, onOrderUpdated, isAdmi
 
   useEffect(() => {
     if (order) {
+      setTitle(order.title || '');
       setDescription(order.description || '');
       setUrgency(order.urgency || '');
       setStatus(order.status || '');
@@ -52,6 +54,7 @@ const EditOrderPopup = ({ openPopup, setOpenPopup, order, onOrderUpdated, isAdmi
     if (isOwner) {
       updatedOrder.description = description;
       updatedOrder.urgency = urgency;
+      updatedOrder.title = title;
     }
 
     if (isAdmin) {
@@ -83,6 +86,15 @@ const EditOrderPopup = ({ openPopup, setOpenPopup, order, onOrderUpdated, isAdmi
 
       {isOwner && (
         <>
+          <InputWithIcon
+            icon={TypeOutline}
+            type="text"
+            name="title"
+            placeholder="Título"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+
           <InputWithIcon
             icon={Text}
             type="text"

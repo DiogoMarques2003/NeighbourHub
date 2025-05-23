@@ -82,7 +82,7 @@ const OrderDetailsForm = () => {
       </div>
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-gray-800" style={{ color: '#3e94bf' }}>
-          Detalhes do Pedido
+          Pedido: {order.title}
         </h1>
       </div>
       <div className="flex gap-10 mb-5">
