@@ -2,6 +2,7 @@ import { v4 as uuid } from 'uuid';
 
 export default class Orders {
   public readonly id: string;
+  public title: string;
   public description: string;
   public readonly createdAt: Date;
   public urgency: string;

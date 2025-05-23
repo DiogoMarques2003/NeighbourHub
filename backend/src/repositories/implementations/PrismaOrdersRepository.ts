@@ -19,6 +19,7 @@ export default class PrismaOrdersRepository implements IOrdersRepository {
       where: { id },
       select: {
         id: true,
+        title: true,
         description: true,
         createdAt: true,
         urgency: true,

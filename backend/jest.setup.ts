@@ -10,8 +10,6 @@ import request from 'supertest';
 import { app } from './src/app';
 import {
   STATUS_READY,
-  STATUS_REQ,
-  STATUS_REQ_CANCELED,
   STATUS_REQ_COMPLETED,
   STATUS_REQ_PENDING,
   STATUS_RESERV_APPROVED,
@@ -19,7 +17,7 @@ import {
   STATUS_ORDER_PENDING,
   STATUS_ORDER_VOTING,
 } from './src/constants/status';
-import { URGENCY_LOW } from './src/constants/urgency';
+import { URGENCY_HIGH, URGENCY_LOW } from './src/constants/urgency';
 import Services from './src/entities/Services';
 import ServiceRequests from './src/entities/ServiceRequests';
 import Order from './src/entities/Orders';
@@ -193,6 +191,7 @@ beforeAll(async () => {
 
   const order = new Order({
     condominiumId: global.condominiumId,
+    title: 'TESTE',
     description: 'TESTE',
     status: STATUS_ORDER_IN_PROGRESS,
     urgency: 'LOW',
@@ -204,6 +203,7 @@ beforeAll(async () => {
 
   const pendingOrder = new Order({
     condominiumId: global.condominiumId,
+    title: 'TESTE',
     description: 'TESTE',
     status: STATUS_ORDER_PENDING,
     urgency: 'LOW',
@@ -215,6 +215,7 @@ beforeAll(async () => {
 
   const pendingOrder2 = new Order({
     condominiumId: global.condominiumId,
+    title: 'TESTE',
     description: 'TESTE',
     status: STATUS_ORDER_PENDING,
     urgency: URGENCY_LOW,
@@ -223,6 +224,7 @@ beforeAll(async () => {
 
   const inProgressOrder = new Order({
     condominiumId: global.condominiumId,
+    title: 'TESTE',
     description: 'TESTE',
     status: STATUS_ORDER_IN_PROGRESS,
     urgency: URGENCY_LOW,
@@ -234,6 +236,7 @@ beforeAll(async () => {
 
   const votingOrderWithBudgets = new Order({
     condominiumId: global.condominiumId,
+    title: 'TESTE',
     description: 'TESTE',
     status: STATUS_ORDER_VOTING,
     urgency: URGENCY_LOW,
@@ -243,15 +246,17 @@ beforeAll(async () => {
 
   const votingOrderWithoutBudgets = new Order({
     condominiumId: global.condominiumId,
+    title: 'TESTE',
     description: 'TESTE',
     status: STATUS_ORDER_VOTING,
-    urgency: URGENCY_LOW,
+    urgency: URGENCY_HIGH,
     userId: residentUser.id,
     votingDeadline: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 dias à frente
   });
 
   const votingOrderDeadLineGone = new Order({
     condominiumId: global.condominiumId,
+    title: 'TESTE',
     description: 'TESTE',
     status: STATUS_ORDER_VOTING,
     urgency: URGENCY_LOW,

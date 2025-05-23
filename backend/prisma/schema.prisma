@@ -149,6 +149,7 @@ model ServiceReviews {
 
 model Orders {
   id String @id @unique
+  title String
   description String
   createdAt DateTime @default(now())
   urgency String
