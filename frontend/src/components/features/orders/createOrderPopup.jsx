@@ -92,6 +92,7 @@ const EditOrderPopup = ({ openPopup, setOpenPopup, order, onOrderUpdated, isAdmi
             name="title"
             placeholder="Título"
             value={title}
+            maxLength={25}
             onChange={(e) => setTitle(e.target.value)}
           />
 

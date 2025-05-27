@@ -6,7 +6,7 @@ import ordersService from '@services/orders';
 import servicesService from '@services/servicesService';
 import commonAreaService from '@services/commonAreaService';
 import RatingStars from '@common/RatingStars';
-import { getStatusColor, getStatusText, getUrgencyColor, getUrgencyText } from '@features/orders/orderConsts';
+import { getStatusText, getUrgencyColor, getUrgencyText } from '@features/orders/orderConsts';
 import { dateFormat, getCommonAreaTypeName, truncateText } from '@utils/helperFunctions';
 import { Clock, Euro, Users } from 'lucide-react';
 import SectionCards from '@common/SectionCards';
@@ -88,7 +88,7 @@ const HomePageForm = () => {
             <strong>Deadline:</strong> {order.votingDeadline ? dateFormat(new Date(order.votingDeadline)) : 'N/A'}
           </p>
           <p>
-            <strong>Status:</strong> <span className={getStatusColor(order.status)}>{getStatusText(order.status)}</span>
+            <strong>Status:</strong> <span>{getStatusText(order.status)}</span>
           </p>
         </div>
       </div>
@@ -159,7 +159,7 @@ const HomePageForm = () => {
         />
 
         <SectionCards
-          title="Espaços Recentes"
+          title="Espaços"
           items={commonAreas}
           isLoading={loadingAreas}
           renderItem={renderCommonAreaCard}

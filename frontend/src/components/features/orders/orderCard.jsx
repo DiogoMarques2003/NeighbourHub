@@ -1,6 +1,6 @@
 import { dateFormat, truncateText } from '../../../utils/helperFunctions';
 import ItemCard from '@common/ItemCard';
-import { getStatusText, getUrgencyColor, getUrgencyText, getStatusColor } from './orderConsts';
+import { getStatusText, getUrgencyColor, getUrgencyText } from './orderConsts';
 
 const OrderCard = ({ order }) => {
   return (
@@ -25,7 +25,7 @@ const OrderCard = ({ order }) => {
 
         <p className="text-sm text-gray-600">
           <b>Status: </b>
-          <span className={getStatusColor(order.status)}>{getStatusText(order.status)}</span>
+          <span>{getStatusText(order.status)}</span>
         </p>
       </div>
     </ItemCard>

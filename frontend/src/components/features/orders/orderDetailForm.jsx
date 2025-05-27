@@ -4,7 +4,7 @@ import ordersService from '@services/orders';
 import { dateFormat } from '@utils/helperFunctions';
 import defaultAvatar from '@public/images/defaultUserAvatar.jpg';
 import { AlarmClock, Plus, Tags } from 'lucide-react';
-import { getStatusText, getUrgencyColor, getUrgencyText, getStatusColor } from './orderConsts';
+import { getStatusText, getUrgencyColor, getUrgencyText } from './orderConsts';
 import EditOrderPopup from './createOrderPopup';
 import VoteCard from '@features/vote/voteCard';
 import votesService from '@services/votes';
@@ -120,7 +120,7 @@ const OrderDetailsForm = () => {
           <h2 className="text-xl font-semibold mb-2" style={{ color: '#3e94bf' }}>
             Status
           </h2>
-          <div className={`mb-4 ${getStatusColor(order.status)}`}>{getStatusText(order.status)}</div>
+          <div className="mb-4">{getStatusText(order.status)}</div>
 
           <h2 className="text-xl font-semibold mb-2" style={{ color: '#3e94bf' }}>
             Data do Pedido

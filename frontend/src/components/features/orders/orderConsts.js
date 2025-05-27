@@ -15,23 +15,6 @@ const getStatusText = (status) => {
   }
 };
 
-const getStatusColor = (status) => {
-  switch (status) {
-    case 'PENDING':
-      return 'text-yellow-500';
-    case 'CANCELLED':
-      return 'text-red-500';
-    case 'VOTING':
-      return 'text-purple-500';
-    case 'IN_PROGRESS':
-      return 'text-blue-500';
-    case 'COMPLETED':
-      return 'text-green-600';
-    default:
-      return 'text-gray-600';
-  }
-};
-
 const getUrgencyText = (urgency) => {
   switch (urgency) {
     case 'LOW':
@@ -58,4 +41,4 @@ const getUrgencyColor = (urgency) => {
   }
 };
 
-export { getStatusColor, getUrgencyColor, getStatusText, getUrgencyText };
+export { getUrgencyColor, getStatusText, getUrgencyText };

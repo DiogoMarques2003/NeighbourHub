@@ -68,6 +68,7 @@ const CreateOrderForm = () => {
             name="title"
             placeholder="Título"
             value={formData.title}
+            maxLength={25}
             onChange={(e) => handleFormDataChange(e, setFormData)}
           />
 
